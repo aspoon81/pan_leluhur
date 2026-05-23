@@ -4,1306 +4,1982 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <meta name="theme-color" content="#a8331f">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>潘氏家谱 · Silsilah Keluarga Pan</title>
-<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink-black: #1a1410;
-    --ink-deep: #2a1f17;
-    --paper-cream: #f4e8d0;
-    --paper-aged: #e8d9b8;
-    --paper-deep: #d4bf91;
-    --vermillion: #a8331f;
-    --vermillion-deep: #7d2014;
-    --gold: #b8923e;
-    --gold-pale: #d4b56a;
-    --jade: #4a6b4d;
-    --shadow: rgba(26, 20, 16, 0.15);
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
-    background: var(--paper-cream);
-    background-image: radial-gradient(ellipse at top, rgba(180,140,80,0.08) 0%, transparent 60%),
-      radial-gradient(ellipse at bottom, rgba(120,50,30,0.05) 0%, transparent 60%),
-      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(120,90,50,0.015) 2px, rgba(120,90,50,0.015) 4px);
-    color: var(--ink-black); min-height: 100vh; line-height: 1.6; overflow-x: hidden;
-  }
-  .container { max-width: 1100px; margin: 0 auto; padding: 40px 30px; position: relative; z-index: 2; }
+:root {
+  --bg: #fafaf7;
+  --bg-card: #ffffff;
+  --bg-hover: #f5f1e8;
+  --bg-current: #fef3e8;
+  --ink: #1a1410;
+  --ink-soft: #6b6359;
+  --ink-mute: #a09689;
+  --line: #e8e2d5;
+  --line-strong: #d4cbb8;
+  --accent: #a8331f;
+  --accent-soft: #d97757;
+  --gold: #b8923e;
+  --jade: #4a6b4d;
+}
 
-  /* PERSPECTIVE SELECTOR */
-  .perspective-selector {
-    background: linear-gradient(135deg, var(--paper-aged), var(--paper-deep));
-    border: 2px solid var(--vermillion);
-    border-radius: 8px;
-    padding: 28px 32px;
-    margin-bottom: 40px;
-    box-shadow: 0 8px 24px var(--shadow);
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============ DASHBOARD CARDS ============ */
+.dashboard {
+  padding: 20px 20px 8px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Welcome Banner */
+.welcome-banner {
+  background: linear-gradient(135deg, rgba(168, 51, 31, 0.04), rgba(184, 146, 62, 0.06));
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+
+.welcome-text {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.welcome-icon {
+  font-size: 36px;
+  flex-shrink: 0;
+}
+
+.welcome-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.welcome-sub {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .welcome-banner { padding: 14px 14px; }
+  .welcome-icon { font-size: 28px; }
+  .welcome-title { font-size: 15px; }
+  .welcome-sub { font-size: 12px; }
+}
+
+/* Search Card - special highlight */
+.search-card {
+  background: linear-gradient(135deg, var(--accent), #c44530) !important;
+  border-color: var(--accent) !important;
+  color: white;
+}
+
+.search-card .card-label,
+.search-card .card-value,
+.search-card .card-sub {
+  color: white !important;
+}
+
+.search-card .card-label { opacity: 0.85; }
+.search-card .card-sub { opacity: 0.9; }
+
+.search-card:hover {
+  background: linear-gradient(135deg, #c44530, var(--accent-soft)) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(168, 51, 31, 0.3) !important;
+}
+
+.dashboard-title {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 16px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(168, 51, 31, 0.08);
+}
+
+.card-icon {
+  font-size: 22px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.card-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-mute);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.card-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+  font-family: 'Noto Serif SC', serif;
+}
+
+.card-sub {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.card.highlight {
+  background: linear-gradient(135deg, rgba(168, 51, 31, 0.06), rgba(184, 146, 62, 0.04));
+  border-color: var(--accent);
+}
+
+.card.highlight .card-value { color: var(--accent); }
+
+/* Card "ANDA SEKARANG" - menonjol */
+.card.card-me {
+  background: linear-gradient(135deg, var(--accent), #c44530) !important;
+  border-color: var(--accent) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.card.card-me .card-label,
+.card.card-me .card-value,
+.card.card-me .card-sub {
+  color: white !important;
+}
+
+.card.card-me .card-label { opacity: 0.85; }
+.card.card-me .card-sub { opacity: 0.9; }
+
+.card.card-me::before {
+  content: '✓';
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 22px;
+  height: 22px;
+  background: white;
+  color: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.card.card-me:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(168, 51, 31, 0.3) !important;
+}
+
+/* Card info-only (tidak clickable) */
+.card.card-info {
+  background: var(--bg-hover);
+  cursor: default;
+}
+
+.card.card-info:hover {
+  border-color: var(--line);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Card reset */
+.card.card-reset {
+  background: linear-gradient(135deg, var(--bg-card), var(--bg-hover));
+  border: 1px dashed var(--ink-mute);
+}
+
+.card.card-reset:hover {
+  border-style: solid;
+  border-color: var(--ink-soft);
+}
+
+.card.card-reset .card-icon { opacity: 0.7; }
+
+/* ============ HOMETOWN SECTION ============ */
+.hometown-section {
+  padding: 24px 20px;
+  background: linear-gradient(135deg, #fbf5e8 0%, #f7ecd3 100%);
+  border-bottom: 1px solid var(--line);
+}
+
+.hometown-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 700px) {
+  .hometown-card { grid-template-columns: 1fr; text-align: center; }
+}
+
+.hometown-emblem {
+  width: 90px;
+  height: 90px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52px;
+  box-shadow: 0 4px 16px rgba(168, 51, 31, 0.15);
+  border: 3px solid var(--accent);
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+
+.hometown-info { min-width: 0; }
+
+.hometown-han {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+  letter-spacing: 0.1em;
+}
+
+.hometown-name {
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.hometown-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+  justify-content: flex-start;
+}
+
+@media (max-width: 700px) {
+  .hometown-stats { justify-content: center; }
+}
+
+.hometown-stat {
+  font-size: 11px;
+  background: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.hometown-stat strong { color: var(--accent); font-weight: 600; }
+
+.hometown-desc {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 700px;
+}
+
+.hometown-desc strong { color: var(--ink); font-weight: 600; }
+
+.hometown-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 700px) {
+  .hometown-actions { justify-content: center; }
+}
+
+.hometown-actions a {
+  font-size: 11px;
+  text-decoration: none;
+  color: var(--accent);
+  padding: 4px 10px;
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  transition: all 0.15s ease;
+}
+
+.hometown-actions a:hover {
+  background: var(--accent);
+  color: white;
+}
+
+/* ============ TOP BAR ============ */
+.topbar {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 20px;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+  background-color: rgba(250, 250, 247, 0.92);
+}
+
+.topbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-seal {
+  width: 36px;
+  height: 36px;
+  background: var(--accent);
+  color: white;
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.brand-text { line-height: 1.2; }
+
+.brand-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.brand-sub {
+  font-size: 11px;
+  color: var(--ink-mute);
+  letter-spacing: 0.05em;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--bg-hover);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.btn-primary:hover {
+  background: var(--accent-soft);
+  color: white;
+  border-color: var(--accent-soft);
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+  max-width: 320px;
+  min-width: 180px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 9px 14px 9px 36px;
+  font-family: inherit;
+  font-size: 14px;
+  background: var(--bg-card);
+  border: 2px solid var(--line-strong);
+  border-radius: 8px;
+  color: var(--ink);
+  outline: none;
+  transition: all 0.15s ease;
+  font-weight: 500;
+}
+
+.search-box input::placeholder {
+  color: var(--ink-mute);
+  font-weight: 400;
+}
+
+.search-box input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(168, 51, 31, 0.12);
+  background: white;
+}
+
+.search-box::before {
+  content: '🔍';
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* ============ BREADCRUMB ============ */
+.breadcrumb {
+  padding: 10px 20px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.breadcrumb-item {
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--ink-soft);
+  transition: all 0.15s ease;
+  font-family: 'Noto Serif SC', serif;
+  white-space: nowrap;
+}
+
+.breadcrumb-item:hover { background: var(--bg-hover); color: var(--accent); }
+.breadcrumb-item.current { color: var(--accent); font-weight: 600; }
+.breadcrumb-sep { color: var(--ink-mute); font-size: 10px; }
+
+/* ============ MAIN LAYOUT ============ */
+.main {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 0;
+  flex: 1;
+}
+
+@media (max-width: 900px) {
+  .main { grid-template-columns: 1fr; }
+}
+
+/* ============ TREE PANEL ============ */
+.tree-panel {
+  padding: 24px 20px;
+  border-right: 1px solid var(--line);
+  min-height: 60vh;
+}
+
+.tree-title {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.gen-section {
+  margin-bottom: 4px;
+}
+
+.gen-label {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  padding: 6px 0 8px 16px;
+  font-weight: 600;
+}
+
+.gen-label .gen-char {
+  display: inline-block;
+  background: var(--jade);
+  color: white;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  margin-left: 4px;
+  font-size: 11px;
+}
+
+/* TREE NODE */
+.tree-node {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px 8px 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  margin: 2px 0;
+  transition: all 0.15s ease;
+  position: relative;
+  gap: 10px;
+  border: 1px solid transparent;
+}
+
+.tree-node:hover {
+  background: var(--bg-hover);
+}
+
+.tree-node.selected {
+  background: var(--bg-current);
+  border-color: var(--accent);
+}
+
+.tree-node.is-yulius {
+  background: linear-gradient(135deg, rgba(168, 51, 31, 0.08), rgba(184, 146, 62, 0.06));
+}
+
+.tree-node.is-yulius.selected {
+  background: var(--bg-current);
+  border-color: var(--accent);
+}
+
+.tree-toggle {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 10px;
+  color: var(--ink-mute);
+  transition: transform 0.2s ease;
+}
+
+.tree-toggle.expanded { transform: rotate(90deg); }
+.tree-toggle.no-children { visibility: hidden; }
+
+.node-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-hover);
+  border: 1.5px solid var(--line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.tree-node.selected .node-avatar {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.node-avatar.female { color: var(--accent-soft); }
+.node-avatar.kakek, .node-avatar.father, .node-avatar.yulius {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.node-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.node-name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.node-id {
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-weight: 400;
+}
+
+.node-badge {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  background: var(--bg-hover);
+  color: var(--ink-soft);
+  font-weight: 500;
+  border: 1px solid var(--line);
+}
+
+.node-badge.you {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.node-badge.role-key {
+  background: var(--jade);
+  color: white;
+  border-color: var(--jade);
+}
+
+.node-meta {
+  font-size: 11px;
+  color: var(--ink-mute);
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* CHILDREN CONTAINER (indented) */
+.children {
+  margin-left: 28px;
+  border-left: 1px dashed var(--line-strong);
+  padding-left: 12px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.2s ease;
+}
+
+.children.expanded {
+  max-height: 5000px;
+  opacity: 1;
+  margin-bottom: 8px;
+}
+
+/* ============ DETAIL PANEL ============ */
+.detail-panel {
+  background: var(--bg-card);
+  padding: 24px 20px;
+  position: sticky;
+  top: 130px;
+  height: fit-content;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+  .detail-panel {
     position: relative;
+    top: 0;
+    border-top: 1px solid var(--line);
+    max-height: none;
   }
-  .perspective-selector::before {
-    content: '👋';
-    position: absolute;
-    top: -20px; left: 30px;
-    background: var(--paper-cream);
-    padding: 0 10px; font-size: 28px;
-  }
-  .selector-title {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 22px;
-    color: var(--vermillion-deep);
-    margin-bottom: 6px;
-    font-weight: 700;
-  }
-  .selector-subtitle {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 16px;
-    color: var(--ink-deep);
-    margin-bottom: 20px;
-    opacity: 0.8;
-  }
-  .person-buttons {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px;
-  }
-  .person-btn {
-    background: var(--paper-cream);
-    border: 2px solid var(--gold);
-    color: var(--ink-deep);
-    padding: 12px 14px;
-    border-radius: 4px;
-    font-family: 'Noto Serif SC', serif;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .person-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px var(--shadow);
-    border-color: var(--vermillion);
-    background: var(--paper-aged);
-  }
-  .person-btn.active {
-    background: var(--vermillion);
-    color: var(--paper-cream);
-    border-color: var(--vermillion-deep);
-    box-shadow: 0 4px 16px rgba(168, 51, 31, 0.3);
-    transform: scale(1.02);
-  }
-  .person-btn .btn-han { font-size: 16px; font-weight: 700; }
-  .person-btn .btn-id { font-size: 11px; font-style: italic; opacity: 0.85; }
-  .person-btn .btn-icon { font-size: 12px; }
+}
 
-  /* HEADER */
-  header { text-align: center; margin-bottom: 60px; position: relative; padding: 40px 20px; }
-  header::before, header::after {
-    content: ''; position: absolute; left: 50%; transform: translateX(-50%);
-    width: 200px; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-  header::before { top: 0; }
-  header::after { bottom: 0; }
-  .seal {
-    display: inline-block; width: 80px; height: 80px;
-    background: var(--vermillion); color: var(--paper-cream);
-    font-family: 'Ma Shan Zheng', serif; font-size: 56px; line-height: 80px;
-    margin-bottom: 20px; border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(168, 51, 31, 0.3), inset 0 0 0 2px rgba(244, 232, 208, 0.2);
-    transform: rotate(-3deg);
-  }
-  .title-chinese {
-    font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
-    font-size: 64px;
-    color: var(--ink-deep);
-    letter-spacing: 0.2em;
-    margin-bottom: 12px;
-    text-shadow: 2px 2px 0 rgba(168, 51, 31, 0.08);
-  }
-  .title-romanized {
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    letter-spacing: 0.5em;
-    color: var(--vermillion-deep);
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-  .viewing-as {
-    margin-top: 24px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 17px;
-    color: var(--jade);
-    font-style: italic;
-  }
-  .viewing-as strong { color: var(--vermillion-deep); font-style: normal; font-weight: 600; }
-  .origin-label {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 16px;
-    color: var(--jade);
-    letter-spacing: 0.1em;
-    margin-top: 12px;
-  }
-  .origin-label::before { content: '— '; color: var(--gold); }
-  .origin-label::after { content: ' —'; color: var(--gold); }
+.detail-empty {
+  text-align: center;
+  color: var(--ink-mute);
+  font-size: 13px;
+  padding: 40px 20px;
+}
 
-  /* SECTIONS */
-  section { margin-bottom: 60px; position: relative; }
-  .section-title {
-    font-family: 'Ma Shan Zheng', serif;
-    font-size: 32px;
-    color: var(--vermillion-deep);
-    text-align: center;
-    margin-bottom: 8px;
-  }
-  .section-subtitle {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    letter-spacing: 0.4em;
-    color: var(--gold);
-    text-align: center;
-    text-transform: uppercase;
-    margin-bottom: 36px;
-  }
+.detail-header {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
 
-  /* INFO PANEL */
-  .info-panel {
-    background: linear-gradient(135deg, rgba(232, 217, 184, 0.6), rgba(212, 191, 145, 0.4));
-    border: 1px solid var(--gold);
-    padding: 32px 40px;
-    border-radius: 4px;
-    position: relative;
-    box-shadow: 0 8px 30px var(--shadow);
-  }
-  .info-panel::before, .info-panel::after {
-    content: '';
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    border: 2px solid var(--vermillion);
-  }
-  .info-panel::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
-  .info-panel::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
-  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .info-item .info-label {
-    font-family: 'Cinzel', serif;
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    color: var(--vermillion-deep);
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-  .info-item .info-value { font-size: 17px; color: var(--ink-deep); }
-  .info-item .info-value .han {
-    font-family: 'Noto Serif SC', serif;
-    font-weight: 700;
-    color: var(--vermillion-deep);
-    margin-right: 6px;
-  }
+.detail-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 28px;
+  margin-bottom: 12px;
+}
 
-  /* TREE */
-  .tree { position: relative; padding: 20px 0; }
-  .generation {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0;
-    position: relative;
-    padding: 24px 0;
-  }
-  .generation:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    bottom: -15px; left: 50%;
-    transform: translateX(-50%);
-    width: 2px; height: 30px;
-    background: linear-gradient(180deg, var(--gold), transparent);
-    z-index: 1;
-  }
-  .name-card {
-    background: var(--paper-aged);
-    border: 1px solid var(--gold);
-    padding: 20px 28px;
-    text-align: center;
-    border-radius: 2px;
-    box-shadow: 0 4px 16px var(--shadow), inset 0 0 0 1px rgba(244, 232, 208, 0.4);
-    position: relative;
-    transition: all 0.4s ease;
-    min-width: 260px;
-  }
-  .name-card.ancestor {
-    background: linear-gradient(135deg, var(--paper-deep), var(--paper-aged));
-    border-color: var(--vermillion);
-    border-width: 2px;
-  }
-  .name-card.is-current {
-    background: linear-gradient(135deg, rgba(168, 51, 31, 0.12), rgba(184, 146, 62, 0.18));
-    border-color: var(--vermillion);
-    border-width: 3px;
-    transform: scale(1.05);
-    box-shadow: 0 8px 32px rgba(168, 51, 31, 0.25);
-  }
-  .name-card.is-current::before {
-    content: '★ ANDA';
-    position: absolute;
-    top: -14px; right: -14px;
-    background: var(--vermillion);
-    color: var(--paper-cream);
-    border-radius: 14px;
-    font-family: 'Cinzel', serif;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    padding: 4px 10px;
-    box-shadow: 0 2px 8px rgba(168, 51, 31, 0.4);
-    z-index: 5;
-  }
-  .gen-number {
-    font-family: 'Cinzel', serif;
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  .gen-character {
-    display: inline-block;
-    font-family: 'Ma Shan Zheng', serif;
-    font-size: 14px;
-    color: var(--paper-cream);
-    background: var(--jade);
-    padding: 2px 10px;
-    border-radius: 2px;
-    margin-left: 8px;
-    vertical-align: middle;
-  }
-  .name-han {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 30px;
-    font-weight: 700;
-    color: var(--vermillion-deep);
-    margin-bottom: 6px;
-    letter-spacing: 0.05em;
-  }
-  .name-pinyin {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 16px;
-    color: var(--ink-deep);
-    margin-bottom: 4px;
-  }
-  .name-id {
-    font-size: 13px;
-    color: var(--jade);
-    font-weight: 500;
-    margin-bottom: 8px;
-  }
-  .name-role {
-    font-family: 'Cinzel', serif;
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    color: var(--vermillion);
-    text-transform: uppercase;
-    padding: 6px 12px;
-    background: rgba(168, 51, 31, 0.08);
-    border-radius: 12px;
-    display: inline-block;
-    margin-top: 6px;
-  }
-  .date-block {
-    margin: 8px 0;
-    padding: 8px 10px;
-    background: rgba(232, 217, 184, 0.5);
-    border-left: 2px solid var(--gold);
-    border-radius: 2px;
-    text-align: left;
-  }
-  .date-row { font-size: 11px; color: var(--ink-deep); line-height: 1.6; margin: 2px 0; }
-  .date-row.lunar { color: var(--vermillion-deep); font-family: 'Noto Serif SC', serif; }
-  .date-label {
-    font-family: 'Noto Serif SC', serif;
-    font-weight: 700;
-    color: var(--vermillion);
-    margin-right: 4px;
-  }
-  .name-meaning {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 12px;
-    color: var(--jade);
-    margin-top: 6px;
-    opacity: 0.85;
-  }
+.detail-name {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
 
-  /* PARENTS */
-  .parents-pair {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .parent-card {
-    min-width: 280px;
-    max-width: 340px;
-    position: relative;
-    padding-top: 32px;
-  }
-  .parent-badge {
-    position: absolute;
-    top: -12px; left: 50%;
-    transform: translateX(-50%);
-    background: var(--vermillion);
-    color: var(--paper-cream);
-    font-family: 'Noto Serif SC', serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    padding: 5px 14px;
-    border-radius: 14px;
-    white-space: nowrap;
-    z-index: 4;
-  }
-  .parent-card.mother {
-    background: linear-gradient(135deg, rgba(232, 217, 184, 0.8), rgba(212, 191, 145, 0.5));
-  }
-  .union-symbol {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    padding: 0 10px;
-  }
-  .union-icon {
-    font-size: 28px;
-    color: var(--vermillion);
-    animation: heartbeat 2s ease-in-out infinite;
-  }
-  @keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-  }
-  .union-text {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 11px;
-    color: var(--gold);
-    letter-spacing: 0.1em;
-  }
+.detail-pinyin {
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin-bottom: 6px;
+}
 
-  /* SIBLINGS */
-  .siblings-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  .sibling-card {
-    min-width: auto;
-    padding: 20px 20px;
-    position: relative;
-  }
-  .sibling-card .birth-order {
-    position: absolute;
-    top: -10px; left: 50%;
-    transform: translateX(-50%);
-    background: var(--gold);
-    color: var(--paper-cream);
-    font-family: 'Cinzel', serif;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    padding: 4px 12px;
-    border-radius: 12px;
-    white-space: nowrap;
-    text-transform: uppercase;
-    z-index: 3;
-  }
-  .sibling-card.daughter {
-    background: linear-gradient(135deg, rgba(168, 51, 31, 0.04), rgba(184, 146, 62, 0.06));
-    border-color: var(--gold-pale);
-  }
-  .sibling-card.daughter .birth-order { background: var(--vermillion-deep); }
-  .sibling-card.daughter .name-han {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-style: italic;
-  }
+.detail-role {
+  display: inline-block;
+  font-size: 11px;
+  padding: 3px 8px;
+  background: var(--accent);
+  color: white;
+  border-radius: 10px;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
 
-  /* POEM */
-  .poem-box {
-    background: linear-gradient(180deg, rgba(232, 217, 184, 0.5), rgba(212, 191, 145, 0.3));
-    border: 1px solid var(--gold);
-    padding: 40px 50px;
-    border-radius: 4px;
-    text-align: center;
-    box-shadow: 0 8px 30px var(--shadow);
-  }
-  .poem-line {
-    font-family: 'Ma Shan Zheng', serif;
-    font-size: 36px;
-    color: var(--ink-deep);
-    letter-spacing: 0.3em;
-    margin-bottom: 12px;
-  }
-  .poem-line .highlight {
-    color: var(--vermillion-deep);
-    background: linear-gradient(180deg, transparent 70%, rgba(184, 146, 62, 0.3) 70%);
-    padding: 0 4px;
-  }
-  .poem-line .current-gen {
-    color: var(--paper-cream);
-    background: var(--vermillion);
-    padding: 2px 8px;
-    border-radius: 2px;
-  }
-  .poem-note {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 15px;
-    color: var(--ink-deep);
-    margin-top: 24px;
-    opacity: 0.8;
-  }
+.detail-section {
+  margin-bottom: 16px;
+}
 
-  /* LOCATION */
-  .location-card {
-    background: linear-gradient(135deg, var(--paper-aged), var(--paper-deep));
-    padding: 36px;
-    border-radius: 4px;
-    text-align: center;
-    border: 1px solid var(--gold);
-    box-shadow: 0 8px 30px var(--shadow);
-  }
-  .location-flow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-    flex-wrap: wrap;
-    margin: 24px 0;
-  }
-  .location-node { text-align: center; padding: 16px; min-width: 160px; }
-  .location-node .flag { font-size: 32px; margin-bottom: 6px; }
-  .location-node .place-han {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 17px;
-    color: var(--vermillion-deep);
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-  .location-node .place-id { font-size: 13px; color: var(--ink-deep); }
-  .location-arrow { font-size: 26px; color: var(--gold); }
+.detail-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
 
-  /* CONTEXT */
-  .context-box { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .context-card {
-    background: var(--paper-aged);
-    border-left: 3px solid var(--vermillion);
-    padding: 20px 24px;
-    border-radius: 2px;
-    box-shadow: 0 4px 12px var(--shadow);
-  }
-  .context-card h3 {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 18px;
-    color: var(--vermillion-deep);
-    margin-bottom: 10px;
-  }
-  .context-card p { font-size: 14px; line-height: 1.7; color: var(--ink-deep); }
+.detail-value {
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.5;
+}
 
-  /* FOOTER */
-  footer {
-    text-align: center;
-    padding: 40px 20px 20px;
-    border-top: 1px solid var(--gold);
-    margin-top: 40px;
-  }
-  .footer-seal {
-    display: inline-block;
-    width: 50px; height: 50px;
-    background: var(--vermillion);
-    color: var(--paper-cream);
-    font-family: 'Ma Shan Zheng', serif;
-    font-size: 30px;
-    line-height: 50px;
-    margin-bottom: 16px;
-    border-radius: 3px;
-    transform: rotate(2deg);
-  }
-  .footer-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    color: var(--ink-deep);
-    font-size: 15px;
-    line-height: 1.8;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  .footer-date {
-    font-family: 'Cinzel', serif;
-    font-size: 10px;
-    letter-spacing: 0.4em;
-    color: var(--gold);
-    margin-top: 16px;
-    text-transform: uppercase;
-  }
+.detail-value .han {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 600;
+  color: var(--accent);
+}
 
-  /* BACK TO TOP - Mobile Helper */
-  .back-to-top {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 48px;
-    height: 48px;
-    background: var(--vermillion);
-    color: var(--paper-cream);
-    border: 2px solid var(--paper-cream);
-    border-radius: 50%;
-    font-family: 'Noto Serif SC', serif;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: 0 4px 16px rgba(168, 51, 31, 0.4);
-    z-index: 100;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.detail-value.lunar {
+  color: var(--accent);
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 500;
+}
+
+.detail-meaning {
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 13px;
+  padding: 10px 12px;
+  background: var(--bg-hover);
+  border-radius: 6px;
+  border-left: 3px solid var(--gold);
+}
+
+/* ============ FOOTER NOTE ============ */
+.footer-note {
+  padding: 20px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--ink-mute);
+  border-top: 1px solid var(--line);
+  background: var(--bg-card);
+}
+
+.footer-note strong {
+  color: var(--accent);
+  font-family: 'Noto Serif SC', serif;
+}
+
+/* ============ MOBILE ============ */
+@media (max-width: 600px) {
+  .topbar { padding: 12px 14px; }
+  .topbar-row { gap: 10px; }
+  .brand-seal { width: 32px; height: 32px; font-size: 18px; }
+  .brand-title { font-size: 16px; }
+  .brand-sub { font-size: 10px; }
+  .search-box { max-width: 100%; min-width: 100%; order: 10; }
+  .breadcrumb { padding: 8px 14px; font-size: 11px; }
+  .tree-panel { padding: 16px 12px; }
+  .tree-node { padding: 8px 8px 8px 10px; gap: 8px; }
+  .node-avatar { width: 26px; height: 26px; font-size: 13px; }
+  .node-name { font-size: 14px; }
+  .node-id { font-size: 11px; }
+  .node-badge { font-size: 9px; padding: 1px 5px; }
+  .node-meta { display: none; }
+  .children { margin-left: 18px; padding-left: 8px; }
+  .detail-panel { padding: 20px 14px; }
+  .detail-avatar { width: 48px; height: 48px; font-size: 24px; }
+  .detail-name { font-size: 19px; }
   
-  .back-to-top.visible {
-    opacity: 1;
-    pointer-events: auto;
+  /* Dashboard mobile */
+  .dashboard { padding: 16px 12px 6px; }
+  .cards-grid { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 8px; 
   }
+  .card { padding: 12px 12px; }
+  .card-icon { font-size: 18px; margin-bottom: 4px; }
+  .card-label { font-size: 9px; }
+  .card-value { font-size: 16px; }
+  .card-sub { font-size: 10px; }
   
-  .back-to-top:hover, .back-to-top:active {
-    background: var(--vermillion-deep);
-    transform: scale(1.1);
-  }
+  /* Hometown mobile */
+  .hometown-section { padding: 18px 14px; }
+  .hometown-emblem { width: 72px; height: 72px; font-size: 40px; }
+  .hometown-han { font-size: 22px; }
+  .hometown-name { font-size: 13px; }
+  .hometown-stat { font-size: 10px; padding: 3px 8px; }
+  .hometown-desc { font-size: 12px; }
+  .hometown-actions a { font-size: 10px; }
+}
 
-  .fade-transition { animation: fadeIn 0.5s ease; }
-  @keyframes fadeIn {
-    from { opacity: 0.5; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+/* HIGHLIGHT SEARCH */
+.highlight-match {
+  background: rgba(184, 146, 62, 0.3);
+  padding: 0 2px;
+  border-radius: 2px;
+}
 
-  /* RESPONSIVE - MOBILE FIRST OPTIMIZED */
-  
-  /* TABLET (max 1024px) */
-  @media (max-width: 1024px) {
-    .siblings-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-    .container { padding: 36px 24px; }
-  }
+/* Search match - highlight glow */
+.tree-node.search-match {
+  background: linear-gradient(135deg, rgba(255, 220, 100, 0.25), rgba(184, 146, 62, 0.2)) !important;
+  border: 2px solid var(--gold) !important;
+  box-shadow: 0 0 0 4px rgba(184, 146, 62, 0.15), 0 4px 12px rgba(184, 146, 62, 0.2) !important;
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
 
-  /* MOBILE (max 768px) */
-  @media (max-width: 768px) {
-    .container { padding: 24px 12px; }
-    
-    /* HEADER */
-    header { padding: 30px 12px; margin-bottom: 36px; }
-    .seal { width: 64px; height: 64px; font-size: 42px; line-height: 64px; }
-    .title-chinese { 
-      font-size: 38px; 
-      letter-spacing: 0.15em;
-      line-height: 1.2;
-    }
-    .title-romanized { 
-      font-size: 10px; 
-      letter-spacing: 0.3em;
-      padding: 0 10px;
-    }
-    .viewing-as { 
-      font-size: 14px; 
-      padding: 0 10px;
-      line-height: 1.5;
-    }
-    .origin-label { font-size: 13px; padding: 0 10px; }
-    
-    /* PERSPECTIVE SELECTOR */
-    .perspective-selector { 
-      padding: 22px 16px 18px; 
-      margin-bottom: 28px;
-    }
-    .perspective-selector::before { 
-      font-size: 22px; 
-      top: -18px; left: 16px;
-    }
-    .selector-title { 
-      font-size: 16px; 
-      line-height: 1.3;
-    }
-    .selector-subtitle { 
-      font-size: 13px; 
-      margin-bottom: 14px;
-      line-height: 1.5;
-    }
-    .person-buttons { 
-      grid-template-columns: repeat(2, 1fr); 
-      gap: 8px;
-    }
-    .person-btn { 
-      padding: 10px 8px;
-      gap: 2px;
-    }
-    .person-btn .btn-icon { font-size: 11px; }
-    .person-btn .btn-han { font-size: 15px; }
-    .person-btn .btn-id { font-size: 10px; }
-    
-    /* SECTIONS */
-    section { margin-bottom: 40px; }
-    .section-title { font-size: 26px; }
-    .section-subtitle { 
-      font-size: 9px; 
-      letter-spacing: 0.3em;
-      margin-bottom: 24px;
-      padding: 0 16px;
-    }
-    
-    /* INFO PANEL */
-    .info-panel { padding: 22px 18px; }
-    .info-grid { 
-      grid-template-columns: 1fr; 
-      gap: 14px;
-    }
-    .info-item .info-label { font-size: 9px; letter-spacing: 0.2em; }
-    .info-item .info-value { font-size: 15px; line-height: 1.4; }
-    .info-item .info-value .han { font-size: 17px; }
-    
-    /* NAME CARDS */
-    .name-card { 
-      min-width: 100%;
-      width: 100%;
-      padding: 18px 16px;
-    }
-    .name-han { font-size: 24px; }
-    .name-pinyin { font-size: 14px; }
-    .name-id { font-size: 12px; }
-    .gen-number { font-size: 9px; letter-spacing: 0.2em; }
-    .gen-character { font-size: 12px; padding: 1px 8px; }
-    
-    /* CURRENT (★ ANDA) - More visible on mobile */
-    .name-card.is-current { 
-      transform: scale(1.02); 
-      border-width: 2px;
-    }
-    .name-card.is-current::before {
-      top: -10px;
-      right: 50%;
-      transform: translateX(50%);
-      font-size: 9px;
-      letter-spacing: 0.15em;
-      padding: 3px 12px;
-    }
-    
-    /* TREE */
-    .tree { padding: 0; }
-    .generation { padding: 18px 0; }
-    .generation:not(:last-child)::after {
-      height: 20px;
-      bottom: -10px;
-    }
-    
-    /* ROLE LABEL */
-    .name-role { 
-      font-size: 9px; 
-      padding: 4px 8px;
-      letter-spacing: 0.15em;
-    }
-    
-    /* DATE BLOCK */
-    .date-block { padding: 6px 8px; margin: 6px 0; }
-    .date-row { font-size: 10px; }
-    .date-label { font-size: 10px; }
-    
-    /* PARENTS PAIR */
-    .parents-pair { 
-      flex-direction: column; 
-      gap: 36px;
-    }
-    .parent-card { 
-      min-width: 100%; 
-      max-width: 100%; 
-      padding-top: 28px;
-    }
-    .parent-badge { 
-      font-size: 10px; 
-      padding: 4px 12px;
-    }
-    .union-symbol { 
-      transform: rotate(90deg);
-      padding: 8px;
-    }
-    .union-icon { font-size: 24px; }
-    .union-text { font-size: 10px; }
-    
-    /* SIBLINGS */
-    .siblings-grid { 
-      grid-template-columns: 1fr; 
-      gap: 32px;
-    }
-    .sibling-card { 
-      width: 100%; 
-      padding: 22px 16px;
-    }
-    .sibling-card .birth-order { 
-      font-size: 9px; 
-      padding: 3px 10px;
-      top: -8px;
-    }
-    
-    /* POEM */
-    .poem-box { padding: 24px 16px; }
-    .poem-line { 
-      font-size: 22px; 
-      letter-spacing: 0.15em;
-      line-height: 1.5;
-    }
-    .poem-note { font-size: 13px; margin-top: 18px; }
-    
-    /* LOCATION */
-    .location-card { padding: 24px 16px; }
-    .location-flow { gap: 12px; }
-    .location-node { padding: 8px; min-width: 100%; }
-    .location-node .flag { font-size: 28px; }
-    .location-node .place-han { font-size: 15px; }
-    .location-node .place-id { font-size: 12px; }
-    .location-arrow { 
-      transform: rotate(90deg); 
-      font-size: 22px; 
-    }
-    
-    /* CONTEXT */
-    .context-box { grid-template-columns: 1fr; gap: 14px; }
-    .context-card { padding: 18px 18px; }
-    .context-card h3 { font-size: 16px; }
-    .context-card p { font-size: 13px; }
-    
-    /* FOOTER */
-    footer { padding: 30px 12px 16px; margin-top: 30px; }
-    .footer-seal { width: 44px; height: 44px; font-size: 26px; line-height: 44px; }
-    .footer-text { font-size: 13px; padding: 0 8px; }
-    .footer-date { font-size: 9px; letter-spacing: 0.3em; }
+.tree-node.search-match.selected {
+  background: linear-gradient(135deg, var(--bg-current), rgba(184, 146, 62, 0.15)) !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 4px rgba(168, 51, 31, 0.2), 0 4px 12px rgba(168, 51, 31, 0.25) !important;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 0 4px rgba(184, 146, 62, 0.15), 0 4px 12px rgba(184, 146, 62, 0.2); 
   }
-  
-  /* SMALL MOBILE (max 380px) - iPhone SE, small Android */
-  @media (max-width: 380px) {
-    .container { padding: 20px 8px; }
-    .title-chinese { font-size: 32px; }
-    .seal { width: 56px; height: 56px; font-size: 36px; line-height: 56px; }
-    .name-han { font-size: 20px; }
-    .name-pinyin { font-size: 13px; }
-    .perspective-selector { padding: 18px 12px 16px; }
-    .person-btn { padding: 9px 6px; }
-    .person-btn .btn-han { font-size: 13px; }
-    .person-btn .btn-id { font-size: 9px; }
-    .section-title { font-size: 22px; }
-    .poem-line { font-size: 18px; letter-spacing: 0.1em; }
-    .info-panel { padding: 18px 14px; }
-    .name-card { padding: 16px 12px; }
-    .sibling-card { padding: 20px 12px; }
+  50% { 
+    box-shadow: 0 0 0 8px rgba(184, 146, 62, 0.08), 0 6px 20px rgba(184, 146, 62, 0.3); 
   }
+}
+
+.tree-node.search-match .node-name {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.tree-node.search-match::after {
+  content: '✓';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  background: var(--gold);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(184, 146, 62, 0.4);
+}
+
+.fadein {
+  animation: fadein 0.3s ease;
+}
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* HIDE for filtering */
+.tree-node.hidden { display: none; }
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="app">
 
-  <!-- PERSPECTIVE SELECTOR -->
-  <div class="perspective-selector">
-    <div class="selector-title">Selamat datang di Silsilah Keluarga Pan</div>
-    <div class="selector-subtitle">Pilih sudut pandang Anda — silsilah akan menyesuaikan diri menampilkan hubungan keluarga dari perspektif Anda.</div>
-    <div class="person-buttons" id="personButtons"></div>
-  </div>
-
-  <!-- HEADER -->
-  <header>
-    <div class="seal">潘</div>
-    <div class="title-chinese">潘氏家谱</div>
-    <div class="title-romanized">Pān Shì Jiā Pǔ · Silsilah Keluarga Pan</div>
-    <div class="viewing-as" id="viewingAs">Menampilkan silsilah dari sudut pandang <strong>Yulius (潘尤上)</strong></div>
-    <div class="origin-label">宝藏村 · 文昌县 · 海南</div>
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-row">
+      <div class="brand">
+        <div class="brand-seal">潘</div>
+        <div class="brand-text">
+          <div class="brand-title">潘氏家谱</div>
+          <div class="brand-sub">SILSILAH KELUARGA PAN · HAINAN</div>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="🔎 Cari nama Anda di sini..." oninput="handleSearch(event)">
+        </div>
+        <button class="btn" onclick="expandAll()">⊕ Buka Semua</button>
+        <button class="btn" onclick="collapseAll()">⊖ Tutup Semua</button>
+      </div>
+    </div>
   </header>
 
-  <!-- INFO PANEL -->
-  <section>
-    <h2 class="section-title">个人资料</h2>
-    <p class="section-subtitle">Profil Anda</p>
-    <div class="info-panel" id="infoPanel"></div>
-  </section>
-
-  <!-- LINEAGE TREE -->
-  <section>
-    <h2 class="section-title">世系图</h2>
-    <p class="section-subtitle">Pohon Silsilah Keluarga</p>
-    <div class="tree" id="familyTree"></div>
-  </section>
-
-  <!-- GENERATION POEM -->
-  <section>
-    <h2 class="section-title">字辈</h2>
-    <p class="section-subtitle">Susunan Generasi Keluarga</p>
-    <div class="poem-box">
-      <div class="poem-line">
-        <span class="highlight">有</span> · <span class="highlight">辉</span> · <span class="highlight">于</span> · <span class="highlight">先</span>
-      </div>
-      <div class="poem-line">
-        <span class="highlight">正</span> · <span class="current-gen">尤</span> · <span class="highlight">唯</span>
-      </div>
-      <div class="poem-note">
-        Tujuh karakter generasi tercatat dari Desa Baozang, Wenchang, Hainan.<br>
-        <strong style="color: var(--vermillion-deep);">尤 (Yóu)</strong> = generasi 6 · <strong style="color: var(--vermillion-deep);">唯 (Wéi)</strong> = generasi 7
-      </div>
-    </div>
-  </section>
-
-  <!-- ORIGIN -->
-  <section>
-    <h2 class="section-title">寻根</h2>
-    <p class="section-subtitle">Mencari Akar Leluhur</p>
-    <div class="location-card">
-      <div class="location-flow">
-        <div class="location-node">
-          <div class="flag">🏯</div>
-          <div class="place-han">宝藏村</div>
-          <div class="place-id">Desa Baozang</div>
-          <div class="place-id" style="font-style: italic; margin-top: 4px;">Wenchang, Hainan</div>
+  <!-- HOMETOWN SECTION -->
+  <section class="hometown-section">
+    <div class="hometown-card">
+      <div class="hometown-emblem">🏯</div>
+      <div class="hometown-info">
+        <div class="hometown-han">宝藏村 · 会文镇</div>
+        <div class="hometown-name">Desa Baozang, Huiwen Town, Wenchang, Hainan, Tiongkok</div>
+        <div class="hometown-stats">
+          <span class="hometown-stat">📍 <strong>Hainan, Tiongkok Selatan</strong></span>
+          <span class="hometown-stat">🌊 Dekat pelabuhan Huiwen</span>
+          <span class="hometown-stat">🌴 ~200 warga, 500+ perantau</span>
+          <span class="hometown-stat">🏛️ Kabupaten Wenchang</span>
         </div>
-        <div class="location-arrow">→</div>
-        <div class="location-node">
-          <div class="flag">🌊</div>
-          <div class="place-han">南洋</div>
-          <div class="place-id">Nanyang</div>
-          <div class="place-id" style="font-style: italic; margin-top: 4px;">Era Migrasi</div>
+        <div class="hometown-desc">
+          <strong>Wenchang (文昌县)</strong> adalah <strong>tanah kelahiran perantauan Tionghoa di Hainan</strong> — kata pepatah: "Lihat perantau Hainan di Wenchang, lihat perantau Wenchang di Huiwen". 
+          Banyak keluarga Tionghoa-Hainan di Indonesia (terutama Indonesia Timur), Singapura, Malaysia, dan Thailand berasal dari Wenchang. 
+          Desa <strong>Baozang (宝藏村)</strong> berarti "Desa Harta Karun" — tersembunyi di kebun kelapa, pinang, dan rambutan. Dari sinilah leluhur 潘有本 memulai perjalanan keluarga.
         </div>
-        <div class="location-arrow">→</div>
-        <div class="location-node">
-          <div class="flag">🇮🇩</div>
-          <div class="place-han">印度尼西亚</div>
-          <div class="place-id">Indonesia</div>
-          <div class="place-id" style="font-style: italic; margin-top: 4px;">Tanah Air Sekarang</div>
+        <div class="hometown-actions">
+          <a href="https://www.google.com/maps/search/?api=1&query=宝藏村+会文镇+文昌+海南" target="_blank">🗺️ Lihat di Google Maps</a>
+          <a href="https://www.google.com/search?q=宝藏村+会文镇+文昌" target="_blank">🔍 Cari info lebih</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CONTEXT -->
-  <section>
-    <h2 class="section-title">历史背景</h2>
-    <p class="section-subtitle">Konteks Sejarah</p>
-    <div class="context-box">
-      <div class="context-card">
-        <h3>🏯 Asal Leluhur</h3>
-        <p>Desa <strong>Baozang (宝藏村)</strong> di Kabupaten <strong>Wenchang (文昌县)</strong>, Hainan — salah satu dari tiga kabupaten kuno bersejarah di Pulau Hainan.</p>
-      </div>
-      <div class="context-card">
-        <h3>📜 Penjaga Silsilah</h3>
-        <p>Ayah <strong>潘正忠</strong> mencatat silsilah ini dengan tangannya di era ketika bahasa Mandarin dilarang di Indonesia (1967–1998).</p>
-      </div>
-      <div class="context-card">
-        <h3>💑 Persatuan Pan & Djap</h3>
-        <p>Ibu <strong>Djap Sit Djun (叶氏)</strong> dari marga <strong>叶 (Djap/Yè)</strong> menikah dengan <strong>潘正忠</strong> dan melahirkan 6 anak generasi 尤.</p>
-      </div>
-      <div class="context-card">
-        <h3>📅 Tradisi Penanggalan Ganda</h3>
-        <p>Setiap anggota memiliki dua tanggal: <strong>国历</strong> (Masehi) dan <strong>农历</strong> (Imlek/Lunar).</p>
+  <!-- DASHBOARD CARDS -->
+  <section class="dashboard" id="dashboardSection">
+    <div class="welcome-banner" id="welcomeBanner">
+      <div class="welcome-text">
+        <span class="welcome-icon">👋</span>
+        <div>
+          <div class="welcome-title">Selamat datang di Silsilah Keluarga Pan</div>
+          <div class="welcome-sub">Cari nama Anda di kotak pencarian, atau klik salah satu kartu di bawah untuk mulai eksplorasi.</div>
+        </div>
       </div>
     </div>
+    
+    <div class="dashboard-title" id="dashboardTitle">Akses Cepat</div>
+    <div class="cards-grid" id="cardsGrid"></div>
   </section>
 
-  <footer>
-    <div class="footer-seal">家</div>
-    <p class="footer-text">
-      "Akar yang dalam menumbuhkan pohon yang tinggi.<br>
-      Memori yang dijaga menjadi warisan yang abadi."<br><br>
-      <em>— Dipersembahkan untuk seluruh keluarga Pan (潘) di Indonesia —</em>
-    </p>
-    <div class="footer-date">Disusun · 2026 · 由 Yulius (潘尤上)</div>
-  </footer>
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb" id="breadcrumb"></div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+    <!-- TREE PANEL -->
+    <div class="tree-panel">
+      <div class="tree-title">Silsilah Tujuh Generasi</div>
+      <div id="treeContainer"></div>
+    </div>
+
+    <!-- DETAIL PANEL -->
+    <aside class="detail-panel" id="detailPanel">
+      <div class="detail-empty">
+        <div style="font-size: 48px; margin-bottom: 12px;">🔍</div>
+        <div style="font-weight: 600; color: var(--ink); margin-bottom: 8px;">Mulai Eksplorasi</div>
+        <div style="font-size: 12px; line-height: 1.6;">
+          Cari nama Anda di kotak pencarian,<br>
+          atau klik salah satu nama<br>
+          di silsilah keluarga di sebelah kiri.
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-note">
+    <strong>宝藏村 · 文昌县 · 海南</strong> &nbsp;·&nbsp; Disusun oleh Yulius (潘尤上) · 2026
+  </div>
 
 </div>
 
-<!-- Back to Top Button (Mobile-friendly) -->
-<button class="back-to-top" id="backToTop" onclick="scrollToTop()" title="Kembali ke atas">↑</button>
-
 <script>
-const familyData = {
-  ancestors: [
-    { id: 'a1', gen: 1, genChar: '有', han: '潘有本', pinyin: 'Pān Yǒu Běn', role: 'Leluhur Pendiri · 祖公', meaning: '"Pan yang Memiliki Akar"', isAncestor: true },
-    { id: 'a2', gen: 2, genChar: '辉', han: '潘辉', pinyin: 'Pān Huī', meaning: '"Pan yang Bersinar"' },
-    { id: 'a3a', gen: 3, genChar: '于', han: '潘于昆', pinyin: 'Pān Yú Kūn', siblings: 'pair' },
-    { id: 'a3b', gen: 3, genChar: '于', han: '潘于理', pinyin: 'Pān Yú Lǐ', siblings: 'pair' },
-    { id: 'kakek', gen: 4, genChar: '先', han: '潘先学', pinyin: 'Pān Xiān Xué', meaning: '"Pan yang Mendahului dalam Belajar"' }
-  ],
-  father: {
-    id: 'ayah', gen: 5, genChar: '正',
-    han: '潘正忠', pinyin: 'Pān Zhèng Zhōng',
-    hakka: 'Phan Ku (潘哥)',
-    lunarDate: '24 bulan 8 (Imlek)',
-    meaning: '"Pan yang Lurus dan Setia"'
-  },
-  mother: {
-    id: 'ibu', gen: 5,
-    han: '叶氏 Djap', pinyin: 'Djap Sit Djun',
-    hakka: 'Sit Djun · 息珍?',
-    surname: '叶 (Djap/Yè)',
-    lunarDate: '22 bulan 8 (Imlek)',
-    meaning: 'Pelita Keluarga'
-  },
-  siblings: [
-    { id: 'jiuthai', order: 1, gen: 6, genChar: '尤', gender: 'M',
-      han: '潘尤太', pinyin: 'Pān Yóu Tài', hakka: 'Jiu Thai',
-      nationalDate: '23 Juli 1980, 11:00 WITA',
-      lunarDate: '12 bulan 6, tahun 1980 (庚申 · Monyet Logam)',
-      meaning: '"Pan yang Istimewa dan Agung"',
-      birthOrderLabel: '长子 · Anak ke-1' },
-    { id: 'asong', order: 2, gen: 6, genChar: '尤', gender: 'M',
-      han: '潘尤上', pinyin: 'Pān Yóu Shàng',
-      indonesianName: 'Yulius', hakka: '阿松 Asong',
-      nationalDate: '22 Oktober 1981, 10:00 WIT',
-      lunarDate: '25 bulan 9, tahun 1981 (辛酉 · Ayam Logam)',
-      meaning: '"Pan yang Istimewa dan Tinggi/Mulia"',
-      birthOrderLabel: '次子 · Anak ke-2',
-      hasChildren: true },
-    { id: 'setiana', order: 3, gen: 6, genChar: '尤', gender: 'F',
-      han: 'Setiana', pinyin: 'Adik Perempuan ke-1', hakka: 'ANAO (阿娜?)',
-      nationalDate: '23 September 1986, 24:00 WIT',
-      lunarDate: '20 bulan 8, tahun 1986 (丙寅 · Macan Api)',
-      meaning: 'Lahir tepat tengah malam',
-      birthOrderLabel: '三女 · Anak ke-3' },
-    { id: 'chindy', order: 4, gen: 6, genChar: '尤', gender: 'F',
-      han: 'Chindy Lien', pinyin: 'Adik Perempuan ke-2', hakka: 'Acian (阿莲?)',
-      nationalDate: '11 Desember 1988, 13:00 WIB',
-      lunarDate: '3 bulan 11, tahun 1988 (戊辰 · Naga Tanah)',
-      meaning: 'Lahir di wilayah WIB',
-      birthOrderLabel: '四女 · Anak ke-4' },
-    { id: 'desi', order: 5, gen: 6, genChar: '尤', gender: 'F',
-      han: 'Desi Wilianti', pinyin: 'Adik Perempuan ke-3', hakka: 'Achin (阿琴?)',
-      nationalDate: '30 Desember 1989, 22:00 WIB',
-      lunarDate: '3 bulan 12, tahun 1989 (己巳 · Ular Tanah)',
-      meaning: 'Lahir Sabtu malam',
-      birthOrderLabel: '五女 · Anak ke-5' },
-    { id: 'stella', order: 6, gen: 6, genChar: '尤', gender: 'F',
-      han: 'Stella', pinyin: 'Si Bungsu · 幺女', hakka: 'Stlela',
-      nationalDate: '3 Januari 1995, 04:40 WIB',
-      lunarDate: '3 bulan 12, tahun 1994 (甲戌 · Anjing Kayu)',
-      meaning: 'Lahir di pagi dini hari',
-      birthOrderLabel: '六女 · Anak Bungsu' }
-  ],
-  children: [
-    { id: 'benedict', gen: 7, genChar: '唯', parentId: 'asong', gender: 'M',
-      han: '潘唯鸿', pinyin: 'Pān Wéi Hóng', indonesianName: 'Benedict Jose Phan',
-      nationalDate: '8 Maret 2007, Jakarta',
-      lunarDate: '19 bulan 1, tahun 2007 (丁亥 · Babi Api)',
-      meaning: '"Yang Sejati dan Agung"',
-      birthOrderLabel: '长子 · Anak ke-1' },
-    { id: 'bellarmino', gen: 7, genChar: '唯', parentId: 'asong', gender: 'M',
-      han: '潘唯慊', pinyin: 'Pān Wéi Qiàn', indonesianName: 'Bellarmino Jovian Phan',
-      nationalDate: '30 September 2010, Jakarta',
-      lunarDate: '23 bulan 8, tahun 2010 (庚寅 · Macan Logam)',
-      meaning: '"Yang Sejati dan Rendah Hati"',
-      birthOrderLabel: '次子 · Anak ke-2' }
-  ]
+// ============ DATA STRUKTUR POHON ============
+// Setiap node bisa punya children. Struktur ini lebih natural untuk tree.
+const tree = {
+  id: 'a1',
+  gen: 1,
+  genChar: '有',
+  han: '潘有本',
+  pinyin: 'Pān Yǒu Běn',
+  role: '始祖 · Leluhur Pendiri',
+  meaning: 'Pan yang Memiliki Akar',
+  children: [{
+    id: 'a2',
+    gen: 2,
+    genChar: '辉',
+    han: '潘辉',
+    pinyin: 'Pān Huī',
+    role: 'Generasi ke-2',
+    meaning: 'Pan yang Bersinar',
+    children: [
+      {
+        id: 'a3a',
+        gen: 3,
+        genChar: '于',
+        han: '潘于昆',
+        pinyin: 'Pān Yú Kūn',
+        role: 'Generasi ke-3 (Buyut)',
+        meta: 'Anak ke-1',
+        children: []
+      },
+      {
+        id: 'a3b',
+        gen: 3,
+        genChar: '于',
+        han: '潘于理',
+        pinyin: 'Pān Yú Lǐ',
+        role: 'Generasi ke-3 (Buyut)',
+        meta: 'Anak ke-2',
+        children: [
+          // Generasi 4 - Kakek dan saudaranya
+          {
+            id: 'kakek',
+            gen: 4,
+            genChar: '先',
+            han: '潘先学',
+            pinyin: 'Pān Xiān Xué',
+            role: '祖父 · Kakek Yulius',
+            isKakek: true,
+            meaning: 'Pan yang Mendahului dalam Belajar',
+            meta: 'Anak ke-1',
+            children: [
+              // Generasi 5 - Anak kakek (Ayah + saudara-saudaranya)
+              {
+                id: 'ayah',
+                gen: 5,
+                genChar: '正',
+                han: '潘正忠',
+                pinyin: 'Pān Zhèng Zhōng',
+                hakka: 'Phan Ku',
+                role: '父亲 · Ayah Yulius',
+                isFather: true,
+                lunarDate: '24 bulan 8 (Imlek)',
+                meaning: 'Pan yang Lurus dan Setia · Penjaga Silsilah',
+                meta: 'Anak ke-1',
+                spouse: {
+                  id: 'ibu',
+                  gen: 5,
+                  han: '叶氏 Djap',
+                  pinyin: 'Djap Sit Djun',
+                  hakka: 'Sit Djun',
+                  role: '母亲 · Ibu Yulius',
+                  surname: '叶 (Djap/Yè)',
+                  lunarDate: '22 bulan 8 (Imlek)',
+                  meaning: 'Pelita Keluarga · Menikah masuk marga Pan'
+                },
+                children: [
+                  {
+                    id: 'jiuthai', gen: 6, genChar: '尤', gender: 'M',
+                    han: '潘尤太', pinyin: 'Pān Yóu Tài',
+                    hakka: 'Jiu Thai',
+                    role: 'Abang Yulius',
+                    nationalDate: '23 Juli 1980, 11:00 WITA',
+                    lunarDate: '12 bulan 6, 1980 (庚申 · Monyet Logam)',
+                    meaning: 'Pan yang Istimewa dan Agung',
+                    meta: 'Anak ke-1', children: []
+                  },
+                  {
+                    id: 'asong', gen: 6, genChar: '尤', gender: 'M',
+                    han: '潘尤上', pinyin: 'Pān Yóu Shàng',
+                    indonesianName: 'Yulius',
+                    hakka: '阿松 Asong',
+                    role: '★ ANDA · Yulius',
+                    isYulius: true,
+                    nationalDate: '22 Oktober 1981, 10:00 WIT',
+                    lunarDate: '25 bulan 9, 1981 (辛酉 · Ayam Logam)',
+                    meaning: 'Pan yang Istimewa dan Tinggi/Mulia',
+                    meta: 'Anak ke-2',
+                    children: [
+                      {
+                        id: 'benedict', gen: 7, genChar: '唯', gender: 'M',
+                        han: '潘唯鸿', pinyin: 'Pān Wéi Hóng',
+                        indonesianName: 'Benedict Jose Phan',
+                        role: 'Anak Sulung Yulius',
+                        nationalDate: '8 Maret 2007, Jakarta',
+                        lunarDate: '19 bulan 1, 2007 (丁亥 · Babi Api)',
+                        meaning: 'Yang Sejati dan Agung',
+                        meta: 'Anak ke-1', children: []
+                      },
+                      {
+                        id: 'bellarmino', gen: 7, genChar: '唯', gender: 'M',
+                        han: '潘唯慊', pinyin: 'Pān Wéi Qiàn',
+                        indonesianName: 'Bellarmino Jovian Phan',
+                        role: 'Anak Kedua Yulius',
+                        nationalDate: '30 September 2010, Jakarta',
+                        lunarDate: '23 bulan 8, 2010 (庚寅 · Macan Logam)',
+                        meaning: 'Yang Sejati dan Rendah Hati',
+                        meta: 'Anak ke-2', children: []
+                      }
+                    ]
+                  },
+                  {
+                    id: 'setiana', gen: 6, genChar: '尤', gender: 'F',
+                    han: 'Setiana', pinyin: '阿娜 ANAO',
+                    hakka: 'ANAO',
+                    role: 'Kakak Perempuan ke-1 Yulius',
+                    nationalDate: '23 September 1986, 24:00 WIT',
+                    lunarDate: '20 bulan 8, 1986 (丙寅 · Macan Api)',
+                    meaning: 'Lahir tepat tengah malam',
+                    meta: 'Anak ke-3', children: []
+                  },
+                  {
+                    id: 'chindy', gen: 6, genChar: '尤', gender: 'F',
+                    han: 'Chindy Lien', pinyin: '阿莲 Acian',
+                    hakka: 'Acian',
+                    role: 'Adik Perempuan ke-1 Yulius',
+                    nationalDate: '11 Desember 1988, 13:00 WIB',
+                    lunarDate: '3 bulan 11, 1988 (戊辰 · Naga Tanah)',
+                    meaning: 'Lahir di wilayah WIB',
+                    meta: 'Anak ke-4', children: []
+                  },
+                  {
+                    id: 'desi', gen: 6, genChar: '尤', gender: 'F',
+                    han: 'Desi Wilianti', pinyin: '阿琴 Achin',
+                    hakka: 'Achin',
+                    role: 'Adik Perempuan ke-2 Yulius',
+                    nationalDate: '30 Desember 1989, 22:00 WIB',
+                    lunarDate: '3 bulan 12, 1989 (己巳 · Ular Tanah)',
+                    meaning: 'Lahir Sabtu malam',
+                    meta: 'Anak ke-5', children: []
+                  },
+                  {
+                    id: 'stella', gen: 6, genChar: '尤', gender: 'F',
+                    han: 'Stella', pinyin: 'Stlela',
+                    hakka: 'Stlela',
+                    role: 'Adik Bungsu Yulius',
+                    nationalDate: '3 Januari 1995, 04:40 WIB',
+                    lunarDate: '3 bulan 12, 1994 (甲戌 · Anjing Kayu)',
+                    meaning: 'Lahir di pagi dini hari',
+                    meta: 'Anak ke-6 (Bungsu)', children: []
+                  }
+                ]
+              },
+              {
+                id: 'pak2', gen: 5, genChar: '正', gender: 'M',
+                han: '潘正石', pinyin: 'Pān Zhèng Shí',
+                role: 'Paman Yulius (Adik Ayah)',
+                meaning: 'Pan yang Lurus seperti Batu',
+                meta: 'Anak ke-2', children: []
+              },
+              {
+                id: 'thaiku', gen: 5, genChar: '正', gender: 'F',
+                han: 'Thai Ku', pinyin: '大姑',
+                hakka: 'Thai Ku',
+                role: 'Bibi Yulius (Kakak/Adik Ayah)',
+                meaning: 'Bibi dari pihak ayah',
+                meta: 'Anak ke-3', children: []
+              },
+              {
+                id: 'pak4', gen: 5, genChar: '正', gender: 'M',
+                han: '潘正小', pinyin: 'Pān Zhèng Xiǎo',
+                role: 'Paman Yulius (Adik Ayah)',
+                meaning: 'Pan yang Lurus dan Rendah Hati',
+                meta: 'Anak ke-4', children: []
+              },
+              {
+                id: 'pak5', gen: 5, genChar: '正', gender: 'M',
+                han: '潘正鹰', pinyin: 'Pān Zhèng Yīng',
+                role: 'Paman Yulius (Adik Ayah)',
+                meaning: 'Pan yang Lurus seperti Elang',
+                meta: 'Anak ke-5', children: []
+              },
+              {
+                id: 'seku', gen: 5, genChar: '正', gender: 'F',
+                han: 'Se Ku', pinyin: '细姑',
+                hakka: 'Se Ku',
+                role: 'Bibi Yulius (Adik Ayah)',
+                meaning: 'Bibi bungsu dari pihak ayah',
+                meta: 'Anak ke-6', children: []
+              }
+            ]
+          },
+          {
+            id: 'ku2', gen: 4, genChar: '先', gender: 'M',
+            han: '潘先当', pinyin: 'Pān Xiān Dāng',
+            role: 'Saudara Kakek (Granduncle)',
+            meaning: 'Pan yang Mendahului dalam Tanggung Jawab',
+            meta: 'Anak ke-2', children: []
+          },
+          {
+            id: 'ku3', gen: 4, genChar: '先', gender: 'M',
+            han: '潘先沣', pinyin: 'Pān Xiān Fēng',
+            role: 'Saudara Kakek (Granduncle)',
+            meaning: 'Pan yang Mendahului dalam Kemakmuran',
+            meta: 'Anak ke-3', children: []
+          },
+          {
+            id: 'ku4', gen: 4, genChar: '先', gender: 'M',
+            han: '潘先泽', pinyin: 'Pān Xiān Zé',
+            role: 'Saudara Kakek (Granduncle)',
+            meaning: 'Pan yang Mendahului dalam Berkat',
+            meta: 'Anak ke-4', children: []
+          }
+        ]
+      }
+    ]
+  }]
 };
 
-let currentPersonId = 'asong';
+// State
+let selectedId = null; // No one selected by default - user must search/click
+let expandedIds = new Set(['a1', 'a2', 'a3b', 'kakek', 'ayah']); // Show key path by default
+let nodeMap = {};
+let parentMap = {};
 
-function findPerson(id) {
-  if (id === 'ayah') return familyData.father;
-  if (id === 'ibu') return familyData.mother;
-  const s = familyData.siblings.find(x => x.id === id);
-  if (s) return s;
-  const c = familyData.children.find(x => x.id === id);
-  if (c) return c;
-  return null;
-}
-
-function getRelation(targetId, viewerId) {
-  if (targetId === viewerId) return '★ ANDA';
-  const target = findPerson(targetId);
-  const viewer = findPerson(viewerId);
-  if (!target || !viewer) return '';
-
-  if (viewer.gen === 6) {
-    if (targetId === 'ayah') return 'Ayah · 父亲';
-    if (targetId === 'ibu') return 'Ibu · 母亲';
-    const ts = familyData.siblings.find(s => s.id === targetId);
-    if (ts) {
-      const vs = familyData.siblings.find(s => s.id === viewerId);
-      if (vs.order < ts.order) {
-        return ts.gender === 'M' ? 'Adik Laki-laki · 弟弟' : 'Adik Perempuan · 妹妹';
-      } else {
-        return ts.gender === 'M' ? 'Abang · 哥哥' : 'Kakak Perempuan · 姐姐';
-      }
-    }
-    const tc = familyData.children.find(c => c.id === targetId);
-    if (tc) {
-      if (tc.parentId === viewerId) {
-        return target.gender === 'M' ? 'Anak Laki-laki · 儿子' : 'Anak Perempuan · 女儿';
-      } else {
-        return target.gender === 'M' ? 'Keponakan · 侄子' : 'Keponakan · 侄女';
-      }
-    }
+// Build maps for quick lookup
+function buildMaps(node, parent = null) {
+  nodeMap[node.id] = node;
+  if (parent) parentMap[node.id] = parent.id;
+  if (node.spouse) {
+    nodeMap[node.spouse.id] = node.spouse;
+    parentMap[node.spouse.id] = node.id; // spouse linked to husband
   }
-
-  if (viewer.gen === 7) {
-    if (targetId === 'ayah') return 'Kakek · 爷爷';
-    if (targetId === 'ibu') return 'Nenek · 奶奶';
-    const ts = familyData.siblings.find(s => s.id === targetId);
-    if (ts) {
-      if (ts.id === viewer.parentId) return 'Ayah · 父亲';
-      else if (ts.gender === 'M') {
-        const vp = familyData.siblings.find(s => s.id === viewer.parentId);
-        return vp.order < ts.order ? 'Paman (Adik Ayah) · 叔叔' : 'Paman (Abang Ayah) · 伯伯';
-      } else return 'Bibi · 姑姑';
-    }
-    const tc = familyData.children.find(c => c.id === targetId);
-    if (tc) {
-      if (tc.parentId === viewer.parentId) {
-        return target.gender === 'M' ? 'Saudara Laki-laki · 兄弟' : 'Saudari · 姐妹';
-      } else {
-        return 'Sepupu · 表亲';
-      }
-    }
-  }
-  return target.role || '';
+  (node.children || []).forEach(c => buildMaps(c, node));
 }
 
-function getAncestorRelation(id, viewerId) {
-  const viewer = findPerson(viewerId);
-  if (!viewer) return '';
-  const map = {
-    'a1': '始祖 · Leluhur Pendiri',
-    'a2': '祖辈 · Leluhur',
-    'a3a': '祖辈 · Leluhur',
-    'a3b': '祖辈 · Leluhur',
-    'kakek': viewer.gen === 7 ? '曾祖父 · Buyut' : '祖父 · Kakek'
-  };
-  return map[id] || '';
+// Find avatar character (first character of name)
+function getAvatarChar(node) {
+  if (node.han && node.han.startsWith('潘')) return '潘';
+  if (node.han) return node.han[0];
+  return '?';
 }
 
-function buildPersonButtons() {
-  const c = document.getElementById('personButtons');
-  const all = [...familyData.siblings, ...familyData.children];
-  c.innerHTML = all.map(p => `
-    <button class="person-btn ${p.id === currentPersonId ? 'active' : ''}" onclick="selectPerson('${p.id}')">
-      <span class="btn-icon">${p.gender === 'M' ? '♂' : '♀'}</span>
-      <span class="btn-han">${p.han}</span>
-      <span class="btn-id">${p.indonesianName || p.hakka || ''}</span>
-    </button>
-  `).join('');
+function getAvatarClass(node) {
+  let cls = '';
+  if (node.gender === 'F') cls += ' female';
+  if (node.isKakek) cls += ' kakek';
+  if (node.isFather) cls += ' father';
+  if (node.isYulius) cls += ' yulius';
+  return cls;
 }
 
-function renderInfoPanel() {
-  const p = findPerson(currentPersonId);
-  if (!p) return;
-  let pos = '';
-  if (p.gen === 6) pos = `Generasi 6 (${p.genChar}) · ${p.birthOrderLabel} dari 6 bersaudara`;
-  else if (p.gen === 7) pos = `Generasi 7 (${p.genChar}) · ${p.birthOrderLabel} dari Yulius`;
-  
-  document.getElementById('infoPanel').innerHTML = `
-    <div class="info-grid">
-      <div class="info-item">
-        <div class="info-label">Nama Indonesia</div>
-        <div class="info-value">${p.indonesianName || p.han || '—'}</div>
+// Render a tree node
+function renderNode(node, depth = 0) {
+  const hasChildren = (node.children && node.children.length > 0) || node.spouse;
+  const isExpanded = expandedIds.has(node.id);
+  const isSelected = node.id === selectedId;
+  const isYulius = node.isYulius;
+
+  let badges = '';
+  if (node.isYulius) badges += '<span class="node-badge you">ANDA</span>';
+  if (node.isKakek) badges += '<span class="node-badge role-key">KAKEK</span>';
+  if (node.isFather) badges += '<span class="node-badge role-key">AYAH</span>';
+
+  let nameDisplay = node.han;
+  if (node.indonesianName) nameDisplay += ` <span class="node-id">· ${node.indonesianName}</span>`;
+  else if (node.hakka) nameDisplay += ` <span class="node-id">· ${node.hakka}</span>`;
+
+  let html = `
+    <div class="tree-node ${isSelected ? 'selected' : ''} ${isYulius ? 'is-yulius' : ''}" 
+         data-id="${node.id}" 
+         onclick="handleNodeClick(event, '${node.id}')">
+      <div class="tree-toggle ${isExpanded ? 'expanded' : ''} ${!hasChildren ? 'no-children' : ''}">▶</div>
+      <div class="node-avatar${getAvatarClass(node)}">${getAvatarChar(node)}</div>
+      <div class="node-content">
+        <span class="node-name">${nameDisplay}</span>
+        ${badges}
       </div>
-      <div class="info-item">
-        <div class="info-label">Nama Mandarin · 中文名</div>
-        <div class="info-value"><span class="han">${p.han || '—'}</span>${p.pinyin || ''}</div>
-      </div>
-      ${p.hakka ? `<div class="info-item">
-        <div class="info-label">Panggilan Hakka · 客家名</div>
-        <div class="info-value">${p.hakka}</div>
-      </div>` : ''}
-      ${p.nationalDate ? `<div class="info-item">
-        <div class="info-label">Tanggal Lahir · 国历</div>
-        <div class="info-value">${p.nationalDate}</div>
-      </div>` : ''}
-      ${p.lunarDate ? `<div class="info-item">
-        <div class="info-label">Tanggal Imlek · 农历</div>
-        <div class="info-value" style="color: var(--vermillion-deep);">${p.lunarDate}</div>
-      </div>` : ''}
-      <div class="info-item">
-        <div class="info-label">Posisi di Keluarga</div>
-        <div class="info-value">${pos}</div>
-      </div>
+      ${node.meta ? `<span class="node-meta">${node.meta}</span>` : ''}
     </div>
   `;
+
+  // Render spouse (rendered as sibling, indented same as the person)
+  if (node.spouse) {
+    const sp = node.spouse;
+    const spSelected = sp.id === selectedId;
+    html += `
+      <div class="tree-node ${spSelected ? 'selected' : ''}" 
+           data-id="${sp.id}" 
+           onclick="handleNodeClick(event, '${sp.id}')"
+           style="margin-left: 28px;">
+        <div class="tree-toggle no-children">▶</div>
+        <div class="node-avatar female">叶</div>
+        <div class="node-content">
+          <span class="node-name">${sp.han} <span class="node-id">· ${sp.pinyin}</span></span>
+          <span class="node-badge">menikah ❤</span>
+        </div>
+      </div>
+    `;
+  }
+
+  // Render children container
+  if (hasChildren) {
+    html += `<div class="children ${isExpanded ? 'expanded' : ''}" data-parent="${node.id}">`;
+    (node.children || []).forEach(child => {
+      html += renderNode(child, depth + 1);
+    });
+    html += `</div>`;
+  }
+
+  return html;
+}
+
+// Group by generation for label
+function renderGenLabel(gen, genChar) {
+  return `<div class="gen-label">Generasi ${gen} <span class="gen-char">${genChar}</span></div>`;
 }
 
 function renderTree() {
-  const tree = document.getElementById('familyTree');
+  const container = document.getElementById('treeContainer');
   let html = '';
+  // Add gen labels as we go, but for simplicity, just render the tree structure
+  html += renderNode(tree);
+  container.innerHTML = html;
+}
 
-  // Gen 1-4 ancestors
-  let renderedPair = false;
-  familyData.ancestors.forEach((a, idx) => {
-    if (a.siblings === 'pair') {
-      if (renderedPair) return;
-      renderedPair = true;
-      const pair = familyData.ancestors.filter(x => x.gen === a.gen);
-      html += `<div class="generation"><div style="display:flex;gap:30px;flex-wrap:wrap;justify-content:center;">`;
-      pair.forEach(p => {
-        const isCurr = p.id === currentPersonId;
-        const rel = isCurr ? '★ ANDA' : getAncestorRelation(p.id, currentPersonId);
-        html += `<div class="name-card ${isCurr ? 'is-current' : ''}">
-          <div class="gen-number">Generasi ${p.gen}<span class="gen-character">${p.genChar}</span></div>
-          <div class="name-han">${p.han}</div>
-          <div class="name-pinyin">${p.pinyin}</div>
-          ${rel ? `<div class="name-role">${rel}</div>` : ''}
-        </div>`;
-      });
-      html += `</div></div>`;
-    } else {
-      const isCurr = a.id === currentPersonId;
-      const rel = isCurr ? '★ ANDA' : getAncestorRelation(a.id, currentPersonId);
-      html += `<div class="generation">
-        <div class="name-card ${a.isAncestor ? 'ancestor' : ''} ${isCurr ? 'is-current' : ''}">
-          <div class="gen-number">Generasi ${a.gen}${a.gen === 1 ? ' · 始祖' : ''}<span class="gen-character">${a.genChar}</span></div>
-          <div class="name-han">${a.han}</div>
-          <div class="name-pinyin">${a.pinyin}</div>
-          ${rel ? `<div class="name-role">${rel}</div>` : ''}
-          ${a.meaning ? `<div class="name-meaning">${a.meaning}</div>` : ''}
+// Handle node click
+function handleNodeClick(event, id) {
+  event.stopPropagation();
+  // Toggle expand if clicked on toggle arrow
+  const toggle = event.target.closest('.tree-toggle');
+  if (toggle && !toggle.classList.contains('no-children')) {
+    toggleExpand(id);
+    return;
+  }
+  // Otherwise select the node
+  selectNode(id);
+  // Also expand if has children
+  const node = nodeMap[id];
+  if (node && ((node.children && node.children.length) || node.spouse) && !expandedIds.has(id)) {
+    expandedIds.add(id);
+  }
+  renderTree();
+  renderDetail();
+  renderBreadcrumb();
+  renderDashboard();
+}
+
+function toggleExpand(id) {
+  if (expandedIds.has(id)) {
+    expandedIds.delete(id);
+  } else {
+    expandedIds.add(id);
+  }
+  renderTree();
+}
+
+function selectNode(id) {
+  selectedId = id;
+}
+
+function expandAll() {
+  Object.keys(nodeMap).forEach(id => expandedIds.add(id));
+  renderTree();
+}
+
+function collapseAll() {
+  expandedIds.clear();
+  // Re-expand path to selected
+  expandPathTo(selectedId);
+  renderTree();
+}
+
+// Expand all parents up to root, for given id
+function expandPathTo(id) {
+  let cur = parentMap[id];
+  while (cur) {
+    expandedIds.add(cur);
+    cur = parentMap[cur];
+  }
+}
+
+// Render detail panel
+function renderDetail() {
+  const panel = document.getElementById('detailPanel');
+  
+  if (!selectedId) {
+    panel.innerHTML = `
+      <div class="detail-empty">
+        <div style="font-size: 48px; margin-bottom: 12px;">🔍</div>
+        <div style="font-weight: 600; color: var(--ink); margin-bottom: 8px;">Mulai Eksplorasi</div>
+        <div style="font-size: 12px; line-height: 1.6;">
+          Cari nama Anda di kotak pencarian,<br>
+          atau klik salah satu nama<br>
+          di silsilah keluarga di sebelah kiri.
         </div>
       </div>`;
-    }
-  });
-
-  // Gen 5 parents
-  const fIsCurr = currentPersonId === 'ayah';
-  const mIsCurr = currentPersonId === 'ibu';
-  const viewer = findPerson(currentPersonId);
-  const fRel = fIsCurr ? '★ ANDA' : (viewer.gen === 7 ? 'Kakek · 爷爷' : 'Ayah · 父亲');
-  const mRel = mIsCurr ? '★ ANDA' : (viewer.gen === 7 ? 'Nenek · 奶奶' : 'Ibu · 母亲');
-
-  html += `<div class="generation"><div class="parents-pair">
-    <div class="name-card parent-card ${fIsCurr ? 'is-current' : ''}">
-      <div class="parent-badge">${fRel}</div>
-      <div class="gen-number">Generasi 5<span class="gen-character">${familyData.father.genChar}</span></div>
-      <div class="name-han">${familyData.father.han}</div>
-      <div class="name-pinyin">${familyData.father.pinyin}</div>
-      <div class="name-id">Hakka: ${familyData.father.hakka}</div>
-      <div class="date-block">
-        <div class="date-row lunar"><span class="date-label">农历:</span> ${familyData.father.lunarDate}</div>
+    return;
+  }
+  
+  const node = nodeMap[selectedId];
+  if (!node) {
+    panel.innerHTML = '<div class="detail-empty">Anggota tidak ditemukan.</div>';
+    return;
+  }
+  
+  const avatarClass = getAvatarClass(node);
+  const avatarChar = getAvatarChar(node);
+  
+  let html = `
+    <div class="fadein">
+      <div class="detail-header">
+        <div class="detail-avatar${avatarClass}">${avatarChar}</div>
+        <div class="detail-name">${node.han}</div>
+        <div class="detail-pinyin">${node.pinyin || ''}</div>
+        <span class="detail-role">${node.role || ''}</span>
       </div>
-      <div class="name-meaning">${familyData.father.meaning}</div>
+  `;
+  
+  if (node.indonesianName) {
+    html += `
+      <div class="detail-section">
+        <div class="detail-label">Nama Indonesia</div>
+        <div class="detail-value">${node.indonesianName}</div>
+      </div>`;
+  }
+  
+  if (node.hakka) {
+    html += `
+      <div class="detail-section">
+        <div class="detail-label">Panggilan Hakka · 客家名</div>
+        <div class="detail-value"><span class="han">${node.hakka}</span></div>
+      </div>`;
+  }
+  
+  if (node.surname) {
+    html += `
+      <div class="detail-section">
+        <div class="detail-label">Marga Asli</div>
+        <div class="detail-value">${node.surname}</div>
+      </div>`;
+  }
+  
+  if (node.nationalDate) {
+    html += `
+      <div class="detail-section">
+        <div class="detail-label">Tanggal Lahir · 国历</div>
+        <div class="detail-value">${node.nationalDate}</div>
+      </div>`;
+  }
+  
+  if (node.lunarDate) {
+    html += `
+      <div class="detail-section">
+        <div class="detail-label">Tanggal Imlek · 农历</div>
+        <div class="detail-value lunar">${node.lunarDate}</div>
+      </div>`;
+  }
+  
+  html += `
+    <div class="detail-section">
+      <div class="detail-label">Generasi · 世代</div>
+      <div class="detail-value">Generasi ke-${node.gen} ${node.genChar ? '(' + node.genChar + ')' : ''}</div>
     </div>
-    <div class="union-symbol">
-      <span class="union-icon">❤</span>
-      <span class="union-text">夫妻</span>
-    </div>
-    <div class="name-card parent-card mother ${mIsCurr ? 'is-current' : ''}">
-      <div class="parent-badge">${mRel}</div>
-      <div class="gen-number">Generasi 5 (menikah masuk)</div>
-      <div class="name-han">${familyData.mother.han}</div>
-      <div class="name-pinyin">${familyData.mother.pinyin}</div>
-      <div class="name-id">Marga asli: ${familyData.mother.surname}</div>
-      <div class="date-block">
-        <div class="date-row lunar"><span class="date-label">农历:</span> ${familyData.mother.lunarDate}</div>
-      </div>
-      <div class="name-meaning">Hakka: ${familyData.mother.hakka}</div>
-    </div>
-  </div></div>`;
+  `;
+  
+  if (node.meta) {
+    html += `
+      <div class="detail-section">
+        <div class="detail-label">Posisi di Keluarga</div>
+        <div class="detail-value">${node.meta}</div>
+      </div>`;
+  }
+  
+  if (node.meaning) {
+    html += `
+      <div class="detail-section">
+        <div class="detail-label">Makna Nama</div>
+        <div class="detail-meaning">"${node.meaning}"</div>
+      </div>`;
+  }
 
-  // Gen 6 siblings
-  html += `<div class="generation"><div class="siblings-grid">`;
-  familyData.siblings.forEach(s => {
-    const isCurr = s.id === currentPersonId;
-    const rel = isCurr ? '★ ANDA' : getRelation(s.id, currentPersonId);
-    html += `<div class="name-card sibling-card ${s.gender === 'F' ? 'daughter' : ''} ${isCurr ? 'is-current' : ''}">
-      <div class="birth-order">${s.birthOrderLabel}</div>
-      <div class="gen-number">Generasi 6<span class="gen-character">${s.genChar}</span></div>
-      <div class="name-han">${s.han}</div>
-      <div class="name-pinyin">${s.pinyin}</div>
-      ${s.indonesianName ? `<div class="name-id">${s.indonesianName} · ${s.hakka}</div>` : `<div class="name-id">Hakka: ${s.hakka}</div>`}
-      <div class="name-role">${rel}</div>
-      <div class="date-block">
-        <div class="date-row"><span class="date-label">国历:</span> ${s.nationalDate}</div>
-        <div class="date-row lunar"><span class="date-label">农历:</span> ${s.lunarDate}</div>
-      </div>
-      <div class="name-meaning">${s.meaning}</div>
-    </div>`;
-  });
-  html += `</div></div>`;
-
-  // Gen 7 children
-  html += `<div class="generation"><div style="display:flex;gap:30px;flex-wrap:wrap;justify-content:center;">`;
-  familyData.children.forEach(c => {
-    const isCurr = c.id === currentPersonId;
-    const rel = isCurr ? '★ ANDA' : getRelation(c.id, currentPersonId);
-    html += `<div class="name-card ${isCurr ? 'is-current' : ''}">
-      <div class="gen-number">Generasi 7<span class="gen-character">${c.genChar}</span></div>
-      <div class="name-han">${c.han}</div>
-      <div class="name-pinyin">${c.pinyin}</div>
-      <div class="name-id">${c.indonesianName}</div>
-      <div class="name-role">${rel}</div>
-      <div class="date-block">
-        <div class="date-row"><span class="date-label">国历:</span> ${c.nationalDate}</div>
-        <div class="date-row lunar"><span class="date-label">农历:</span> ${c.lunarDate}</div>
-      </div>
-      <div class="name-meaning">${c.meaning}</div>
-    </div>`;
-  });
-  html += `</div></div>`;
-
-  tree.innerHTML = html;
-  tree.classList.add('fade-transition');
-  setTimeout(() => tree.classList.remove('fade-transition'), 500);
+  // Children count
+  if (node.children && node.children.length > 0) {
+    html += `
+      <div class="detail-section">
+        <div class="detail-label">Keturunan</div>
+        <div class="detail-value">${node.children.length} anak</div>
+      </div>`;
+  }
+  
+  html += '</div>';
+  panel.innerHTML = html;
 }
 
-function selectPerson(id) {
-  currentPersonId = id;
-  const p = findPerson(id);
-  const name = p.indonesianName ? `${p.indonesianName} (${p.han})` : p.han;
-  document.getElementById('viewingAs').innerHTML = 
-    `Menampilkan silsilah dari sudut pandang <strong>${name}</strong>`;
-  buildPersonButtons();
-  renderInfoPanel();
+// Breadcrumb
+function renderBreadcrumb() {
+  const bc = document.getElementById('breadcrumb');
+  if (!selectedId) {
+    bc.innerHTML = `<span style="color: var(--ink-mute); font-size: 11px; font-style: italic;">💡 Tip: Cari nama Anda atau klik kartu di atas untuk navigasi cepat.</span>`;
+    return;
+  }
+  const path = [];
+  let cur = selectedId;
+  while (cur) {
+    path.unshift(cur);
+    cur = parentMap[cur];
+  }
+  
+  let html = '';
+  path.forEach((id, i) => {
+    const node = nodeMap[id];
+    if (!node) return;
+    if (i > 0) html += '<span class="breadcrumb-sep">›</span>';
+    const isCurrent = i === path.length - 1;
+    html += `<span class="breadcrumb-item ${isCurrent ? 'current' : ''}" onclick="goToNode('${id}')">${node.han}</span>`;
+  });
+  bc.innerHTML = html;
+}
+
+// Focus search box
+function focusSearch() {
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.focus();
+    searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+// Render dashboard cards (DYNAMIC based on selected person)
+function renderDashboard() {
+  const titleEl = document.getElementById('dashboardTitle');
+  const grid = document.getElementById('cardsGrid');
+  const banner = document.getElementById('welcomeBanner');
+  
+  // No one selected - show default dashboard
+  if (!selectedId) {
+    if (banner) banner.style.display = 'block';
+    titleEl.textContent = 'Akses Cepat';
+    grid.innerHTML = `
+      <div class="card search-card" onclick="focusSearch()">
+        <span class="card-icon">🔍</span>
+        <div class="card-label">Cari Saya</div>
+        <div class="card-value">Cari Nama</div>
+        <div class="card-sub">Ketik nama Anda di pencarian atas</div>
+      </div>
+      <div class="card" onclick="goToNode('a1')">
+        <span class="card-icon">🏛️</span>
+        <div class="card-label">Leluhur Tertua</div>
+        <div class="card-value">潘有本</div>
+        <div class="card-sub">Pendiri · Generasi 1 (有)</div>
+      </div>
+      <div class="card" onclick="goToNode('kakek')">
+        <span class="card-icon">👴</span>
+        <div class="card-label">Kakek</div>
+        <div class="card-value">潘先学</div>
+        <div class="card-sub">Generasi 4 (先) · 4 bersaudara</div>
+      </div>
+      <div class="card" onclick="goToNode('ayah')">
+        <span class="card-icon">👨</span>
+        <div class="card-label">Ayah</div>
+        <div class="card-value">潘正忠</div>
+        <div class="card-sub">Generasi 5 (正) · Anak ke-1 dari 6</div>
+      </div>
+      <div class="card" onclick="goToNode('ibu')">
+        <span class="card-icon">👩</span>
+        <div class="card-label">Ibu</div>
+        <div class="card-value">叶氏 Djap</div>
+        <div class="card-sub">Marga 叶 (Djap/Yè)</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🌳</span>
+        <div class="card-label">Total Generasi</div>
+        <div class="card-value">7 世代</div>
+        <div class="card-sub">Dari 潘有本 hingga cucu</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">👨‍👩‍👧‍👦</span>
+        <div class="card-label">Anggota Tercatat</div>
+        <div class="card-value">23 orang</div>
+        <div class="card-sub">Termasuk paman, bibi, anak</div>
+      </div>
+      <div class="card" onclick="goToNode('benedict')">
+        <span class="card-icon">👶</span>
+        <div class="card-label">Generasi Termuda</div>
+        <div class="card-value">潘唯鸿 & 唯慊</div>
+        <div class="card-sub">Generasi 7 (唯)</div>
+      </div>
+    `;
+    return;
+  }
+  
+  // Person selected - show contextual dashboard
+  const me = nodeMap[selectedId];
+  if (!me) return;
+  if (banner) banner.style.display = 'none';
+  
+  const displayName = me.indonesianName || me.han;
+  titleEl.innerHTML = `Hubungan Keluarga dari Sudut Pandang <strong style="color: var(--accent);">${displayName}</strong>`;
+  
+  // Cari hubungan-hubungan
+  const cards = [];
+  
+  // 1. Card "ANDA" (orang yang dipilih)
+  cards.push({
+    icon: '⭐',
+    label: 'Anda Sekarang',
+    han: me.han,
+    sub: `${me.role || ''}`,
+    isMe: true,
+    onClick: null
+  });
+  
+  // 2. Ayah (cari parent yang merupakan father type)
+  const myFather = findFatherOf(selectedId);
+  if (myFather) {
+    cards.push({
+      icon: '👨',
+      label: 'Ayah',
+      han: myFather.han,
+      sub: getRelationLabel(myFather, me),
+      onClick: myFather.id
+    });
+  }
+  
+  // 3. Ibu (cari mother)
+  const myMother = findMotherOf(selectedId);
+  if (myMother) {
+    cards.push({
+      icon: '👩',
+      label: 'Ibu',
+      han: myMother.han,
+      sub: myMother.pinyin || '',
+      onClick: myMother.id
+    });
+  }
+  
+  // 4. Kakek (parent's parent)
+  const myGrandfather = findGrandfatherOf(selectedId);
+  if (myGrandfather) {
+    cards.push({
+      icon: '👴',
+      label: 'Kakek',
+      han: myGrandfather.han,
+      sub: myGrandfather.pinyin || '',
+      onClick: myGrandfather.id
+    });
+  }
+  
+  // 5. Saudara kandung (siblings)
+  const siblings = findSiblingsOf(selectedId);
+  if (siblings.length > 0) {
+    const siblingNames = siblings.slice(0, 2).map(s => s.han).join(', ');
+    const more = siblings.length > 2 ? ` +${siblings.length - 2} lainnya` : '';
+    cards.push({
+      icon: '👫',
+      label: `${siblings.length} Saudara Kandung`,
+      han: siblings.length + ' orang',
+      sub: siblingNames + more,
+      onClick: siblings[0].id,
+      smallValue: true
+    });
+  }
+  
+  // 6. Pasangan (spouse)
+  if (me.spouse) {
+    cards.push({
+      icon: '❤️',
+      label: 'Pasangan',
+      han: me.spouse.han,
+      sub: me.spouse.pinyin || '',
+      onClick: me.spouse.id
+    });
+  }
+  
+  // 7. Anak (children) - kecuali yang invalid
+  if (me.children && me.children.length > 0) {
+    const childNames = me.children.slice(0, 2).map(c => c.han).join(', ');
+    const more = me.children.length > 2 ? ` +${me.children.length - 2}` : '';
+    cards.push({
+      icon: '👶',
+      label: `${me.children.length} Anak`,
+      han: me.children.length + ' orang',
+      sub: childNames + more,
+      onClick: me.children[0].id,
+      smallValue: true
+    });
+  }
+  
+  // 8. Generasi
+  cards.push({
+    icon: '🌳',
+    label: 'Generasi',
+    han: `世代 ${me.gen}`,
+    sub: me.genChar ? `Karakter: ${me.genChar}` : '—',
+    isInfo: true
+  });
+  
+  // 9. Tanggal Imlek (kalau ada)
+  if (me.lunarDate) {
+    cards.push({
+      icon: '📅',
+      label: 'Tanggal Imlek',
+      han: me.lunarDate.split('(')[0].trim(),
+      sub: me.lunarDate.includes('(') ? me.lunarDate.split('(')[1].replace(')', '') : '',
+      isInfo: true,
+      smallValue: true
+    });
+  }
+  
+  // 10. Kembali ke awal
+  cards.push({
+    icon: '🔄',
+    label: 'Reset',
+    han: 'Kembali Awal',
+    sub: 'Tampilkan dashboard default',
+    isReset: true,
+    onClick: 'RESET'
+  });
+  
+  // Render cards
+  grid.innerHTML = cards.map(c => {
+    let classes = 'card';
+    if (c.isMe) classes += ' card-me';
+    if (c.isInfo) classes += ' card-info';
+    if (c.isReset) classes += ' card-reset';
+    const onclickAttr = c.onClick === 'RESET' 
+      ? 'onclick="resetSelection()"' 
+      : c.onClick 
+        ? `onclick="goToNode('${c.onClick}')"` 
+        : '';
+    const valueStyle = c.smallValue ? 'style="font-size: 14px;"' : '';
+    return `
+      <div class="${classes}" ${onclickAttr}>
+        <span class="card-icon">${c.icon}</span>
+        <div class="card-label">${c.label}</div>
+        <div class="card-value" ${valueStyle}>${c.han}</div>
+        <div class="card-sub">${c.sub}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Helper: pergi ke node dan render semua
+function goToNode(id) {
+  selectedId = id;
+  expandPathTo(id);
+  renderTree();
+  renderDetail();
+  renderBreadcrumb();
+  renderDashboard();
+}
+
+// Helper: reset selection
+function resetSelection() {
+  selectedId = null;
+  document.getElementById('searchInput').value = '';
+  document.querySelectorAll('.tree-node').forEach(n => {
+    n.classList.remove('hidden');
+    n.classList.remove('search-match');
+  });
+  renderTree();
+  renderDetail();
+  renderBreadcrumb();
+  renderDashboard();
+}
+
+// Helper: get short relation label
+function getRelationLabel(target, viewer) {
+  if (target.isFather && viewer.gen === 7) return 'Kakek dari Ayah';
+  if (target.isFather) return '父亲 · Penjaga Silsilah';
+  return target.role || '';
+}
+
+// Helper: find father of a node (traverse parentMap)
+function findFatherOf(id) {
+  let cur = parentMap[id];
+  while (cur) {
+    const node = nodeMap[cur];
+    if (node && (node.gen === 5 && node.isFather)) return node;
+    if (node && node.gen < nodeMap[id].gen) return node;
+    cur = parentMap[cur];
+  }
+  return null;
+}
+
+// Helper: find mother of a node (only works for Gen 6)
+function findMotherOf(id) {
+  const node = nodeMap[id];
+  if (!node) return null;
+  // Gen 6 (anak Yulius gen): mother = ibu (Djap)
+  if (node.gen === 6) {
+    const father = findFatherOf(id);
+    if (father && father.spouse) return father.spouse;
+  }
+  // Gen 7: nenek dari ayah
+  if (node.gen === 7) {
+    // Find grandfather first, then their spouse
+    const fatherOfNode = findFatherOf(id);
+    if (fatherOfNode) {
+      const grandfather = findFatherOf(fatherOfNode.id);
+      if (grandfather && grandfather.spouse) return grandfather.spouse;
+    }
+  }
+  return null;
+}
+
+// Helper: find grandfather
+function findGrandfatherOf(id) {
+  const father = findFatherOf(id);
+  if (father) {
+    const grandfather = findFatherOf(father.id);
+    return grandfather;
+  }
+  return null;
+}
+
+// Helper: find siblings (same parent)
+function findSiblingsOf(id) {
+  const parentId = parentMap[id];
+  if (!parentId) return [];
+  const parent = nodeMap[parentId];
+  if (!parent || !parent.children) return [];
+  return parent.children.filter(c => c.id !== id);
+}
+
+// Search
+function handleSearch(event) {
+  const query = event.target.value.toLowerCase().trim();
+  
+  // Clear search highlights
+  document.querySelectorAll('.tree-node.search-match').forEach(n => n.classList.remove('search-match'));
+  
+  if (!query) {
+    document.querySelectorAll('.tree-node').forEach(n => n.classList.remove('hidden'));
+    // Jika search kosong dan ada selection sebelumnya (dari search), reset ke default
+    if (selectedId) {
+      selectedId = null;
+      renderTree();
+      renderDetail();
+      renderBreadcrumb();
+      renderDashboard();
+    }
+    return;
+  }
+  
+  // Find matching nodes and expand their ancestors
+  const matches = new Set();
+  Object.keys(nodeMap).forEach(id => {
+    const node = nodeMap[id];
+    const searchText = [
+      node.han, node.pinyin, node.indonesianName, node.hakka, node.role
+    ].filter(Boolean).join(' ').toLowerCase();
+    if (searchText.includes(query)) {
+      matches.add(id);
+      // Expand ancestors
+      let cur = parentMap[id];
+      while (cur) {
+        expandedIds.add(cur);
+        cur = parentMap[cur];
+      }
+    }
+  });
+  
+  // Auto-select first match
+  if (matches.size > 0 && !matches.has(selectedId)) {
+    const firstMatch = Array.from(matches)[0];
+    selectedId = firstMatch;
+    renderBreadcrumb();
+    renderDetail();
+    renderDashboard();
+  }
+  
+  // Re-render with matches highlighted
   renderTree();
   
-  // Smooth scroll - di mobile scroll ke section silsilah, di desktop ke top
-  const isMobile = window.innerWidth <= 768;
-  if (isMobile) {
-    // Scroll ke info panel (profil orang yang dipilih)
-    const infoPanel = document.getElementById('infoPanel');
-    if (infoPanel) {
-      setTimeout(() => {
-        infoPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
-    }
-  } else {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-}
-
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// Show/hide back-to-top based on scroll
-window.addEventListener('scroll', () => {
-  const btn = document.getElementById('backToTop');
-  if (btn) {
-    if (window.scrollY > 300) {
-      btn.classList.add('visible');
+  // Highlight all matching nodes (yellow background)
+  matches.forEach(id => {
+    const el = document.querySelector(`.tree-node[data-id="${id}"]`);
+    if (el) el.classList.add('search-match');
+  });
+  
+  // Hide non-matching and non-ancestor nodes
+  document.querySelectorAll('.tree-node').forEach(n => {
+    const id = n.dataset.id;
+    if (!id) return;
+    let isAncestor = false;
+    matches.forEach(mId => {
+      let cur = mId;
+      while (cur) {
+        if (cur === id) isAncestor = true;
+        cur = parentMap[cur];
+      }
+    });
+    if (matches.has(id) || isAncestor) {
+      n.classList.remove('hidden');
     } else {
-      btn.classList.remove('visible');
+      n.classList.add('hidden');
     }
-  }
-});
+  });
+}
 
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  buildPersonButtons();
-  renderInfoPanel();
+  buildMaps(tree);
   renderTree();
+  renderDetail();
+  renderBreadcrumb();
+  renderDashboard();
+  // Auto-focus search box on load
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput && window.innerWidth > 768) {
+    setTimeout(() => searchInput.focus(), 500);
+  }
 });
 </script>
 
