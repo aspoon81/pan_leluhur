@@ -598,15 +598,6 @@ body {
   border-color: var(--accent);
 }
 
-.tree-node.is-yulius {
-  background: linear-gradient(135deg, rgba(168, 51, 31, 0.08), rgba(184, 146, 62, 0.06));
-}
-
-.tree-node.is-yulius.selected {
-  background: var(--bg-current);
-  border-color: var(--accent);
-}
-
 .tree-toggle {
   width: 18px;
   height: 18px;
@@ -646,7 +637,7 @@ body {
 }
 
 .node-avatar.female { color: var(--accent-soft); }
-.node-avatar.kakek, .node-avatar.father, .node-avatar.yulius {
+.node-avatar.kakek, .node-avatar.father {
   background: var(--accent);
   color: white;
   border-color: var(--accent);
@@ -975,7 +966,7 @@ body {
       </div>
       <div class="controls">
         <div class="search-box">
-          <input type="text" id="searchInput" placeholder="🔎 Cari nama Anda di sini..." oninput="handleSearch(event)">
+          <input type="text" id="searchInput" placeholder="🔎 Cari nama anggota keluarga..." oninput="handleSearch(event)">
         </div>
         <button class="btn" onclick="expandAll()">⊕ Buka Semua</button>
         <button class="btn" onclick="collapseAll()">⊖ Tutup Semua</button>
@@ -1013,10 +1004,10 @@ body {
   <section class="dashboard" id="dashboardSection">
     <div class="welcome-banner" id="welcomeBanner">
       <div class="welcome-text">
-        <span class="welcome-icon">👋</span>
+        <span class="welcome-icon">🏛️</span>
         <div>
-          <div class="welcome-title">Selamat datang di Silsilah Keluarga Pan</div>
-          <div class="welcome-sub">Cari nama Anda di kotak pencarian, atau klik salah satu kartu di bawah untuk mulai eksplorasi.</div>
+          <div class="welcome-title">Silsilah Keluarga 潘氏 (Pan)</div>
+          <div class="welcome-sub">Selamat datang, anggota keluarga! Cari nama Anda di kotak pencarian, atau klik salah satu kartu di bawah untuk eksplorasi silsilah keluarga besar kita.</div>
         </div>
       </div>
     </div>
@@ -1039,12 +1030,12 @@ body {
     <!-- DETAIL PANEL -->
     <aside class="detail-panel" id="detailPanel">
       <div class="detail-empty">
-        <div style="font-size: 48px; margin-bottom: 12px;">🔍</div>
-        <div style="font-weight: 600; color: var(--ink); margin-bottom: 8px;">Mulai Eksplorasi</div>
+        <div style="font-size: 48px; margin-bottom: 12px;">🌳</div>
+        <div style="font-weight: 600; color: var(--ink); margin-bottom: 8px;">Eksplorasi Silsilah Keluarga</div>
         <div style="font-size: 12px; line-height: 1.6;">
-          Cari nama Anda di kotak pencarian,<br>
-          atau klik salah satu nama<br>
-          di silsilah keluarga di sebelah kiri.
+          Cari nama anggota keluarga<br>
+          di kotak pencarian, atau<br>
+          klik salah satu nama di silsilah.
         </div>
       </div>
     </aside>
@@ -1052,7 +1043,7 @@ body {
 
   <!-- FOOTER -->
   <div class="footer-note">
-    <strong>宝藏村 · 文昌县 · 海南</strong> &nbsp;·&nbsp; Disusun oleh Yulius (潘尤上) · 2026
+    <strong>宝藏村 · 文昌县 · 海南</strong> &nbsp;·&nbsp; Silsilah Keluarga 潘氏 · 宝藏村 · 海南 · 2026
   </div>
 
 </div>
@@ -1103,7 +1094,7 @@ const tree = {
             genChar: '先',
             han: '潘先学',
             pinyin: 'Pān Xiān Xué',
-            role: '祖父 · Kakek Yulius',
+            role: '祖父 · Kakek (Generasi 4)',
             isKakek: true,
             meaning: 'Pan yang Mendahului dalam Belajar',
             meta: 'Anak ke-1',
@@ -1116,7 +1107,7 @@ const tree = {
                 han: '潘正忠',
                 pinyin: 'Pān Zhèng Zhōng',
                 hakka: 'Phan Ku',
-                role: '父亲 · Ayah Yulius',
+                role: '父亲 · Penjaga Silsilah (Generasi 5)',
                 isFather: true,
                 lunarDate: '24 bulan 8 (Imlek)',
                 meaning: 'Pan yang Lurus dan Setia · Penjaga Silsilah',
@@ -1127,7 +1118,7 @@ const tree = {
                   han: '叶氏 Djap',
                   pinyin: 'Djap Sit Djun',
                   hakka: 'Sit Djun',
-                  role: '母亲 · Ibu Yulius',
+                  role: '母亲 · Ibu Rumah Tangga (Generasi 5)',
                   surname: '叶 (Djap/Yè)',
                   lunarDate: '22 bulan 8 (Imlek)',
                   meaning: 'Pelita Keluarga · Menikah masuk marga Pan'
@@ -1136,8 +1127,9 @@ const tree = {
                   {
                     id: 'jiuthai', gen: 6, genChar: '尤', gender: 'M',
                     han: '潘尤太', pinyin: 'Pān Yóu Tài',
+                    indonesianName: 'Yulianus',
                     hakka: 'Jiu Thai',
-                    role: 'Abang Yulius',
+                    role: 'Anak Sulung Laki-laki (Generasi 6)',
                     nationalDate: '23 Juli 1980, 11:00 WITA',
                     lunarDate: '12 bulan 6, 1980 (庚申 · Monyet Logam)',
                     meaning: 'Pan yang Istimewa dan Agung',
@@ -1148,18 +1140,31 @@ const tree = {
                     han: '潘尤上', pinyin: 'Pān Yóu Shàng',
                     indonesianName: 'Yulius',
                     hakka: '阿松 Asong',
-                    role: '★ ANDA · Yulius',
-                    isYulius: true,
+                    role: 'Anak Laki-laki Kedua (Generasi 6)',
                     nationalDate: '22 Oktober 1981, 10:00 WIT',
                     lunarDate: '25 bulan 9, 1981 (辛酉 · Ayam Logam)',
                     meaning: 'Pan yang Istimewa dan Tinggi/Mulia',
                     meta: 'Anak ke-2',
+                    spouse: {
+                      id: 'veronika',
+                      gen: 6,
+                      gender: 'F',
+                      han: '苏美玲 Veronika',
+                      pinyin: 'Sū Měi Líng',
+                      indonesianName: 'Veronika',
+                      hakka: 'Shu Mei Ling',
+                      role: '妻子 · Istri Yulius · Ibu Benedict & Bellarmino',
+                      surname: '苏 (Su/Shu)',
+                      nationalDate: '18 Januari 1983, Pontianak',
+                      marriageDate: '21 Mei 2006',
+                      meaning: 'Bunga Indah yang Berkilau · Menikah masuk marga Pan'
+                    },
                     children: [
                       {
                         id: 'benedict', gen: 7, genChar: '唯', gender: 'M',
                         han: '潘唯鸿', pinyin: 'Pān Wéi Hóng',
                         indonesianName: 'Benedict Jose Phan',
-                        role: 'Anak Sulung Yulius',
+                        role: 'Anak Sulung (Generasi 7)',
                         nationalDate: '8 Maret 2007, Jakarta',
                         lunarDate: '19 bulan 1, 2007 (丁亥 · Babi Api)',
                         meaning: 'Yang Sejati dan Agung',
@@ -1169,7 +1174,7 @@ const tree = {
                         id: 'bellarmino', gen: 7, genChar: '唯', gender: 'M',
                         han: '潘唯慊', pinyin: 'Pān Wéi Qiàn',
                         indonesianName: 'Bellarmino Jovian Phan',
-                        role: 'Anak Kedua Yulius',
+                        role: 'Anak Kedua (Generasi 7)',
                         nationalDate: '30 September 2010, Jakarta',
                         lunarDate: '23 bulan 8, 2010 (庚寅 · Macan Logam)',
                         meaning: 'Yang Sejati dan Rendah Hati',
@@ -1181,7 +1186,7 @@ const tree = {
                     id: 'setiana', gen: 6, genChar: '尤', gender: 'F',
                     han: 'Setiana', pinyin: '阿娜 ANAO',
                     hakka: 'ANAO',
-                    role: 'Kakak Perempuan ke-1 Yulius',
+                    role: 'Anak Perempuan ke-1 (Generasi 6)',
                     nationalDate: '23 September 1986, 24:00 WIT',
                     lunarDate: '20 bulan 8, 1986 (丙寅 · Macan Api)',
                     meaning: 'Lahir tepat tengah malam',
@@ -1191,7 +1196,7 @@ const tree = {
                     id: 'chindy', gen: 6, genChar: '尤', gender: 'F',
                     han: 'Chindy Lien', pinyin: '阿莲 Acian',
                     hakka: 'Acian',
-                    role: 'Adik Perempuan ke-1 Yulius',
+                    role: 'Anak Perempuan ke-2 (Generasi 6)',
                     nationalDate: '11 Desember 1988, 13:00 WIB',
                     lunarDate: '3 bulan 11, 1988 (戊辰 · Naga Tanah)',
                     meaning: 'Lahir di wilayah WIB',
@@ -1200,18 +1205,40 @@ const tree = {
                   {
                     id: 'desi', gen: 6, genChar: '尤', gender: 'F',
                     han: 'Desi Wilianti', pinyin: '阿琴 Achin',
-                    hakka: 'Achin',
-                    role: 'Adik Perempuan ke-2 Yulius',
+                    indonesianName: 'Desi Wilianti',
+                    hakka: 'Aching',
+                    role: 'Anak Perempuan ke-3 (Generasi 6)',
                     nationalDate: '30 Desember 1989, 22:00 WIB',
                     lunarDate: '3 bulan 12, 1989 (己巳 · Ular Tanah)',
                     meaning: 'Lahir Sabtu malam',
-                    meta: 'Anak ke-5', children: []
+                    meta: 'Anak ke-5',
+                    spouse: {
+                      id: 'fandy',
+                      gen: 6,
+                      han: 'Fandy Harto Ho',
+                      pinyin: 'Fandy Harto Ho',
+                      role: '丈夫 · Suami Desi',
+                      surname: '何 (Ho/Hé)',
+                      nationalDate: '11 Desember 1982',
+                      meaning: 'Menikah masuk ke keluarga Pan'
+                    },
+                    children: [
+                      {
+                        id: 'iriana', gen: 7, gender: 'F',
+                        han: '何依丽', pinyin: 'Hé Yī Lì',
+                        indonesianName: 'Iriana Harto Ho',
+                        role: 'Anak Desi & Fandy (Generasi 7)',
+                        nationalDate: '15 September 2017',
+                        meaning: 'Yang Bergantung pada Keindahan',
+                        meta: 'Anak tunggal', children: []
+                      }
+                    ]
                   },
                   {
                     id: 'stella', gen: 6, genChar: '尤', gender: 'F',
                     han: 'Stella', pinyin: 'Stlela',
                     hakka: 'Stlela',
-                    role: 'Adik Bungsu Yulius',
+                    role: 'Anak Perempuan Bungsu (Generasi 6)',
                     nationalDate: '3 Januari 1995, 04:40 WIB',
                     lunarDate: '3 bulan 12, 1994 (甲戌 · Anjing Kayu)',
                     meaning: 'Lahir di pagi dini hari',
@@ -1222,7 +1249,7 @@ const tree = {
               {
                 id: 'pak2', gen: 5, genChar: '正', gender: 'M',
                 han: '潘正石', pinyin: 'Pān Zhèng Shí',
-                role: 'Paman Yulius (Adik Ayah)',
+                role: 'Saudara Laki-laki dari 潘正忠 (Generasi 5)',
                 meaning: 'Pan yang Lurus seperti Batu',
                 meta: 'Anak ke-2', children: []
               },
@@ -1230,21 +1257,21 @@ const tree = {
                 id: 'thaiku', gen: 5, genChar: '正', gender: 'F',
                 han: 'Thai Ku', pinyin: '大姑',
                 hakka: 'Thai Ku',
-                role: 'Bibi Yulius (Kakak/Adik Ayah)',
+                role: 'Saudari dari 潘正忠 (Generasi 5)',
                 meaning: 'Bibi dari pihak ayah',
                 meta: 'Anak ke-3', children: []
               },
               {
                 id: 'pak4', gen: 5, genChar: '正', gender: 'M',
                 han: '潘正小', pinyin: 'Pān Zhèng Xiǎo',
-                role: 'Paman Yulius (Adik Ayah)',
+                role: 'Saudara Laki-laki dari 潘正忠 (Generasi 5)',
                 meaning: 'Pan yang Lurus dan Rendah Hati',
                 meta: 'Anak ke-4', children: []
               },
               {
                 id: 'pak5', gen: 5, genChar: '正', gender: 'M',
                 han: '潘正鹰', pinyin: 'Pān Zhèng Yīng',
-                role: 'Paman Yulius (Adik Ayah)',
+                role: 'Saudara Laki-laki dari 潘正忠 (Generasi 5)',
                 meaning: 'Pan yang Lurus seperti Elang',
                 meta: 'Anak ke-5', children: []
               },
@@ -1252,7 +1279,7 @@ const tree = {
                 id: 'seku', gen: 5, genChar: '正', gender: 'F',
                 han: 'Se Ku', pinyin: '细姑',
                 hakka: 'Se Ku',
-                role: 'Bibi Yulius (Adik Ayah)',
+                role: 'Saudari Bungsu dari 潘正忠 (Generasi 5)',
                 meaning: 'Bibi bungsu dari pihak ayah',
                 meta: 'Anak ke-6', children: []
               }
@@ -1291,13 +1318,20 @@ let expandedIds = new Set(['a1', 'a2', 'a3b', 'kakek', 'ayah']); // Show key pat
 let nodeMap = {};
 let parentMap = {};
 
+// Maps untuk lookup cepat
+let spouseMap = {}; // id → id pasangan
+
 // Build maps for quick lookup
 function buildMaps(node, parent = null) {
   nodeMap[node.id] = node;
   if (parent) parentMap[node.id] = parent.id;
   if (node.spouse) {
     nodeMap[node.spouse.id] = node.spouse;
-    parentMap[node.spouse.id] = node.id; // spouse linked to husband
+    // Spouse BUKAN child dari node — mereka pasangan!
+    // Track lewat spouseMap, dan attach reference spouse balik
+    spouseMap[node.id] = node.spouse.id;
+    spouseMap[node.spouse.id] = node.id;
+    node.spouse.spouse = node; // back-reference biar bisa findFather lewat spouse
   }
   (node.children || []).forEach(c => buildMaps(c, node));
 }
@@ -1314,7 +1348,6 @@ function getAvatarClass(node) {
   if (node.gender === 'F') cls += ' female';
   if (node.isKakek) cls += ' kakek';
   if (node.isFather) cls += ' father';
-  if (node.isYulius) cls += ' yulius';
   return cls;
 }
 
@@ -1323,19 +1356,17 @@ function renderNode(node, depth = 0) {
   const hasChildren = (node.children && node.children.length > 0) || node.spouse;
   const isExpanded = expandedIds.has(node.id);
   const isSelected = node.id === selectedId;
-  const isYulius = node.isYulius;
 
   let badges = '';
-  if (node.isYulius) badges += '<span class="node-badge you">ANDA</span>';
   if (node.isKakek) badges += '<span class="node-badge role-key">KAKEK</span>';
-  if (node.isFather) badges += '<span class="node-badge role-key">AYAH</span>';
+  if (node.isFather) badges += '<span class="node-badge role-key">PENJAGA SILSILAH</span>';
 
   let nameDisplay = node.han;
   if (node.indonesianName) nameDisplay += ` <span class="node-id">· ${node.indonesianName}</span>`;
   else if (node.hakka) nameDisplay += ` <span class="node-id">· ${node.hakka}</span>`;
 
   let html = `
-    <div class="tree-node ${isSelected ? 'selected' : ''} ${isYulius ? 'is-yulius' : ''}" 
+    <div class="tree-node ${isSelected ? 'selected' : ''}" 
          data-id="${node.id}" 
          onclick="handleNodeClick(event, '${node.id}')">
       <div class="tree-toggle ${isExpanded ? 'expanded' : ''} ${!hasChildren ? 'no-children' : ''}">▶</div>
@@ -1352,13 +1383,14 @@ function renderNode(node, depth = 0) {
   if (node.spouse) {
     const sp = node.spouse;
     const spSelected = sp.id === selectedId;
+    const spAvatarClass = sp.gender === 'F' ? ' female' : '';
     html += `
       <div class="tree-node ${spSelected ? 'selected' : ''}" 
            data-id="${sp.id}" 
            onclick="handleNodeClick(event, '${sp.id}')"
            style="margin-left: 28px;">
         <div class="tree-toggle no-children">▶</div>
-        <div class="node-avatar female">叶</div>
+        <div class="node-avatar${spAvatarClass}">${getAvatarChar(sp)}</div>
         <div class="node-content">
           <span class="node-name">${sp.han} <span class="node-id">· ${sp.pinyin}</span></span>
           <span class="node-badge">menikah ❤</span>
@@ -1455,12 +1487,12 @@ function renderDetail() {
   if (!selectedId) {
     panel.innerHTML = `
       <div class="detail-empty">
-        <div style="font-size: 48px; margin-bottom: 12px;">🔍</div>
-        <div style="font-weight: 600; color: var(--ink); margin-bottom: 8px;">Mulai Eksplorasi</div>
+        <div style="font-size: 48px; margin-bottom: 12px;">🌳</div>
+        <div style="font-weight: 600; color: var(--ink); margin-bottom: 8px;">Eksplorasi Silsilah Keluarga</div>
         <div style="font-size: 12px; line-height: 1.6;">
-          Cari nama Anda di kotak pencarian,<br>
-          atau klik salah satu nama<br>
-          di silsilah keluarga di sebelah kiri.
+          Cari nama anggota keluarga<br>
+          di kotak pencarian, atau<br>
+          klik salah satu nama di silsilah.
         </div>
       </div>`;
     return;
@@ -1525,6 +1557,14 @@ function renderDetail() {
       </div>`;
   }
   
+  if (node.marriageDate) {
+    html += `
+      <div class="detail-section">
+        <div class="detail-label">Tanggal Pernikahan · 结婚日</div>
+        <div class="detail-value" style="color: var(--gold); font-weight: 600;">💍 ${node.marriageDate}</div>
+      </div>`;
+  }
+  
   html += `
     <div class="detail-section">
       <div class="detail-label">Generasi · 世代</div>
@@ -1565,7 +1605,7 @@ function renderDetail() {
 function renderBreadcrumb() {
   const bc = document.getElementById('breadcrumb');
   if (!selectedId) {
-    bc.innerHTML = `<span style="color: var(--ink-mute); font-size: 11px; font-style: italic;">💡 Tip: Cari nama Anda atau klik kartu di atas untuk navigasi cepat.</span>`;
+    bc.innerHTML = `<span style="color: var(--ink-mute); font-size: 11px; font-style: italic;">💡 Tip: Cari nama anggota keluarga atau klik kartu di atas untuk navigasi cepat.</span>`;
     return;
   }
   const path = [];
@@ -1608,9 +1648,9 @@ function renderDashboard() {
     grid.innerHTML = `
       <div class="card search-card" onclick="focusSearch()">
         <span class="card-icon">🔍</span>
-        <div class="card-label">Cari Saya</div>
+        <div class="card-label">Cari Anggota</div>
         <div class="card-value">Cari Nama</div>
-        <div class="card-sub">Ketik nama Anda di pencarian atas</div>
+        <div class="card-sub">Temukan posisi Anda di silsilah</div>
       </div>
       <div class="card" onclick="goToNode('a1')">
         <span class="card-icon">🏛️</span>
@@ -1620,39 +1660,39 @@ function renderDashboard() {
       </div>
       <div class="card" onclick="goToNode('kakek')">
         <span class="card-icon">👴</span>
-        <div class="card-label">Kakek</div>
+        <div class="card-label">Generasi 4 (先)</div>
         <div class="card-value">潘先学</div>
-        <div class="card-sub">Generasi 4 (先) · 4 bersaudara</div>
+        <div class="card-sub">Anak ke-1 dari 4 saudara</div>
       </div>
       <div class="card" onclick="goToNode('ayah')">
-        <span class="card-icon">👨</span>
-        <div class="card-label">Ayah</div>
+        <span class="card-icon">✍️</span>
+        <div class="card-label">Penjaga Silsilah</div>
         <div class="card-value">潘正忠</div>
-        <div class="card-sub">Generasi 5 (正) · Anak ke-1 dari 6</div>
+        <div class="card-sub">Generasi 5 · Pencatat dokumen asli</div>
       </div>
       <div class="card" onclick="goToNode('ibu')">
         <span class="card-icon">👩</span>
-        <div class="card-label">Ibu</div>
+        <div class="card-label">Generasi 5 (Istri)</div>
         <div class="card-value">叶氏 Djap</div>
-        <div class="card-sub">Marga 叶 (Djap/Yè)</div>
+        <div class="card-sub">Marga 叶 · Menikah masuk</div>
       </div>
       <div class="card">
         <span class="card-icon">🌳</span>
         <div class="card-label">Total Generasi</div>
         <div class="card-value">7 世代</div>
-        <div class="card-sub">Dari 潘有本 hingga cucu</div>
+        <div class="card-sub">Dari leluhur hingga cucu-cucu</div>
       </div>
       <div class="card">
         <span class="card-icon">👨‍👩‍👧‍👦</span>
         <div class="card-label">Anggota Tercatat</div>
-        <div class="card-value">23 orang</div>
-        <div class="card-sub">Termasuk paman, bibi, anak</div>
+        <div class="card-value">26 orang</div>
+        <div class="card-sub">Termasuk menantu & cucu</div>
       </div>
-      <div class="card" onclick="goToNode('benedict')">
+      <div class="card" onclick="goToNode('iriana')">
         <span class="card-icon">👶</span>
         <div class="card-label">Generasi Termuda</div>
-        <div class="card-value">潘唯鸿 & 唯慊</div>
-        <div class="card-sub">Generasi 7 (唯)</div>
+        <div class="card-value">何依丽</div>
+        <div class="card-sub">Iriana · Lahir 2017 · Generasi 7</div>
       </div>
     `;
     return;
@@ -1664,15 +1704,15 @@ function renderDashboard() {
   if (banner) banner.style.display = 'none';
   
   const displayName = me.indonesianName || me.han;
-  titleEl.innerHTML = `Hubungan Keluarga dari Sudut Pandang <strong style="color: var(--accent);">${displayName}</strong>`;
+  titleEl.innerHTML = `Keluarga dari <strong style="color: var(--accent);">${displayName}</strong>`;
   
   // Cari hubungan-hubungan
   const cards = [];
   
-  // 1. Card "ANDA" (orang yang dipilih)
+  // 1. Card "DIPILIH" (orang yang dipilih)
   cards.push({
-    icon: '⭐',
-    label: 'Anda Sekarang',
+    icon: '👤',
+    label: 'Yang Dipilih',
     han: me.han,
     sub: `${me.role || ''}`,
     isMe: true,
@@ -1703,15 +1743,51 @@ function renderDashboard() {
     });
   }
   
-  // 4. Kakek (parent's parent)
-  const myGrandfather = findGrandfatherOf(selectedId);
-  if (myGrandfather) {
+  // 4. Kakek dari pihak ayah (parent's parent)
+  const myFatherFather = myFather ? findFatherOf(myFather.id) : null;
+  if (myFatherFather) {
     cards.push({
       icon: '👴',
-      label: 'Kakek',
-      han: myGrandfather.han,
-      sub: myGrandfather.pinyin || '',
-      onClick: myGrandfather.id
+      label: 'Kakek (Pihak Ayah)',
+      han: myFatherFather.han,
+      sub: myFatherFather.pinyin || '',
+      onClick: myFatherFather.id
+    });
+  }
+  
+  // 4b. Nenek dari pihak ayah
+  const myFatherMother = myFather ? findMotherOf(myFather.id) : null;
+  if (myFatherMother) {
+    cards.push({
+      icon: '👵',
+      label: 'Nenek (Pihak Ayah)',
+      han: myFatherMother.han,
+      sub: myFatherMother.pinyin || '',
+      onClick: myFatherMother.id
+    });
+  }
+  
+  // 4c. Kakek dari pihak ibu (jika berbeda)
+  const myMotherFather = myMother ? findFatherOf(myMother.id) : null;
+  if (myMotherFather && (!myFatherFather || myMotherFather.id !== myFatherFather.id)) {
+    cards.push({
+      icon: '👴',
+      label: 'Kakek (Pihak Ibu)',
+      han: myMotherFather.han,
+      sub: myMotherFather.pinyin || '',
+      onClick: myMotherFather.id
+    });
+  }
+  
+  // 4d. Nenek dari pihak ibu (jika berbeda)
+  const myMotherMother = myMother ? findMotherOf(myMother.id) : null;
+  if (myMotherMother && (!myFatherMother || myMotherMother.id !== myFatherMother.id)) {
+    cards.push({
+      icon: '👵',
+      label: 'Nenek (Pihak Ibu)',
+      han: myMotherMother.han,
+      sub: myMotherMother.pinyin || '',
+      onClick: myMotherMother.id
     });
   }
   
@@ -1840,50 +1916,69 @@ function getRelationLabel(target, viewer) {
   return target.role || '';
 }
 
-// Helper: find father of a node (traverse parentMap)
+// Helper: find biological father of a node
+// Logic: parent di tree adalah biological parent. Cek gender.
+// Jika parent.gender === 'M', dia ayah. Jika 'F', dia ibu (bukan ayah).
+// Jika parent perempuan, ayah = pasangan dari ibu.
 function findFatherOf(id) {
-  let cur = parentMap[id];
-  while (cur) {
-    const node = nodeMap[cur];
-    if (node && (node.gen === 5 && node.isFather)) return node;
-    if (node && node.gen < nodeMap[id].gen) return node;
-    cur = parentMap[cur];
+  const parentId = parentMap[id];
+  if (!parentId) return null;
+  const parent = nodeMap[parentId];
+  if (!parent) return null;
+  
+  // Parent laki-laki → dia ayah
+  if (parent.gender === 'M' || parent.isFather || parent.isKakek) {
+    return parent;
   }
-  return null;
+  
+  // Parent perempuan → ayah adalah pasangan parent
+  if (parent.gender === 'F') {
+    if (parent.spouse) return parent.spouse;
+    return null;
+  }
+  
+  // Fallback (untuk ancestors yang tidak ada gender field, anggap laki-laki)
+  return parent;
 }
 
-// Helper: find mother of a node (only works for Gen 6)
+// Helper: find biological mother of a node
 function findMotherOf(id) {
-  const node = nodeMap[id];
-  if (!node) return null;
-  // Gen 6 (anak Yulius gen): mother = ibu (Djap)
-  if (node.gen === 6) {
-    const father = findFatherOf(id);
-    if (father && father.spouse) return father.spouse;
+  const parentId = parentMap[id];
+  if (!parentId) return null;
+  const parent = nodeMap[parentId];
+  if (!parent) return null;
+  
+  // Parent perempuan → dia ibu
+  if (parent.gender === 'F') {
+    return parent;
   }
-  // Gen 7: nenek dari ayah
-  if (node.gen === 7) {
-    // Find grandfather first, then their spouse
-    const fatherOfNode = findFatherOf(id);
-    if (fatherOfNode) {
-      const grandfather = findFatherOf(fatherOfNode.id);
-      if (grandfather && grandfather.spouse) return grandfather.spouse;
-    }
+  
+  // Parent laki-laki → ibu adalah pasangan (spouse) parent
+  if (parent.gender === 'M' || parent.isFather || parent.isKakek) {
+    if (parent.spouse) return parent.spouse;
+    return null;
   }
+  
+  // Fallback: cek spouse
+  if (parent.spouse) return parent.spouse;
   return null;
 }
 
-// Helper: find grandfather
+// Helper: find grandfather (father's father)
 function findGrandfatherOf(id) {
   const father = findFatherOf(id);
-  if (father) {
-    const grandfather = findFatherOf(father.id);
-    return grandfather;
+  if (!father) {
+    // Kalau ayah tidak ada (mungkin masuk lewat ibu), coba ibu's father
+    const mother = findMotherOf(id);
+    if (mother) {
+      return findFatherOf(mother.id);
+    }
+    return null;
   }
-  return null;
+  return findFatherOf(father.id);
 }
 
-// Helper: find siblings (same parent)
+// Helper: find siblings (same biological parents)
 function findSiblingsOf(id) {
   const parentId = parentMap[id];
   if (!parentId) return [];
