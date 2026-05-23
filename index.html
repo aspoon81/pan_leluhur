@@ -2,7 +2,10 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#a8331f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>潘氏家谱 · Silsilah Keluarga Pan</title>
 <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -553,28 +556,260 @@
     text-transform: uppercase;
   }
 
+  /* BACK TO TOP - Mobile Helper */
+  .back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    background: var(--vermillion);
+    color: var(--paper-cream);
+    border: 2px solid var(--paper-cream);
+    border-radius: 50%;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(168, 51, 31, 0.4);
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .back-to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .back-to-top:hover, .back-to-top:active {
+    background: var(--vermillion-deep);
+    transform: scale(1.1);
+  }
+
   .fade-transition { animation: fadeIn 0.5s ease; }
   @keyframes fadeIn {
     from { opacity: 0.5; transform: translateY(5px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* RESPONSIVE */
+  /* RESPONSIVE - MOBILE FIRST OPTIMIZED */
+  
+  /* TABLET (max 1024px) */
+  @media (max-width: 1024px) {
+    .siblings-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .container { padding: 36px 24px; }
+  }
+
+  /* MOBILE (max 768px) */
   @media (max-width: 768px) {
-    .container { padding: 30px 16px; }
-    .title-chinese { font-size: 44px; }
-    .name-card { min-width: 220px; padding: 16px 20px; }
-    .name-han { font-size: 26px; }
-    .info-grid { grid-template-columns: 1fr; gap: 12px; }
-    .poem-line { font-size: 24px; }
-    .context-box { grid-template-columns: 1fr; }
-    .siblings-grid { grid-template-columns: 1fr; gap: 24px; }
-    .parents-pair { flex-direction: column; gap: 24px; }
-    .parent-card { min-width: 100%; max-width: 100%; }
-    .union-symbol { transform: rotate(90deg); }
-    .person-buttons { grid-template-columns: repeat(2, 1fr); }
-    .perspective-selector { padding: 20px 18px; }
-    .selector-title { font-size: 18px; }
+    .container { padding: 24px 12px; }
+    
+    /* HEADER */
+    header { padding: 30px 12px; margin-bottom: 36px; }
+    .seal { width: 64px; height: 64px; font-size: 42px; line-height: 64px; }
+    .title-chinese { 
+      font-size: 38px; 
+      letter-spacing: 0.15em;
+      line-height: 1.2;
+    }
+    .title-romanized { 
+      font-size: 10px; 
+      letter-spacing: 0.3em;
+      padding: 0 10px;
+    }
+    .viewing-as { 
+      font-size: 14px; 
+      padding: 0 10px;
+      line-height: 1.5;
+    }
+    .origin-label { font-size: 13px; padding: 0 10px; }
+    
+    /* PERSPECTIVE SELECTOR */
+    .perspective-selector { 
+      padding: 22px 16px 18px; 
+      margin-bottom: 28px;
+    }
+    .perspective-selector::before { 
+      font-size: 22px; 
+      top: -18px; left: 16px;
+    }
+    .selector-title { 
+      font-size: 16px; 
+      line-height: 1.3;
+    }
+    .selector-subtitle { 
+      font-size: 13px; 
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+    .person-buttons { 
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 8px;
+    }
+    .person-btn { 
+      padding: 10px 8px;
+      gap: 2px;
+    }
+    .person-btn .btn-icon { font-size: 11px; }
+    .person-btn .btn-han { font-size: 15px; }
+    .person-btn .btn-id { font-size: 10px; }
+    
+    /* SECTIONS */
+    section { margin-bottom: 40px; }
+    .section-title { font-size: 26px; }
+    .section-subtitle { 
+      font-size: 9px; 
+      letter-spacing: 0.3em;
+      margin-bottom: 24px;
+      padding: 0 16px;
+    }
+    
+    /* INFO PANEL */
+    .info-panel { padding: 22px 18px; }
+    .info-grid { 
+      grid-template-columns: 1fr; 
+      gap: 14px;
+    }
+    .info-item .info-label { font-size: 9px; letter-spacing: 0.2em; }
+    .info-item .info-value { font-size: 15px; line-height: 1.4; }
+    .info-item .info-value .han { font-size: 17px; }
+    
+    /* NAME CARDS */
+    .name-card { 
+      min-width: 100%;
+      width: 100%;
+      padding: 18px 16px;
+    }
+    .name-han { font-size: 24px; }
+    .name-pinyin { font-size: 14px; }
+    .name-id { font-size: 12px; }
+    .gen-number { font-size: 9px; letter-spacing: 0.2em; }
+    .gen-character { font-size: 12px; padding: 1px 8px; }
+    
+    /* CURRENT (★ ANDA) - More visible on mobile */
+    .name-card.is-current { 
+      transform: scale(1.02); 
+      border-width: 2px;
+    }
+    .name-card.is-current::before {
+      top: -10px;
+      right: 50%;
+      transform: translateX(50%);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      padding: 3px 12px;
+    }
+    
+    /* TREE */
+    .tree { padding: 0; }
+    .generation { padding: 18px 0; }
+    .generation:not(:last-child)::after {
+      height: 20px;
+      bottom: -10px;
+    }
+    
+    /* ROLE LABEL */
+    .name-role { 
+      font-size: 9px; 
+      padding: 4px 8px;
+      letter-spacing: 0.15em;
+    }
+    
+    /* DATE BLOCK */
+    .date-block { padding: 6px 8px; margin: 6px 0; }
+    .date-row { font-size: 10px; }
+    .date-label { font-size: 10px; }
+    
+    /* PARENTS PAIR */
+    .parents-pair { 
+      flex-direction: column; 
+      gap: 36px;
+    }
+    .parent-card { 
+      min-width: 100%; 
+      max-width: 100%; 
+      padding-top: 28px;
+    }
+    .parent-badge { 
+      font-size: 10px; 
+      padding: 4px 12px;
+    }
+    .union-symbol { 
+      transform: rotate(90deg);
+      padding: 8px;
+    }
+    .union-icon { font-size: 24px; }
+    .union-text { font-size: 10px; }
+    
+    /* SIBLINGS */
+    .siblings-grid { 
+      grid-template-columns: 1fr; 
+      gap: 32px;
+    }
+    .sibling-card { 
+      width: 100%; 
+      padding: 22px 16px;
+    }
+    .sibling-card .birth-order { 
+      font-size: 9px; 
+      padding: 3px 10px;
+      top: -8px;
+    }
+    
+    /* POEM */
+    .poem-box { padding: 24px 16px; }
+    .poem-line { 
+      font-size: 22px; 
+      letter-spacing: 0.15em;
+      line-height: 1.5;
+    }
+    .poem-note { font-size: 13px; margin-top: 18px; }
+    
+    /* LOCATION */
+    .location-card { padding: 24px 16px; }
+    .location-flow { gap: 12px; }
+    .location-node { padding: 8px; min-width: 100%; }
+    .location-node .flag { font-size: 28px; }
+    .location-node .place-han { font-size: 15px; }
+    .location-node .place-id { font-size: 12px; }
+    .location-arrow { 
+      transform: rotate(90deg); 
+      font-size: 22px; 
+    }
+    
+    /* CONTEXT */
+    .context-box { grid-template-columns: 1fr; gap: 14px; }
+    .context-card { padding: 18px 18px; }
+    .context-card h3 { font-size: 16px; }
+    .context-card p { font-size: 13px; }
+    
+    /* FOOTER */
+    footer { padding: 30px 12px 16px; margin-top: 30px; }
+    .footer-seal { width: 44px; height: 44px; font-size: 26px; line-height: 44px; }
+    .footer-text { font-size: 13px; padding: 0 8px; }
+    .footer-date { font-size: 9px; letter-spacing: 0.3em; }
+  }
+  
+  /* SMALL MOBILE (max 380px) - iPhone SE, small Android */
+  @media (max-width: 380px) {
+    .container { padding: 20px 8px; }
+    .title-chinese { font-size: 32px; }
+    .seal { width: 56px; height: 56px; font-size: 36px; line-height: 56px; }
+    .name-han { font-size: 20px; }
+    .name-pinyin { font-size: 13px; }
+    .perspective-selector { padding: 18px 12px 16px; }
+    .person-btn { padding: 9px 6px; }
+    .person-btn .btn-han { font-size: 13px; }
+    .person-btn .btn-id { font-size: 9px; }
+    .section-title { font-size: 22px; }
+    .poem-line { font-size: 18px; letter-spacing: 0.1em; }
+    .info-panel { padding: 18px 14px; }
+    .name-card { padding: 16px 12px; }
+    .sibling-card { padding: 20px 12px; }
   }
 </style>
 </head>
@@ -695,6 +930,9 @@
   </footer>
 
 </div>
+
+<!-- Back to Top Button (Mobile-friendly) -->
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()" title="Kembali ke atas">↑</button>
 
 <script>
 const familyData = {
@@ -1030,8 +1268,37 @@ function selectPerson(id) {
   buildPersonButtons();
   renderInfoPanel();
   renderTree();
+  
+  // Smooth scroll - di mobile scroll ke section silsilah, di desktop ke top
+  const isMobile = window.innerWidth <= 768;
+  if (isMobile) {
+    // Scroll ke info panel (profil orang yang dipilih)
+    const infoPanel = document.getElementById('infoPanel');
+    if (infoPanel) {
+      setTimeout(() => {
+        infoPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  } else {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+// Show/hide back-to-top based on scroll
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('backToTop');
+  if (btn) {
+    if (window.scrollY > 300) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  }
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   buildPersonButtons();
