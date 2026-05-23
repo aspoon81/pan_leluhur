@@ -19,334 +19,249 @@
     --jade: #4a6b4d;
     --shadow: rgba(26, 20, 16, 0.15);
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   body {
     font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
     background: var(--paper-cream);
-    background-image: 
-      radial-gradient(ellipse at top, rgba(180, 140, 80, 0.08) 0%, transparent 60%),
-      radial-gradient(ellipse at bottom, rgba(120, 50, 30, 0.05) 0%, transparent 60%),
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(120, 90, 50, 0.015) 2px,
-        rgba(120, 90, 50, 0.015) 4px
-      );
-    color: var(--ink-black);
-    min-height: 100vh;
-    line-height: 1.6;
-    overflow-x: hidden;
+    background-image: radial-gradient(ellipse at top, rgba(180,140,80,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at bottom, rgba(120,50,30,0.05) 0%, transparent 60%),
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(120,90,50,0.015) 2px, rgba(120,90,50,0.015) 4px);
+    color: var(--ink-black); min-height: 100vh; line-height: 1.6; overflow-x: hidden;
   }
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 30px; position: relative; z-index: 2; }
 
-  /* Paper texture overlay */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: 
-      radial-gradient(circle at 20% 30%, rgba(140, 100, 50, 0.04) 0%, transparent 8%),
-      radial-gradient(circle at 80% 60%, rgba(140, 100, 50, 0.03) 0%, transparent 6%),
-      radial-gradient(circle at 50% 80%, rgba(140, 100, 50, 0.04) 0%, transparent 7%);
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 60px 40px;
+  /* PERSPECTIVE SELECTOR */
+  .perspective-selector {
+    background: linear-gradient(135deg, var(--paper-aged), var(--paper-deep));
+    border: 2px solid var(--vermillion);
+    border-radius: 8px;
+    padding: 28px 32px;
+    margin-bottom: 40px;
+    box-shadow: 0 8px 24px var(--shadow);
     position: relative;
-    z-index: 2;
   }
+  .perspective-selector::before {
+    content: '👋';
+    position: absolute;
+    top: -20px; left: 30px;
+    background: var(--paper-cream);
+    padding: 0 10px; font-size: 28px;
+  }
+  .selector-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    color: var(--vermillion-deep);
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .selector-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-deep);
+    margin-bottom: 20px;
+    opacity: 0.8;
+  }
+  .person-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+  }
+  .person-btn {
+    background: var(--paper-cream);
+    border: 2px solid var(--gold);
+    color: var(--ink-deep);
+    padding: 12px 14px;
+    border-radius: 4px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .person-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow);
+    border-color: var(--vermillion);
+    background: var(--paper-aged);
+  }
+  .person-btn.active {
+    background: var(--vermillion);
+    color: var(--paper-cream);
+    border-color: var(--vermillion-deep);
+    box-shadow: 0 4px 16px rgba(168, 51, 31, 0.3);
+    transform: scale(1.02);
+  }
+  .person-btn .btn-han { font-size: 16px; font-weight: 700; }
+  .person-btn .btn-id { font-size: 11px; font-style: italic; opacity: 0.85; }
+  .person-btn .btn-icon { font-size: 12px; }
 
   /* HEADER */
-  header {
-    text-align: center;
-    margin-bottom: 80px;
-    position: relative;
-    padding: 60px 20px 40px;
-  }
-
+  header { text-align: center; margin-bottom: 60px; position: relative; padding: 40px 20px; }
   header::before, header::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 1px;
+    content: ''; position: absolute; left: 50%; transform: translateX(-50%);
+    width: 200px; height: 1px;
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
   }
   header::before { top: 0; }
   header::after { bottom: 0; }
-
   .seal {
-    display: inline-block;
-    width: 80px;
-    height: 80px;
-    background: var(--vermillion);
-    color: var(--paper-cream);
-    font-family: 'Ma Shan Zheng', serif;
-    font-size: 56px;
-    line-height: 80px;
-    margin-bottom: 24px;
-    border-radius: 4px;
-    box-shadow: 
-      0 4px 12px rgba(168, 51, 31, 0.3),
-      inset 0 0 0 2px rgba(244, 232, 208, 0.2);
+    display: inline-block; width: 80px; height: 80px;
+    background: var(--vermillion); color: var(--paper-cream);
+    font-family: 'Ma Shan Zheng', serif; font-size: 56px; line-height: 80px;
+    margin-bottom: 20px; border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(168, 51, 31, 0.3), inset 0 0 0 2px rgba(244, 232, 208, 0.2);
     transform: rotate(-3deg);
-    position: relative;
   }
-
   .title-chinese {
     font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
-    font-size: 72px;
+    font-size: 64px;
     color: var(--ink-deep);
     letter-spacing: 0.2em;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     text-shadow: 2px 2px 0 rgba(168, 51, 31, 0.08);
   }
-
   .title-romanized {
     font-family: 'Cinzel', serif;
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 0.5em;
     color: var(--vermillion-deep);
     text-transform: uppercase;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
   }
-
-  .title-subtitle {
+  .viewing-as {
+    margin-top: 24px;
     font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    color: var(--jade);
     font-style: italic;
-    font-size: 22px;
-    color: var(--ink-deep);
-    margin-bottom: 24px;
-    opacity: 0.85;
   }
-
+  .viewing-as strong { color: var(--vermillion-deep); font-style: normal; font-weight: 600; }
   .origin-label {
     font-family: 'Noto Serif SC', serif;
-    font-size: 18px;
+    font-size: 16px;
     color: var(--jade);
     letter-spacing: 0.1em;
+    margin-top: 12px;
   }
-
   .origin-label::before { content: '— '; color: var(--gold); }
   .origin-label::after { content: ' —'; color: var(--gold); }
 
-  /* SECTION */
-  section {
-    margin-bottom: 80px;
-    position: relative;
-  }
-
+  /* SECTIONS */
+  section { margin-bottom: 60px; position: relative; }
   .section-title {
     font-family: 'Ma Shan Zheng', serif;
-    font-size: 36px;
+    font-size: 32px;
     color: var(--vermillion-deep);
     text-align: center;
-    margin-bottom: 12px;
-    position: relative;
+    margin-bottom: 8px;
   }
-
   .section-subtitle {
     font-family: 'Cinzel', serif;
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 0.4em;
     color: var(--gold);
     text-align: center;
     text-transform: uppercase;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
   }
 
-  .divider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 40px 0;
-    gap: 20px;
-  }
-
-  .divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
-    max-width: 200px;
-  }
-
-  .divider-ornament {
-    width: 16px;
-    height: 16px;
-    background: var(--vermillion);
-    transform: rotate(45deg);
-    box-shadow: 0 0 0 2px var(--paper-cream), 0 0 0 3px var(--gold);
-  }
-
-  /* INTRO CARD */
-  .intro-card {
+  /* INFO PANEL */
+  .info-panel {
     background: linear-gradient(135deg, rgba(232, 217, 184, 0.6), rgba(212, 191, 145, 0.4));
     border: 1px solid var(--gold);
-    padding: 40px 50px;
+    padding: 32px 40px;
     border-radius: 4px;
     position: relative;
     box-shadow: 0 8px 30px var(--shadow);
   }
-
-  .intro-card::before, .intro-card::after {
+  .info-panel::before, .info-panel::after {
     content: '';
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    height: 24px;
     border: 2px solid var(--vermillion);
   }
-  .intro-card::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
-  .intro-card::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
-
-  .intro-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-  }
-
-  .intro-item {
-    padding: 12px 0;
-  }
-
-  .intro-label {
+  .info-panel::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+  .info-panel::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .info-item .info-label {
     font-family: 'Cinzel', serif;
-    font-size: 11px;
+    font-size: 10px;
     letter-spacing: 0.3em;
     color: var(--vermillion-deep);
     text-transform: uppercase;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
-
-  .intro-value {
-    font-size: 20px;
-    color: var(--ink-deep);
-    font-weight: 500;
-  }
-
-  .intro-value .han {
+  .info-item .info-value { font-size: 17px; color: var(--ink-deep); }
+  .info-item .info-value .han {
     font-family: 'Noto Serif SC', serif;
     font-weight: 700;
     color: var(--vermillion-deep);
-    margin-right: 8px;
+    margin-right: 6px;
   }
 
-  /* GENERATION TREE */
-  .tree {
-    position: relative;
-    padding: 20px 0;
-  }
-
+  /* TREE */
+  .tree { position: relative; padding: 20px 0; }
   .generation {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 0;
     position: relative;
-    padding: 30px 0;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards;
+    padding: 24px 0;
   }
-
-  .generation:nth-child(1) { animation-delay: 0.1s; }
-  .generation:nth-child(2) { animation-delay: 0.2s; }
-  .generation:nth-child(3) { animation-delay: 0.3s; }
-  .generation:nth-child(4) { animation-delay: 0.4s; }
-  .generation:nth-child(5) { animation-delay: 0.5s; }
-  .generation:nth-child(6) { animation-delay: 0.6s; }
-  .generation:nth-child(7) { animation-delay: 0.7s; }
-  .generation:nth-child(8) { animation-delay: 0.8s; }
-  .generation:nth-child(9) { animation-delay: 0.9s; }
-
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-    from { opacity: 0; transform: translateY(20px); }
-  }
-
-  /* Connecting line between generations */
   .generation:not(:last-child)::after {
     content: '';
     position: absolute;
-    bottom: -15px;
-    left: 50%;
+    bottom: -15px; left: 50%;
     transform: translateX(-50%);
-    width: 2px;
-    height: 30px;
+    width: 2px; height: 30px;
     background: linear-gradient(180deg, var(--gold), transparent);
     z-index: 1;
   }
-
-  .gen-marker {
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    color: var(--gold);
-    letter-spacing: 0.2em;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-  }
-
   .name-card {
     background: var(--paper-aged);
     border: 1px solid var(--gold);
-    padding: 24px 36px;
+    padding: 20px 28px;
     text-align: center;
     border-radius: 2px;
-    box-shadow: 
-      0 4px 16px var(--shadow),
-      inset 0 0 0 1px rgba(244, 232, 208, 0.4);
+    box-shadow: 0 4px 16px var(--shadow), inset 0 0 0 1px rgba(244, 232, 208, 0.4);
     position: relative;
     transition: all 0.4s ease;
-    min-width: 280px;
-    cursor: pointer;
+    min-width: 260px;
   }
-
-  .name-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 
-      0 8px 24px rgba(26, 20, 16, 0.2),
-      inset 0 0 0 1px rgba(244, 232, 208, 0.4);
-    border-color: var(--vermillion);
-  }
-
   .name-card.ancestor {
     background: linear-gradient(135deg, var(--paper-deep), var(--paper-aged));
     border-color: var(--vermillion);
     border-width: 2px;
   }
-
-  .name-card.current {
-    background: linear-gradient(135deg, rgba(168, 51, 31, 0.08), rgba(184, 146, 62, 0.12));
+  .name-card.is-current {
+    background: linear-gradient(135deg, rgba(168, 51, 31, 0.12), rgba(184, 146, 62, 0.18));
     border-color: var(--vermillion);
-    border-width: 2px;
+    border-width: 3px;
     transform: scale(1.05);
+    box-shadow: 0 8px 32px rgba(168, 51, 31, 0.25);
   }
-
-  .name-card.current::before {
-    content: '★';
+  .name-card.is-current::before {
+    content: '★ ANDA';
     position: absolute;
-    top: -12px;
-    right: -12px;
-    width: 28px;
-    height: 28px;
+    top: -14px; right: -14px;
     background: var(--vermillion);
     color: var(--paper-cream);
-    border-radius: 50%;
-    font-size: 14px;
-    line-height: 28px;
+    border-radius: 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    padding: 4px 10px;
     box-shadow: 0 2px 8px rgba(168, 51, 31, 0.4);
+    z-index: 5;
   }
-
   .gen-number {
     font-family: 'Cinzel', serif;
     font-size: 10px;
@@ -355,7 +270,6 @@
     text-transform: uppercase;
     margin-bottom: 8px;
   }
-
   .gen-character {
     display: inline-block;
     font-family: 'Ma Shan Zheng', serif;
@@ -367,102 +281,136 @@
     margin-left: 8px;
     vertical-align: middle;
   }
-
   .name-han {
     font-family: 'Noto Serif SC', serif;
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 700;
     color: var(--vermillion-deep);
     margin-bottom: 6px;
     letter-spacing: 0.05em;
   }
-
   .name-pinyin {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 18px;
+    font-size: 16px;
     color: var(--ink-deep);
     margin-bottom: 4px;
   }
-
   .name-id {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--jade);
     font-weight: 500;
     margin-bottom: 8px;
   }
-
   .name-role {
     font-family: 'Cinzel', serif;
     font-size: 10px;
     letter-spacing: 0.25em;
-    color: var(--gold);
+    color: var(--vermillion);
     text-transform: uppercase;
-    padding-top: 8px;
-    border-top: 1px solid rgba(184, 146, 62, 0.3);
+    padding: 6px 12px;
+    background: rgba(168, 51, 31, 0.08);
+    border-radius: 12px;
+    display: inline-block;
+    margin-top: 6px;
   }
-
-  .name-detail {
-    font-size: 13px;
-    color: var(--ink-deep);
-    opacity: 0.7;
-    margin-top: 4px;
+  .date-block {
+    margin: 8px 0;
+    padding: 8px 10px;
+    background: rgba(232, 217, 184, 0.5);
+    border-left: 2px solid var(--gold);
+    border-radius: 2px;
+    text-align: left;
+  }
+  .date-row { font-size: 11px; color: var(--ink-deep); line-height: 1.6; margin: 2px 0; }
+  .date-row.lunar { color: var(--vermillion-deep); font-family: 'Noto Serif SC', serif; }
+  .date-label {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 700;
+    color: var(--vermillion);
+    margin-right: 4px;
+  }
+  .name-meaning {
+    font-family: 'Cormorant Garamond', serif;
     font-style: italic;
+    font-size: 12px;
+    color: var(--jade);
+    margin-top: 6px;
+    opacity: 0.85;
   }
 
-  /* Siblings - horizontal layout */
-  .siblings {
+  /* PARENTS */
+  .parents-pair {
     display: flex;
-    gap: 40px;
+    align-items: center;
     justify-content: center;
+    gap: 20px;
     flex-wrap: wrap;
+  }
+  .parent-card {
+    min-width: 280px;
+    max-width: 340px;
     position: relative;
+    padding-top: 32px;
   }
-
-  .siblings::before {
-    content: '';
+  .parent-badge {
     position: absolute;
-    top: -30px;
-    left: 50%;
+    top: -12px; left: 50%;
     transform: translateX(-50%);
-    width: calc(100% - 280px);
-    max-width: 600px;
-    height: 1px;
-    background: var(--gold);
+    background: var(--vermillion);
+    color: var(--paper-cream);
+    font-family: 'Noto Serif SC', serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 5px 14px;
+    border-radius: 14px;
+    white-space: nowrap;
+    z-index: 4;
+  }
+  .parent-card.mother {
+    background: linear-gradient(135deg, rgba(232, 217, 184, 0.8), rgba(212, 191, 145, 0.5));
+  }
+  .union-symbol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 0 10px;
+  }
+  .union-icon {
+    font-size: 28px;
+    color: var(--vermillion);
+    animation: heartbeat 2s ease-in-out infinite;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+  }
+  .union-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
   }
 
-  /* Siblings grid - for 6 siblings */
+  /* SIBLINGS */
   .siblings-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
-    position: relative;
     width: 100%;
     max-width: 1000px;
     margin: 0 auto;
   }
-
-  .siblings-grid::before {
-    content: '';
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60%;
-    height: 1px;
-    background: var(--gold);
-  }
-
   .sibling-card {
     min-width: auto;
-    padding: 20px 24px;
+    padding: 20px 20px;
     position: relative;
   }
-
   .sibling-card .birth-order {
     position: absolute;
-    top: -10px;
-    left: 50%;
+    top: -10px; left: 50%;
     transform: translateX(-50%);
     background: var(--gold);
     color: var(--paper-cream);
@@ -473,686 +421,160 @@
     border-radius: 12px;
     white-space: nowrap;
     text-transform: uppercase;
+    z-index: 3;
   }
-
-  .sibling-card.current .birth-order {
-    background: var(--vermillion);
-  }
-
   .sibling-card.daughter {
     background: linear-gradient(135deg, rgba(168, 51, 31, 0.04), rgba(184, 146, 62, 0.06));
     border-color: var(--gold-pale);
   }
-
-  .sibling-card.daughter .birth-order {
-    background: var(--vermillion-deep);
-  }
-
+  .sibling-card.daughter .birth-order { background: var(--vermillion-deep); }
   .sibling-card.daughter .name-han {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
+    font-size: 22px;
     font-style: italic;
   }
 
-  .name-meaning {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 12px;
-    color: var(--jade);
-    margin-top: 6px;
-    opacity: 0.85;
-  }
-
-  /* Date block (Masehi + Lunar) */
-  .date-block {
-    margin: 8px 0;
-    padding: 8px 10px;
-    background: rgba(232, 217, 184, 0.5);
-    border-left: 2px solid var(--gold);
-    border-radius: 2px;
-    text-align: left;
-  }
-
-  .date-row {
-    font-size: 11px;
-    color: var(--ink-deep);
-    line-height: 1.6;
-    margin: 2px 0;
-  }
-
-  .date-row.lunar {
-    color: var(--vermillion-deep);
-    font-family: 'Noto Serif SC', serif;
-  }
-
-  .date-label {
-    font-family: 'Noto Serif SC', serif;
-    font-weight: 700;
-    color: var(--vermillion);
-    margin-right: 4px;
-    display: inline-block;
-    min-width: 30px;
-  }
-
-  /* PARENTS PAIR */
-  .parents-pair {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-
-  .parent-card {
-    min-width: 320px;
-    max-width: 360px;
-    position: relative;
-    padding-top: 36px;
-  }
-
-  .parent-badge {
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--vermillion);
-    color: var(--paper-cream);
-    font-family: 'Noto Serif SC', serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    padding: 5px 14px;
-    border-radius: 14px;
-    white-space: nowrap;
-    box-shadow: 0 2px 8px rgba(168, 51, 31, 0.3);
-  }
-
-  .parent-badge.mother-badge {
-    background: var(--vermillion-deep);
-  }
-
-  .parent-card.mother {
-    background: linear-gradient(135deg, rgba(232, 217, 184, 0.8), rgba(212, 191, 145, 0.5));
-  }
-
-  .union-symbol {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    padding: 0 10px;
-  }
-
-  .union-icon {
-    font-size: 28px;
-    color: var(--vermillion);
-    animation: heartbeat 2s ease-in-out infinite;
-  }
-
-  @keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-  }
-
-  .union-text {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 11px;
-    color: var(--gold);
-    letter-spacing: 0.1em;
-    writing-mode: horizontal-tb;
-  }
-
-  /* GENERATION CHARACTERS POEM */
+  /* POEM */
   .poem-box {
     background: linear-gradient(180deg, rgba(232, 217, 184, 0.5), rgba(212, 191, 145, 0.3));
     border: 1px solid var(--gold);
-    padding: 50px 60px;
+    padding: 40px 50px;
     border-radius: 4px;
     text-align: center;
-    position: relative;
     box-shadow: 0 8px 30px var(--shadow);
   }
-
-  .poem-box::before, .poem-box::after {
-    content: '※';
-    position: absolute;
-    color: var(--vermillion);
-    font-size: 20px;
-    top: 20px;
-  }
-  .poem-box::before { left: 25px; }
-  .poem-box::after { right: 25px; }
-
   .poem-line {
     font-family: 'Ma Shan Zheng', serif;
-    font-size: 42px;
+    font-size: 36px;
     color: var(--ink-deep);
     letter-spacing: 0.3em;
-    margin-bottom: 14px;
-    line-height: 1.4;
+    margin-bottom: 12px;
   }
-
   .poem-line .highlight {
     color: var(--vermillion-deep);
     background: linear-gradient(180deg, transparent 70%, rgba(184, 146, 62, 0.3) 70%);
     padding: 0 4px;
   }
-
   .poem-line .current-gen {
     color: var(--paper-cream);
     background: var(--vermillion);
     padding: 2px 8px;
     border-radius: 2px;
   }
-
   .poem-note {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 16px;
+    font-size: 15px;
     color: var(--ink-deep);
-    margin-top: 30px;
+    margin-top: 24px;
     opacity: 0.8;
   }
 
-  /* HAINAN 60 GENERATIONS POEM */
-  .hainan-poem-intro {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto 40px;
-    padding: 20px 30px;
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 17px;
-    color: var(--ink-deep);
-    line-height: 1.7;
-    border-top: 1px solid var(--gold);
-    border-bottom: 1px solid var(--gold);
-  }
-
-  .hainan-poem {
-    background: linear-gradient(180deg, rgba(232, 217, 184, 0.4), rgba(212, 191, 145, 0.2));
-    border: 1px solid var(--gold);
-    padding: 40px 30px;
-    border-radius: 4px;
-    box-shadow: 0 8px 30px var(--shadow);
-  }
-
-  .poem-row {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 24px;
-    padding: 16px;
-    border-radius: 4px;
-    transition: background 0.3s ease;
-  }
-
-  .poem-row:hover {
-    background: rgba(232, 217, 184, 0.5);
-  }
-
-  .poem-row.family-row {
-    background: linear-gradient(90deg, rgba(168, 51, 31, 0.08), rgba(184, 146, 62, 0.12));
-    border: 1px solid var(--vermillion);
-    padding: 24px 16px;
-  }
-
-  .poem-row.meaningful {
-    background: rgba(74, 107, 77, 0.06);
-  }
-
-  .poem-row.five-elements {
-    background: rgba(184, 146, 62, 0.08);
-  }
-
-  .row-label {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    color: var(--gold);
-    min-width: 90px;
-    text-align: right;
-    text-transform: uppercase;
-    flex-shrink: 0;
-  }
-
-  .row-label.highlight {
-    color: var(--vermillion);
-    font-weight: 600;
-  }
-
-  .char-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
-    flex: 1;
-  }
-
-  .char-grid.wide {
-    grid-template-columns: repeat(6, 1fr);
-  }
-
-  .gen-char {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: var(--paper-cream);
-    border: 1px solid var(--paper-deep);
-    padding: 12px 8px;
-    border-radius: 4px;
-    text-align: center;
-    transition: all 0.3s ease;
-    position: relative;
-    min-height: 80px;
-  }
-
-  .gen-char:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px var(--shadow);
-    border-color: var(--gold);
-  }
-
-  .gen-char .num {
-    font-family: 'Cinzel', serif;
-    font-size: 9px;
-    color: var(--gold);
-    letter-spacing: 0.2em;
-    margin-bottom: 4px;
-  }
-
-  .gen-char .char {
-    font-family: 'Ma Shan Zheng', serif;
-    font-size: 32px;
-    color: var(--ink-deep);
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .gen-char .py {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 11px;
-    color: var(--jade);
-    line-height: 1.2;
-  }
-
-  .gen-char .note {
-    font-size: 9px;
-    color: var(--vermillion);
-    margin-top: 4px;
-    font-weight: 600;
-  }
-
-  /* Family generation cells */
-  .gen-char.family-gen {
-    background: linear-gradient(135deg, var(--paper-aged), var(--paper-deep));
-    border: 2px solid var(--vermillion);
-    min-height: 110px;
-  }
-
-  .gen-char.family-gen .char {
-    color: var(--vermillion-deep);
-  }
-
-  .gen-char.ancestor-gen {
-    background: linear-gradient(135deg, rgba(168, 51, 31, 0.15), rgba(184, 146, 62, 0.2));
-    border: 2px solid var(--vermillion-deep);
-  }
-
-  .gen-char .badge {
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--vermillion);
-    color: var(--paper-cream);
-    font-family: 'Cinzel', serif;
-    font-size: 8px;
-    letter-spacing: 0.15em;
-    padding: 3px 8px;
-    border-radius: 10px;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .gen-char .family-name {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 12px;
-    color: var(--vermillion-deep);
-    margin-top: 4px;
-    line-height: 1.2;
-  }
-
-  .gen-char .family-name strong {
-    background: var(--gold);
-    color: var(--paper-cream);
-    padding: 0 3px;
-    border-radius: 2px;
-  }
-
-  /* Skipped generations (尤, 唯) */
-  .gen-char.skipped {
-    background: linear-gradient(135deg, rgba(184, 146, 62, 0.2), rgba(74, 107, 77, 0.1));
-    border: 2px dashed var(--jade);
-    min-height: 110px;
-  }
-
-  .gen-char.skipped .char {
-    color: var(--jade);
-    opacity: 0.6;
-  }
-
-  .gen-char .badge-alt {
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--jade);
-    color: var(--paper-cream);
-    font-family: 'Cinzel', serif;
-    font-size: 8px;
-    letter-spacing: 0.1em;
-    padding: 3px 8px;
-    border-radius: 10px;
-    white-space: nowrap;
-  }
-
-  .gen-char .actual-name {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 11px;
-    color: var(--vermillion-deep);
-    margin-top: 4px;
-    line-height: 1.2;
-    font-style: italic;
-  }
-
-  .gen-char .actual-name strong {
-    background: var(--vermillion);
-    color: var(--paper-cream);
-    padding: 0 3px;
-    border-radius: 2px;
-  }
-
-  /* Future generation */
-  .gen-char.future-gen {
-    background: linear-gradient(135deg, rgba(74, 107, 77, 0.15), rgba(184, 146, 62, 0.15));
-    border: 2px solid var(--jade);
-    animation: pulse 3s ease-in-out infinite;
-    min-height: 110px;
-  }
-
-  @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(74, 107, 77, 0.3); }
-    50% { box-shadow: 0 0 0 8px rgba(74, 107, 77, 0); }
-  }
-
-  .gen-char.future-gen .char {
-    color: var(--jade);
-  }
-
-  .gen-char .badge-future {
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--gold);
-    color: var(--ink-deep);
-    font-family: 'Cinzel', serif;
-    font-size: 8px;
-    letter-spacing: 0.1em;
-    padding: 3px 8px;
-    border-radius: 10px;
-    white-space: nowrap;
-    font-weight: 700;
-  }
-
-  .row-meaning {
-    width: 100%;
-    text-align: center;
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 14px;
-    color: var(--jade);
-    margin-top: 12px;
-    padding-top: 8px;
-    border-top: 1px dashed rgba(74, 107, 77, 0.3);
-  }
-
-  /* LEGEND */
-  .legend {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
-    margin-top: 30px;
-    padding: 20px;
-    background: rgba(232, 217, 184, 0.4);
-    border-radius: 4px;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    color: var(--ink-deep);
-  }
-
-  .legend-box {
-    width: 20px;
-    height: 20px;
-    border-radius: 3px;
-    flex-shrink: 0;
-  }
-
-  .legend-box.ancestor-gen {
-    background: linear-gradient(135deg, rgba(168, 51, 31, 0.15), rgba(184, 146, 62, 0.2));
-    border: 2px solid var(--vermillion-deep);
-  }
-
-  .legend-box.family-gen {
-    background: linear-gradient(135deg, var(--paper-aged), var(--paper-deep));
-    border: 2px solid var(--vermillion);
-  }
-
-  .legend-box.skipped {
-    background: linear-gradient(135deg, rgba(184, 146, 62, 0.2), rgba(74, 107, 77, 0.1));
-    border: 2px dashed var(--jade);
-  }
-
-  .legend-box.future-gen {
-    background: linear-gradient(135deg, rgba(74, 107, 77, 0.15), rgba(184, 146, 62, 0.15));
-    border: 2px solid var(--jade);
-  }
-
-  /* HISTORICAL CONTEXT */
-  .context-box {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-top: 40px;
-  }
-
-  .context-card {
-    background: var(--paper-aged);
-    border-left: 3px solid var(--vermillion);
-    padding: 24px 28px;
-    border-radius: 2px;
-    box-shadow: 0 4px 12px var(--shadow);
-  }
-
-  .context-card h3 {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 20px;
-    color: var(--vermillion-deep);
-    margin-bottom: 12px;
-  }
-
-  .context-card p {
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--ink-deep);
-  }
-
-  /* MAP / LOCATION */
+  /* LOCATION */
   .location-card {
     background: linear-gradient(135deg, var(--paper-aged), var(--paper-deep));
-    padding: 40px;
+    padding: 36px;
     border-radius: 4px;
     text-align: center;
     border: 1px solid var(--gold);
-    position: relative;
     box-shadow: 0 8px 30px var(--shadow);
   }
-
   .location-flow {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 30px;
+    gap: 24px;
     flex-wrap: wrap;
-    margin: 30px 0;
+    margin: 24px 0;
   }
-
-  .location-node {
-    text-align: center;
-    padding: 20px;
-    min-width: 180px;
-  }
-
-  .location-node .flag {
-    font-size: 36px;
-    margin-bottom: 8px;
-  }
-
+  .location-node { text-align: center; padding: 16px; min-width: 160px; }
+  .location-node .flag { font-size: 32px; margin-bottom: 6px; }
   .location-node .place-han {
     font-family: 'Noto Serif SC', serif;
-    font-size: 18px;
+    font-size: 17px;
     color: var(--vermillion-deep);
     font-weight: 700;
     margin-bottom: 4px;
   }
+  .location-node .place-id { font-size: 13px; color: var(--ink-deep); }
+  .location-arrow { font-size: 26px; color: var(--gold); }
 
-  .location-node .place-id {
-    font-size: 14px;
-    color: var(--ink-deep);
+  /* CONTEXT */
+  .context-box { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .context-card {
+    background: var(--paper-aged);
+    border-left: 3px solid var(--vermillion);
+    padding: 20px 24px;
+    border-radius: 2px;
+    box-shadow: 0 4px 12px var(--shadow);
   }
-
-  .location-arrow {
-    font-size: 28px;
-    color: var(--gold);
+  .context-card h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    color: var(--vermillion-deep);
+    margin-bottom: 10px;
   }
+  .context-card p { font-size: 14px; line-height: 1.7; color: var(--ink-deep); }
 
   /* FOOTER */
   footer {
     text-align: center;
-    padding: 60px 20px 30px;
+    padding: 40px 20px 20px;
     border-top: 1px solid var(--gold);
-    margin-top: 60px;
+    margin-top: 40px;
   }
-
   .footer-seal {
     display: inline-block;
-    width: 60px;
-    height: 60px;
+    width: 50px; height: 50px;
     background: var(--vermillion);
     color: var(--paper-cream);
     font-family: 'Ma Shan Zheng', serif;
-    font-size: 36px;
-    line-height: 60px;
-    margin-bottom: 20px;
+    font-size: 30px;
+    line-height: 50px;
+    margin-bottom: 16px;
     border-radius: 3px;
     transform: rotate(2deg);
   }
-
   .footer-text {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     color: var(--ink-deep);
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.8;
     max-width: 600px;
     margin: 0 auto;
   }
-
   .footer-date {
     font-family: 'Cinzel', serif;
-    font-size: 11px;
+    font-size: 10px;
     letter-spacing: 0.4em;
     color: var(--gold);
-    margin-top: 20px;
+    margin-top: 16px;
     text-transform: uppercase;
+  }
+
+  .fade-transition { animation: fadeIn 0.5s ease; }
+  @keyframes fadeIn {
+    from { opacity: 0.5; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   /* RESPONSIVE */
   @media (max-width: 768px) {
-    .container { padding: 40px 20px; }
-    .title-chinese { font-size: 48px; }
-    .name-card { min-width: 240px; padding: 20px 24px; }
-    .name-han { font-size: 28px; }
-    .intro-grid { grid-template-columns: 1fr; gap: 16px; }
-    .poem-line { font-size: 28px; }
+    .container { padding: 30px 16px; }
+    .title-chinese { font-size: 44px; }
+    .name-card { min-width: 220px; padding: 16px 20px; }
+    .name-han { font-size: 26px; }
+    .info-grid { grid-template-columns: 1fr; gap: 12px; }
+    .poem-line { font-size: 24px; }
     .context-box { grid-template-columns: 1fr; }
-    .siblings { gap: 20px; }
-    .siblings::before { display: none; }
-    
-    /* Siblings grid mobile */
-    .siblings-grid {
-      grid-template-columns: 1fr;
-      gap: 30px;
-    }
-    .siblings-grid::before { display: none; }
-    .sibling-card { min-width: 100%; }
-    
-    /* Parents pair mobile */
-    .parents-pair {
-      flex-direction: column;
-      gap: 30px;
-    }
-    .parent-card {
-      min-width: 100%;
-      max-width: 100%;
-    }
-    .union-symbol {
-      transform: rotate(90deg);
-    }
-    
-    /* Hainan poem mobile */
-    .poem-row { 
-      flex-direction: column; 
-      align-items: stretch;
-      padding: 12px 8px;
-    }
-    .row-label { 
-      text-align: center; 
-      min-width: auto;
-      margin-bottom: 8px;
-    }
-    .char-grid { 
-      grid-template-columns: repeat(3, 1fr); 
-      gap: 8px;
-    }
-    .char-grid.wide { 
-      grid-template-columns: repeat(3, 1fr); 
-    }
-    .gen-char .char { font-size: 26px; }
-    .gen-char .badge,
-    .gen-char .badge-alt,
-    .gen-char .badge-future {
-      font-size: 7px;
-      padding: 2px 6px;
-    }
-    .hainan-poem { padding: 20px 12px; }
-    .legend { gap: 12px; padding: 12px; }
-    .legend-item { font-size: 11px; }
-  }
-  
-  /* Tablet */
-  @media (min-width: 769px) and (max-width: 1024px) {
-    .siblings-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .siblings-grid { grid-template-columns: 1fr; gap: 24px; }
+    .parents-pair { flex-direction: column; gap: 24px; }
+    .parent-card { min-width: 100%; max-width: 100%; }
+    .union-symbol { transform: rotate(90deg); }
+    .person-buttons { grid-template-columns: repeat(2, 1fr); }
+    .perspective-selector { padding: 20px 18px; }
+    .selector-title { font-size: 18px; }
   }
 </style>
 </head>
@@ -1160,509 +582,50 @@
 
 <div class="container">
 
+  <!-- PERSPECTIVE SELECTOR -->
+  <div class="perspective-selector">
+    <div class="selector-title">Selamat datang di Silsilah Keluarga Pan</div>
+    <div class="selector-subtitle">Pilih sudut pandang Anda — silsilah akan menyesuaikan diri menampilkan hubungan keluarga dari perspektif Anda.</div>
+    <div class="person-buttons" id="personButtons"></div>
+  </div>
+
   <!-- HEADER -->
   <header>
     <div class="seal">潘</div>
     <div class="title-chinese">潘氏家谱</div>
-    <div class="title-romanized">Pān Shì Jiā Pǔ</div>
-    <div class="title-subtitle">Silsilah Keluarga Pan</div>
+    <div class="title-romanized">Pān Shì Jiā Pǔ · Silsilah Keluarga Pan</div>
+    <div class="viewing-as" id="viewingAs">Menampilkan silsilah dari sudut pandang <strong>Yulius (潘尤上)</strong></div>
     <div class="origin-label">宝藏村 · 文昌县 · 海南</div>
   </header>
 
-  <!-- IDENTITY OF YULIUS -->
+  <!-- INFO PANEL -->
   <section>
-    <h2 class="section-title">家主</h2>
-    <p class="section-subtitle">Kepala Keluarga</p>
-
-    <div class="intro-card">
-      <div class="intro-grid">
-        <div class="intro-item">
-          <div class="intro-label">Nama Indonesia</div>
-          <div class="intro-value">Yulius</div>
-        </div>
-        <div class="intro-item">
-          <div class="intro-label">Nama Mandarin · 中文名</div>
-          <div class="intro-value"><span class="han">潘尤上</span>Pān Yóu Shàng</div>
-        </div>
-        <div class="intro-item">
-          <div class="intro-label">Panggilan Hakka · 客家名</div>
-          <div class="intro-value"><span class="han">阿松</span>Asong</div>
-        </div>
-        <div class="intro-item">
-          <div class="intro-label">Tanggal Lahir</div>
-          <div class="intro-value">22 Oktober 1981, 10:00 WIT</div>
-        </div>
-        <div class="intro-item">
-          <div class="intro-label">Marga · 姓</div>
-          <div class="intro-value"><span class="han">潘</span>Pan / Pun (Hakka)</div>
-        </div>
-        <div class="intro-item">
-          <div class="intro-label">Generasi · 世代</div>
-          <div class="intro-value">Ke-6 (Karakter 尤) · Anak ke-2 dari 6 bersaudara</div>
-        </div>
-      </div>
-    </div>
+    <h2 class="section-title">个人资料</h2>
+    <p class="section-subtitle">Profil Anda</p>
+    <div class="info-panel" id="infoPanel"></div>
   </section>
 
   <!-- LINEAGE TREE -->
   <section>
     <h2 class="section-title">世系图</h2>
-    <p class="section-subtitle">Pohon Silsilah Tujuh Generasi</p>
-
-    <div class="tree">
-
-      <!-- Gen 1: Ancestor -->
-      <div class="generation">
-        <div class="name-card ancestor">
-          <div class="gen-number">Generasi 1 · 始祖<span class="gen-character">有</span></div>
-          <div class="name-han">潘有本</div>
-          <div class="name-pinyin">Pān Yǒu Běn</div>
-          <div class="name-role">Leluhur Pendiri · 祖公</div>
-          <div class="name-detail">"Pan yang Memiliki Akar"</div>
-        </div>
-      </div>
-
-      <!-- Gen 2 -->
-      <div class="generation">
-        <div class="name-card">
-          <div class="gen-number">Generasi 2<span class="gen-character">辉</span></div>
-          <div class="name-han">潘辉</div>
-          <div class="name-pinyin">Pān Huī</div>
-          <div class="name-role">Keturunan ke-2</div>
-          <div class="name-detail">"Pan yang Bersinar"</div>
-        </div>
-      </div>
-
-      <!-- Gen 3 -->
-      <div class="generation">
-        <div class="siblings">
-          <div class="name-card">
-            <div class="gen-number">Generasi 3<span class="gen-character">于</span></div>
-            <div class="name-han">潘于昆</div>
-            <div class="name-pinyin">Pān Yú Kūn</div>
-            <div class="name-role">Keturunan ke-3</div>
-          </div>
-          <div class="name-card">
-            <div class="gen-number">Generasi 3<span class="gen-character">于</span></div>
-            <div class="name-han">潘于理</div>
-            <div class="name-pinyin">Pān Yú Lǐ</div>
-            <div class="name-role">Keturunan ke-3</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Gen 4: Grandfather -->
-      <div class="generation">
-        <div class="name-card">
-          <div class="gen-number">Generasi 4 · Kakek<span class="gen-character">先</span></div>
-          <div class="name-han">潘先学</div>
-          <div class="name-pinyin">Pān Xiān Xué</div>
-          <div class="name-role">Kakek · 祖父</div>
-          <div class="name-detail">"Pan yang Mendahului dalam Belajar"</div>
-        </div>
-      </div>
-
-      <!-- Gen 5: Father AND Mother -->
-      <div class="generation">
-        <div class="parents-pair">
-          <!-- Father -->
-          <div class="name-card parent-card">
-            <div class="parent-badge father">父亲 · AYAH</div>
-            <div class="gen-number">Generasi 5<span class="gen-character">正</span></div>
-            <div class="name-han">潘正忠</div>
-            <div class="name-pinyin">Pān Zhèng Zhōng</div>
-            <div class="name-id">Hakka: Phan Ku (潘哥)</div>
-            <div class="name-role">Ayah · 父亲</div>
-            <div class="date-block">
-              <div class="date-row lunar"><span class="date-label">农历:</span> 24 bulan 8 (Imlek)</div>
-            </div>
-            <div class="name-meaning">"Pan yang Lurus dan Setia"<br>— Penjaga Silsilah Keluarga —</div>
-          </div>
-
-          <!-- Connector heart -->
-          <div class="union-symbol">
-            <span class="union-icon">❤</span>
-            <span class="union-text">夫妻 · Suami Istri</span>
-          </div>
-
-          <!-- Mother -->
-          <div class="name-card parent-card mother">
-            <div class="parent-badge mother-badge">母亲 · IBU</div>
-            <div class="gen-number">Generasi 5 (menikah masuk)</div>
-            <div class="name-han">叶氏 Djap</div>
-            <div class="name-pinyin">Djap Sit Djun</div>
-            <div class="name-id">Marga asli: 叶 (Djap/Yè)</div>
-            <div class="name-role">Ibu · 母亲</div>
-            <div class="date-block">
-              <div class="date-row lunar"><span class="date-label">农历:</span> 22 bulan 8 (Imlek)</div>
-            </div>
-            <div class="name-meaning">Hakka: Sit Djun (息珍?)<br>— Pelita Keluarga —</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Gen 6: Yulius and 5 siblings -->
-      <div class="generation">
-        <div class="siblings-grid">
-          
-          <!-- Anak 1: 潘尤太 / Jiu Thai -->
-          <div class="name-card sibling-card">
-            <div class="birth-order">长子 · Anak ke-1</div>
-            <div class="gen-number">Generasi 6<span class="gen-character">尤</span></div>
-            <div class="name-han">潘尤太</div>
-            <div class="name-pinyin">Pān Yóu Tài</div>
-            <div class="name-id">Hakka: Jiu Thai</div>
-            <div class="name-role">♂ Abang Sulung</div>
-            <div class="date-block">
-              <div class="date-row"><span class="date-label">国历:</span> 23 Juli 1980, 11:00 WITA</div>
-              <div class="date-row lunar"><span class="date-label">农历:</span> 12 bulan 6, tahun 1980 (庚申 · Monyet Logam)</div>
-            </div>
-            <div class="name-meaning">"Pan yang Istimewa dan Agung"</div>
-          </div>
-
-          <!-- Anak 2: 潘尤上 / Asong (KAMU) -->
-          <div class="name-card sibling-card current">
-            <div class="birth-order">次子 · Anak ke-2 · KAMU</div>
-            <div class="gen-number">Generasi 6<span class="gen-character">尤</span></div>
-            <div class="name-han">潘尤上</div>
-            <div class="name-pinyin">Pān Yóu Shàng</div>
-            <div class="name-id">Yulius · Hakka: 阿松 Asong</div>
-            <div class="name-role">♂ Anak Kedua</div>
-            <div class="date-block">
-              <div class="date-row"><span class="date-label">国历:</span> 22 Oktober 1981, 10:00 WIT</div>
-              <div class="date-row lunar"><span class="date-label">农历:</span> 25 bulan 9, tahun 1981 (辛酉 · Ayam Logam)</div>
-            </div>
-            <div class="name-meaning">"Pan yang Istimewa dan Tinggi/Mulia"</div>
-          </div>
-
-          <!-- Anak 3: Setiana / ANAO -->
-          <div class="name-card sibling-card daughter">
-            <div class="birth-order">三女 · Anak ke-3</div>
-            <div class="gen-number">Generasi 6<span class="gen-character">尤</span></div>
-            <div class="name-han">Setiana</div>
-            <div class="name-pinyin">Adik Perempuan ke-1</div>
-            <div class="name-id">Hakka: ANAO (阿娜?)</div>
-            <div class="name-role">♀ Anak Ketiga</div>
-            <div class="date-block">
-              <div class="date-row"><span class="date-label">国历:</span> 23 September 1986, 24:00 WIT</div>
-              <div class="date-row lunar"><span class="date-label">农历:</span> 20 bulan 8, tahun 1986 (丙寅 · Macan Api)</div>
-            </div>
-            <div class="name-meaning">Lahir tepat tengah malam · 半夜出生</div>
-          </div>
-
-          <!-- Anak 4: Chindy Lien / Acian -->
-          <div class="name-card sibling-card daughter">
-            <div class="birth-order">四女 · Anak ke-4</div>
-            <div class="gen-number">Generasi 6<span class="gen-character">尤</span></div>
-            <div class="name-han">Chindy Lien</div>
-            <div class="name-pinyin">Adik Perempuan ke-2</div>
-            <div class="name-id">Hakka: Acian (阿莲?)</div>
-            <div class="name-role">♀ Anak Keempat</div>
-            <div class="date-block">
-              <div class="date-row"><span class="date-label">国历:</span> 11 Desember 1988, 13:00 WIB</div>
-              <div class="date-row lunar"><span class="date-label">农历:</span> 3 bulan 11, tahun 1988 (戊辰 · Naga Tanah)</div>
-            </div>
-            <div class="name-meaning">Lahir di wilayah WIB · 良辰美景</div>
-          </div>
-
-          <!-- Anak 5: Desi Wilianti / Achin -->
-          <div class="name-card sibling-card daughter">
-            <div class="birth-order">五女 · Anak ke-5</div>
-            <div class="gen-number">Generasi 6<span class="gen-character">尤</span></div>
-            <div class="name-han">Desi Wilianti</div>
-            <div class="name-pinyin">Adik Perempuan ke-3</div>
-            <div class="name-id">Hakka: Achin (阿琴?)</div>
-            <div class="name-role">♀ Anak Kelima</div>
-            <div class="date-block">
-              <div class="date-row"><span class="date-label">国历:</span> 30 Desember 1989, 22:00 WIB (Sabtu Malam)</div>
-              <div class="date-row lunar"><span class="date-label">农历:</span> 3 bulan 12, tahun 1989 (己巳 · Ular Tanah)</div>
-            </div>
-            <div class="name-meaning">Lahir Sabtu malam · 周六之夜</div>
-          </div>
-
-          <!-- Anak 6: Stella / Stlela -->
-          <div class="name-card sibling-card daughter">
-            <div class="birth-order">六女 · Anak Bungsu</div>
-            <div class="gen-number">Generasi 6<span class="gen-character">尤</span></div>
-            <div class="name-han">Stella</div>
-            <div class="name-pinyin">Si Bungsu · 幺女</div>
-            <div class="name-id">Hakka: Stlela</div>
-            <div class="name-role">♀ Anak Bungsu</div>
-            <div class="date-block">
-              <div class="date-row"><span class="date-label">国历:</span> 3 Januari 1995, 04:40 WIB</div>
-              <div class="date-row lunar"><span class="date-label">农历:</span> 3 bulan 12, tahun 1994 (甲戌 · Anjing Kayu)</div>
-            </div>
-            <div class="name-meaning">Lahir di pagi dini hari · 黎明出生</div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Gen 7: Children -->
-      <div class="generation">
-        <div class="siblings">
-          <div class="name-card">
-            <div class="gen-number">Generasi 7 · Anak<span class="gen-character">唯</span></div>
-            <div class="name-han">潘唯鸿</div>
-            <div class="name-pinyin">Pān Wéi Hóng</div>
-            <div class="name-id">Benedict Jose Phan</div>
-            <div class="name-role">Cucu Sulung · 长孙</div>
-            <div class="date-block">
-              <div class="date-row"><span class="date-label">国历:</span> 8 Maret 2007, Jakarta</div>
-              <div class="date-row lunar"><span class="date-label">农历:</span> 19 bulan 1, tahun 2007 (丁亥 · Babi Api)</div>
-            </div>
-            <div class="name-meaning">"Yang Sejati dan Agung"</div>
-          </div>
-          <div class="name-card">
-            <div class="gen-number">Generasi 7 · Anak<span class="gen-character">唯</span></div>
-            <div class="name-han">潘唯慊</div>
-            <div class="name-pinyin">Pān Wéi Qiàn</div>
-            <div class="name-id">Bellarmino Jovian Phan</div>
-            <div class="name-role">Cucu Kedua · 次孙</div>
-            <div class="date-block">
-              <div class="date-row"><span class="date-label">国历:</span> 30 September 2010, Jakarta</div>
-              <div class="date-row lunar"><span class="date-label">农历:</span> 23 bulan 8, tahun 2010 (庚寅 · Macan Logam)</div>
-            </div>
-            <div class="name-meaning">"Yang Sejati dan Rendah Hati"</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
+    <p class="section-subtitle">Pohon Silsilah Keluarga</p>
+    <div class="tree" id="familyTree"></div>
   </section>
 
-  <div class="divider">
-    <div class="divider-ornament"></div>
-  </div>
-
-  <!-- GENERATION CHARACTERS -->
+  <!-- GENERATION POEM -->
   <section>
     <h2 class="section-title">字辈</h2>
     <p class="section-subtitle">Susunan Generasi Keluarga</p>
-
     <div class="poem-box">
       <div class="poem-line">
-        <span class="highlight">有</span> · 
-        <span class="highlight">辉</span> · 
-        <span class="highlight">于</span> · 
-        <span class="highlight">先</span>
+        <span class="highlight">有</span> · <span class="highlight">辉</span> · <span class="highlight">于</span> · <span class="highlight">先</span>
       </div>
       <div class="poem-line">
-        <span class="highlight">正</span> · 
-        <span class="current-gen">尤</span> · 
-        <span class="highlight">唯</span>
+        <span class="highlight">正</span> · <span class="current-gen">尤</span> · <span class="highlight">唯</span>
       </div>
-
       <div class="poem-note">
-        Tujuh karakter generasi yang tercatat dari Desa Baozang, Wenchang, Hainan.<br>
-        <strong style="color: var(--vermillion-deep);">尤 (Yóu)</strong> = generasi Yulius — "Istimewa, Luar Biasa"
-      </div>
-    </div>
-  </section>
-
-  <!-- 60 GENERATIONS OF PAN HAINAN -->
-  <section>
-    <h2 class="section-title">海南潘氏字辈</h2>
-    <p class="section-subtitle">Syair 60 Generasi Klan Pan Hainan</p>
-
-    <div class="hainan-poem-intro">
-      <p>Susunan resmi 60 generasi marga Pan dari Hainan, disusun seperti syair leluhur. Setiap karakter mewakili satu generasi. Keluarga Yulius berada di <strong>baris kedua</strong> (generasi 16–21).</p>
-    </div>
-
-    <div class="hainan-poem">
-
-      <!-- Baris 1: Gen 1-5 -->
-      <div class="poem-row">
-        <div class="row-label">壹 · I</div>
-        <div class="char-grid">
-          <div class="gen-char"><span class="num">1</span><span class="char">万</span><span class="py">wàn</span></div>
-          <div class="gen-char"><span class="num">2</span><span class="char">翁</span><span class="py">wēng</span></div>
-          <div class="gen-char"><span class="num">3</span><span class="char">宏</span><span class="py">hóng</span></div>
-          <div class="gen-char"><span class="num">4</span><span class="char">朝</span><span class="py">cháo</span></div>
-          <div class="gen-char"><span class="num">5</span><span class="char">世</span><span class="py">shì</span></div>
-        </div>
-      </div>
-
-      <!-- Baris 2: Gen 6-10 -->
-      <div class="poem-row">
-        <div class="row-label">贰 · II</div>
-        <div class="char-grid">
-          <div class="gen-char"><span class="num">6</span><span class="char">保</span><span class="py">bǎo</span></div>
-          <div class="gen-char"><span class="num">7</span><span class="char">王</span><span class="py">wáng</span></div>
-          <div class="gen-char"><span class="num">8</span><span class="char">廷</span><span class="py">tíng</span></div>
-          <div class="gen-char"><span class="num">9</span><span class="char">中</span><span class="py">zhōng</span></div>
-          <div class="gen-char"><span class="num">10</span><span class="char">文</span><span class="py">wén</span></div>
-        </div>
-      </div>
-
-      <!-- Baris 3: Gen 11-15 (Five Elements 五行) -->
-      <div class="poem-row five-elements">
-        <div class="row-label">叁 · III · 五行</div>
-        <div class="char-grid">
-          <div class="gen-char"><span class="num">11</span><span class="char">水</span><span class="py">shuǐ · air</span></div>
-          <div class="gen-char"><span class="num">12</span><span class="char">木</span><span class="py">mù · kayu</span></div>
-          <div class="gen-char"><span class="num">13</span><span class="char">火</span><span class="py">huǒ · api</span></div>
-          <div class="gen-char"><span class="num">14</span><span class="char">土</span><span class="py">tǔ · tanah</span></div>
-          <div class="gen-char"><span class="num">15</span><span class="char">宇</span><span class="py">yǔ · alam</span></div>
-        </div>
-      </div>
-
-      <!-- Baris 4: Gen 16-21 — KELUARGAMU! -->
-      <div class="poem-row family-row">
-        <div class="row-label highlight">肆 · IV · 你的家族</div>
-        <div class="char-grid wide">
-          <div class="gen-char"><span class="num">16</span><span class="char">大</span><span class="py">dà</span></div>
-          <div class="gen-char family-gen ancestor-gen">
-            <span class="badge">祖公 Leluhur</span>
-            <span class="num">17</span><span class="char">有</span><span class="py">yǒu</span>
-            <span class="family-name">潘<strong>有</strong>本</span>
-          </div>
-          <div class="gen-char"><span class="num">18</span><span class="char">光</span><span class="py">guāng</span><span class="note">≈ 辉 Hui</span></div>
-          <div class="gen-char family-gen">
-            <span class="num">19</span><span class="char">于</span><span class="py">yú</span>
-            <span class="family-name">潘<strong>于</strong>昆/理</span>
-          </div>
-          <div class="gen-char family-gen">
-            <span class="badge">祖父 Kakek</span>
-            <span class="num">20</span><span class="char">先</span><span class="py">xiān</span>
-            <span class="family-name">潘<strong>先</strong>学</span>
-          </div>
-          <div class="gen-char family-gen">
-            <span class="badge">父亲 Ayah</span>
-            <span class="num">21</span><span class="char">正</span><span class="py">zhèng</span>
-            <span class="family-name">潘<strong>正</strong>忠</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Baris 5: Gen 22-25 — "Rumah berdasarkan Bakti & Kebajikan" -->
-      <div class="poem-row meaningful">
-        <div class="row-label">伍 · V</div>
-        <div class="char-grid">
-          <div class="gen-char skipped">
-            <span class="badge-alt">★ Kamu (尤)</span>
-            <span class="num">22</span><span class="char">家</span><span class="py">jiā · rumah</span>
-            <span class="actual-name">Aktual: 潘<strong>尤</strong>上/太</span>
-          </div>
-          <div class="gen-char skipped">
-            <span class="badge-alt">★ Anakmu (唯)</span>
-            <span class="num">23</span><span class="char">在</span><span class="py">zài · di</span>
-            <span class="actual-name">Aktual: 潘<strong>唯</strong>鸿/慊</span>
-          </div>
-          <div class="gen-char future-gen">
-            <span class="badge-future">🔮 Cucumu</span>
-            <span class="num">24</span><span class="char">孝</span><span class="py">xiào · bakti</span>
-          </div>
-          <div class="gen-char">
-            <span class="num">25</span><span class="char">德</span><span class="py">dé · budi</span>
-          </div>
-        </div>
-        <div class="row-meaning">"Rumah tangga berdasarkan <strong>bakti dan budi luhur</strong>"</div>
-      </div>
-
-      <!-- Baris 6: Gen 26-30 -->
-      <div class="poem-row meaningful">
-        <div class="row-label">陆 · VI</div>
-        <div class="char-grid">
-          <div class="gen-char"><span class="num">26</span><span class="char">辅</span><span class="py">fǔ · bantu</span></div>
-          <div class="gen-char"><span class="num">27</span><span class="char">国</span><span class="py">guó · negara</span></div>
-          <div class="gen-char"><span class="num">28</span><span class="char">纪</span><span class="py">jì · catat</span></div>
-          <div class="gen-char"><span class="num">29</span><span class="char">显</span><span class="py">xiǎn · gemilang</span></div>
-          <div class="gen-char"><span class="num">30</span><span class="char">勋</span><span class="py">xūn · jasa</span></div>
-        </div>
-        <div class="row-meaning">"Membantu negara, mencatat jasa yang gemilang"</div>
-      </div>
-
-      <!-- Baris 7: Gen 31-35 -->
-      <div class="poem-row">
-        <div class="row-label">柒 · VII</div>
-        <div class="char-grid">
-          <div class="gen-char"><span class="num">31</span><span class="char">祥</span><span class="py">xiáng</span></div>
-          <div class="gen-char"><span class="num">32</span><span class="char">书</span><span class="py">shū</span></div>
-          <div class="gen-char"><span class="num">33</span><span class="char">泰</span><span class="py">tài</span></div>
-          <div class="gen-char"><span class="num">34</span><span class="char">孚</span><span class="py">fú</span></div>
-          <div class="gen-char"><span class="num">35</span><span class="char">日</span><span class="py">rì</span></div>
-        </div>
-      </div>
-
-      <!-- Baris 8: Gen 36-40 -->
-      <div class="poem-row">
-        <div class="row-label">捌 · VIII</div>
-        <div class="char-grid">
-          <div class="gen-char"><span class="num">36</span><span class="char">昌</span><span class="py">chāng</span></div>
-          <div class="gen-char"><span class="num">37</span><span class="char">明</span><span class="py">míng</span></div>
-          <div class="gen-char"><span class="num">38</span><span class="char">应</span><span class="py">yìng</span></div>
-          <div class="gen-char"><span class="num">39</span><span class="char">运</span><span class="py">yùn</span></div>
-          <div class="gen-char"><span class="num">40</span><span class="char">兴</span><span class="py">xìng</span></div>
-        </div>
-      </div>
-
-      <!-- Baris 9: Gen 41-45 -->
-      <div class="poem-row">
-        <div class="row-label">玖 · IX</div>
-        <div class="char-grid">
-          <div class="gen-char"><span class="num">41</span><span class="char">安</span><span class="py">ān</span></div>
-          <div class="gen-char"><span class="num">42</span><span class="char">全</span><span class="py">quán</span></div>
-          <div class="gen-char"><span class="num">43</span><span class="char">开</span><span class="py">kāi</span></div>
-          <div class="gen-char"><span class="num">44</span><span class="char">盛</span><span class="py">shèng</span></div>
-          <div class="gen-char"><span class="num">45</span><span class="char">会</span><span class="py">huì</span></div>
-        </div>
-      </div>
-
-      <!-- Baris 10: Gen 46-50 -->
-      <div class="poem-row">
-        <div class="row-label">拾 · X</div>
-        <div class="char-grid">
-          <div class="gen-char"><span class="num">46</span><span class="char">纯</span><span class="py">chún</span></div>
-          <div class="gen-char"><span class="num">47</span><span class="char">厚</span><span class="py">hòu</span></div>
-          <div class="gen-char"><span class="num">48</span><span class="char">福</span><span class="py">fú</span></div>
-          <div class="gen-char"><span class="num">49</span><span class="char">乃</span><span class="py">nǎi</span></div>
-          <div class="gen-char"><span class="num">50</span><span class="char">成</span><span class="py">chéng</span></div>
-        </div>
-      </div>
-
-      <!-- Baris 11: Gen 51-55 -->
-      <div class="poem-row">
-        <div class="row-label">拾壹 · XI</div>
-        <div class="char-grid">
-          <div class="gen-char"><span class="num">51</span><span class="char">修</span><span class="py">xiū</span></div>
-          <div class="gen-char"><span class="num">52</span><span class="char">善</span><span class="py">shàn</span></div>
-          <div class="gen-char"><span class="num">53</span><span class="char">荣</span><span class="py">róng</span></div>
-          <div class="gen-char"><span class="num">54</span><span class="char">华</span><span class="py">huá</span></div>
-          <div class="gen-char"><span class="num">55</span><span class="char">美</span><span class="py">měi</span></div>
-        </div>
-      </div>
-
-      <!-- Baris 12: Gen 56-60 -->
-      <div class="poem-row">
-        <div class="row-label">拾贰 · XII</div>
-        <div class="char-grid">
-          <div class="gen-char"><span class="num">56</span><span class="char">才</span><span class="py">cái</span></div>
-          <div class="gen-char"><span class="num">57</span><span class="char">献</span><span class="py">xiàn</span></div>
-          <div class="gen-char"><span class="num">58</span><span class="char">业</span><span class="py">yè</span></div>
-          <div class="gen-char"><span class="num">59</span><span class="char">树</span><span class="py">shù</span></div>
-          <div class="gen-char"><span class="num">60</span><span class="char">嘉</span><span class="py">jiā</span></div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="legend">
-      <div class="legend-item">
-        <span class="legend-box ancestor-gen"></span>
-        <span>Leluhur tercatat keluargamu</span>
-      </div>
-      <div class="legend-item">
-        <span class="legend-box family-gen"></span>
-        <span>Generasi keluargamu (有→正)</span>
-      </div>
-      <div class="legend-item">
-        <span class="legend-box skipped"></span>
-        <span>Generasi yang "dilompati" (尤, 唯)</span>
-      </div>
-      <div class="legend-item">
-        <span class="legend-box future-gen"></span>
-        <span>Generasi cucu (rekomendasi: 孝)</span>
+        Tujuh karakter generasi tercatat dari Desa Baozang, Wenchang, Hainan.<br>
+        <strong style="color: var(--vermillion-deep);">尤 (Yóu)</strong> = generasi 6 · <strong style="color: var(--vermillion-deep);">唯 (Wéi)</strong> = generasi 7
       </div>
     </div>
   </section>
@@ -1671,7 +634,6 @@
   <section>
     <h2 class="section-title">寻根</h2>
     <p class="section-subtitle">Mencari Akar Leluhur</p>
-
     <div class="location-card">
       <div class="location-flow">
         <div class="location-node">
@@ -1684,7 +646,7 @@
         <div class="location-node">
           <div class="flag">🌊</div>
           <div class="place-han">南洋</div>
-          <div class="place-id">Nanyang (Asia Tenggara)</div>
+          <div class="place-id">Nanyang</div>
           <div class="place-id" style="font-style: italic; margin-top: 4px;">Era Migrasi</div>
         </div>
         <div class="location-arrow">→</div>
@@ -1695,77 +657,388 @@
           <div class="place-id" style="font-style: italic; margin-top: 4px;">Tanah Air Sekarang</div>
         </div>
       </div>
-      <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--ink-deep); font-size: 17px; margin-top: 20px;">
-        Marga Pan (潘) dari Hainan adalah salah satu dari sedikit klan Tionghoa-Hainan<br>
-        yang bermigrasi ke Indonesia Timur sejak akhir abad ke-19.
-      </p>
     </div>
   </section>
 
-  <!-- HISTORICAL CONTEXT -->
+  <!-- CONTEXT -->
   <section>
     <h2 class="section-title">历史背景</h2>
     <p class="section-subtitle">Konteks Sejarah</p>
-
     <div class="context-box">
       <div class="context-card">
         <h3>🏯 Asal Leluhur</h3>
-        <p>
-          Desa <strong>Baozang (宝藏村)</strong> terletak di Kabupaten <strong>Wenchang (文昌县)</strong>, salah satu dari tiga kabupaten kuno bersejarah di Pulau Hainan. Wenchang juga merupakan tempat lahirnya budaya Min-Nan di Hainan.
-        </p>
+        <p>Desa <strong>Baozang (宝藏村)</strong> di Kabupaten <strong>Wenchang (文昌县)</strong>, Hainan — salah satu dari tiga kabupaten kuno bersejarah di Pulau Hainan.</p>
       </div>
       <div class="context-card">
         <h3>📜 Penjaga Silsilah</h3>
-        <p>
-          Ayah Yulius, <strong>潘正忠 (Pan Zheng Zhong)</strong>, mencatat silsilah keluarga ini dengan tangannya di era ketika bahasa Mandarin dilarang di Indonesia (1967–1998). Berkat dedikasinya, silsilah keluarga ini terselamatkan dari kepunahan.
-        </p>
+        <p>Ayah <strong>潘正忠</strong> mencatat silsilah ini dengan tangannya di era ketika bahasa Mandarin dilarang di Indonesia (1967–1998).</p>
+      </div>
+      <div class="context-card">
+        <h3>💑 Persatuan Pan & Djap</h3>
+        <p>Ibu <strong>Djap Sit Djun (叶氏)</strong> dari marga <strong>叶 (Djap/Yè)</strong> menikah dengan <strong>潘正忠</strong> dan melahirkan 6 anak generasi 尤.</p>
       </div>
       <div class="context-card">
         <h3>📅 Tradisi Penanggalan Ganda</h3>
-        <p>
-          Setiap anggota keluarga memiliki <strong>dua tanggal lahir</strong>: <strong>国历 (Guólì)</strong> = Tanggal Masehi/Nasional, dan <strong>农历 (Nónglì)</strong> = Tanggal Imlek/Lunar. Tradisi ini dijaga ayah untuk merayakan ulang tahun secara Tionghoa dan menghitung horoskop (shio).
-        </p>
-      </div>
-      <div class="context-card">
-        <h3>💑 Persatuan Marga Pan & Djap</h3>
-        <p>
-          Ibu, <strong>Djap Sit Djun (叶氏)</strong>, berasal dari marga <strong>叶 (Djap/Yè)</strong> — salah satu marga besar Tionghoa. Pernikahan beliau dengan <strong>潘正忠</strong> menyatukan dua keluarga Tionghoa-Indonesia dan melahirkan 6 anak yang menjadi penerus generasi 尤.
-        </p>
-      </div>
-      <div class="context-card">
-        <h3>🌏 Tiga Identitas</h3>
-        <p>
-          Keluarga ini hidup dalam tiga identitas: Tionghoa dari Hainan (asal-usul), Indonesia (kewarganegaraan), dan Katolik (iman, terlihat dari nama anak: Benedict & Bellarmino). Sebuah harmoni budaya yang indah.
-        </p>
-      </div>
-      <div class="context-card">
-        <h3>🕐 Jejak Migrasi Domestik</h3>
-        <p>
-          Dari tanggal lahir 6 bersaudara, terlihat keluarga ayah <strong>潘正忠</strong> pindah dari wilayah <strong>WIT</strong> (Indonesia Timur) ke <strong>WIB</strong> (Indonesia Barat) antara tahun 1986–1988. Tiga anak tertua (1980, 1981, 1986) lahir di WIT, sedangkan tiga anak bungsu (1988, 1989, 1995) lahir di WIB.
-        </p>
-      </div>
-      <div class="context-card">
-        <h3>🌳 Warisan untuk Generasi Mendatang</h3>
-        <p>
-          Karakter generasi <strong>尤 (You)</strong> dipilih oleh ayah Yulius, dan <strong>唯 (Wei)</strong> dipilih oleh Yulius. Keduanya adalah keputusan kasih sayang di tengah keterbatasan akses informasi pada zamannya.
-        </p>
+        <p>Setiap anggota memiliki dua tanggal: <strong>国历</strong> (Masehi) dan <strong>农历</strong> (Imlek/Lunar).</p>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-seal">家</div>
     <p class="footer-text">
       "Akar yang dalam menumbuhkan pohon yang tinggi.<br>
-      Memori yang dijaga menjadi warisan yang abadi."<br>
-      <br>
-      <em>— Dipersembahkan untuk anak-cucu keluarga Pan (潘) di Indonesia —</em>
+      Memori yang dijaga menjadi warisan yang abadi."<br><br>
+      <em>— Dipersembahkan untuk seluruh keluarga Pan (潘) di Indonesia —</em>
     </p>
     <div class="footer-date">Disusun · 2026 · 由 Yulius (潘尤上)</div>
   </footer>
 
 </div>
+
+<script>
+const familyData = {
+  ancestors: [
+    { id: 'a1', gen: 1, genChar: '有', han: '潘有本', pinyin: 'Pān Yǒu Běn', role: 'Leluhur Pendiri · 祖公', meaning: '"Pan yang Memiliki Akar"', isAncestor: true },
+    { id: 'a2', gen: 2, genChar: '辉', han: '潘辉', pinyin: 'Pān Huī', meaning: '"Pan yang Bersinar"' },
+    { id: 'a3a', gen: 3, genChar: '于', han: '潘于昆', pinyin: 'Pān Yú Kūn', siblings: 'pair' },
+    { id: 'a3b', gen: 3, genChar: '于', han: '潘于理', pinyin: 'Pān Yú Lǐ', siblings: 'pair' },
+    { id: 'kakek', gen: 4, genChar: '先', han: '潘先学', pinyin: 'Pān Xiān Xué', meaning: '"Pan yang Mendahului dalam Belajar"' }
+  ],
+  father: {
+    id: 'ayah', gen: 5, genChar: '正',
+    han: '潘正忠', pinyin: 'Pān Zhèng Zhōng',
+    hakka: 'Phan Ku (潘哥)',
+    lunarDate: '24 bulan 8 (Imlek)',
+    meaning: '"Pan yang Lurus dan Setia"'
+  },
+  mother: {
+    id: 'ibu', gen: 5,
+    han: '叶氏 Djap', pinyin: 'Djap Sit Djun',
+    hakka: 'Sit Djun · 息珍?',
+    surname: '叶 (Djap/Yè)',
+    lunarDate: '22 bulan 8 (Imlek)',
+    meaning: 'Pelita Keluarga'
+  },
+  siblings: [
+    { id: 'jiuthai', order: 1, gen: 6, genChar: '尤', gender: 'M',
+      han: '潘尤太', pinyin: 'Pān Yóu Tài', hakka: 'Jiu Thai',
+      nationalDate: '23 Juli 1980, 11:00 WITA',
+      lunarDate: '12 bulan 6, tahun 1980 (庚申 · Monyet Logam)',
+      meaning: '"Pan yang Istimewa dan Agung"',
+      birthOrderLabel: '长子 · Anak ke-1' },
+    { id: 'asong', order: 2, gen: 6, genChar: '尤', gender: 'M',
+      han: '潘尤上', pinyin: 'Pān Yóu Shàng',
+      indonesianName: 'Yulius', hakka: '阿松 Asong',
+      nationalDate: '22 Oktober 1981, 10:00 WIT',
+      lunarDate: '25 bulan 9, tahun 1981 (辛酉 · Ayam Logam)',
+      meaning: '"Pan yang Istimewa dan Tinggi/Mulia"',
+      birthOrderLabel: '次子 · Anak ke-2',
+      hasChildren: true },
+    { id: 'setiana', order: 3, gen: 6, genChar: '尤', gender: 'F',
+      han: 'Setiana', pinyin: 'Adik Perempuan ke-1', hakka: 'ANAO (阿娜?)',
+      nationalDate: '23 September 1986, 24:00 WIT',
+      lunarDate: '20 bulan 8, tahun 1986 (丙寅 · Macan Api)',
+      meaning: 'Lahir tepat tengah malam',
+      birthOrderLabel: '三女 · Anak ke-3' },
+    { id: 'chindy', order: 4, gen: 6, genChar: '尤', gender: 'F',
+      han: 'Chindy Lien', pinyin: 'Adik Perempuan ke-2', hakka: 'Acian (阿莲?)',
+      nationalDate: '11 Desember 1988, 13:00 WIB',
+      lunarDate: '3 bulan 11, tahun 1988 (戊辰 · Naga Tanah)',
+      meaning: 'Lahir di wilayah WIB',
+      birthOrderLabel: '四女 · Anak ke-4' },
+    { id: 'desi', order: 5, gen: 6, genChar: '尤', gender: 'F',
+      han: 'Desi Wilianti', pinyin: 'Adik Perempuan ke-3', hakka: 'Achin (阿琴?)',
+      nationalDate: '30 Desember 1989, 22:00 WIB',
+      lunarDate: '3 bulan 12, tahun 1989 (己巳 · Ular Tanah)',
+      meaning: 'Lahir Sabtu malam',
+      birthOrderLabel: '五女 · Anak ke-5' },
+    { id: 'stella', order: 6, gen: 6, genChar: '尤', gender: 'F',
+      han: 'Stella', pinyin: 'Si Bungsu · 幺女', hakka: 'Stlela',
+      nationalDate: '3 Januari 1995, 04:40 WIB',
+      lunarDate: '3 bulan 12, tahun 1994 (甲戌 · Anjing Kayu)',
+      meaning: 'Lahir di pagi dini hari',
+      birthOrderLabel: '六女 · Anak Bungsu' }
+  ],
+  children: [
+    { id: 'benedict', gen: 7, genChar: '唯', parentId: 'asong', gender: 'M',
+      han: '潘唯鸿', pinyin: 'Pān Wéi Hóng', indonesianName: 'Benedict Jose Phan',
+      nationalDate: '8 Maret 2007, Jakarta',
+      lunarDate: '19 bulan 1, tahun 2007 (丁亥 · Babi Api)',
+      meaning: '"Yang Sejati dan Agung"',
+      birthOrderLabel: '长子 · Anak ke-1' },
+    { id: 'bellarmino', gen: 7, genChar: '唯', parentId: 'asong', gender: 'M',
+      han: '潘唯慊', pinyin: 'Pān Wéi Qiàn', indonesianName: 'Bellarmino Jovian Phan',
+      nationalDate: '30 September 2010, Jakarta',
+      lunarDate: '23 bulan 8, tahun 2010 (庚寅 · Macan Logam)',
+      meaning: '"Yang Sejati dan Rendah Hati"',
+      birthOrderLabel: '次子 · Anak ke-2' }
+  ]
+};
+
+let currentPersonId = 'asong';
+
+function findPerson(id) {
+  if (id === 'ayah') return familyData.father;
+  if (id === 'ibu') return familyData.mother;
+  const s = familyData.siblings.find(x => x.id === id);
+  if (s) return s;
+  const c = familyData.children.find(x => x.id === id);
+  if (c) return c;
+  return null;
+}
+
+function getRelation(targetId, viewerId) {
+  if (targetId === viewerId) return '★ ANDA';
+  const target = findPerson(targetId);
+  const viewer = findPerson(viewerId);
+  if (!target || !viewer) return '';
+
+  if (viewer.gen === 6) {
+    if (targetId === 'ayah') return 'Ayah · 父亲';
+    if (targetId === 'ibu') return 'Ibu · 母亲';
+    const ts = familyData.siblings.find(s => s.id === targetId);
+    if (ts) {
+      const vs = familyData.siblings.find(s => s.id === viewerId);
+      if (vs.order < ts.order) {
+        return ts.gender === 'M' ? 'Adik Laki-laki · 弟弟' : 'Adik Perempuan · 妹妹';
+      } else {
+        return ts.gender === 'M' ? 'Abang · 哥哥' : 'Kakak Perempuan · 姐姐';
+      }
+    }
+    const tc = familyData.children.find(c => c.id === targetId);
+    if (tc) {
+      if (tc.parentId === viewerId) {
+        return target.gender === 'M' ? 'Anak Laki-laki · 儿子' : 'Anak Perempuan · 女儿';
+      } else {
+        return target.gender === 'M' ? 'Keponakan · 侄子' : 'Keponakan · 侄女';
+      }
+    }
+  }
+
+  if (viewer.gen === 7) {
+    if (targetId === 'ayah') return 'Kakek · 爷爷';
+    if (targetId === 'ibu') return 'Nenek · 奶奶';
+    const ts = familyData.siblings.find(s => s.id === targetId);
+    if (ts) {
+      if (ts.id === viewer.parentId) return 'Ayah · 父亲';
+      else if (ts.gender === 'M') {
+        const vp = familyData.siblings.find(s => s.id === viewer.parentId);
+        return vp.order < ts.order ? 'Paman (Adik Ayah) · 叔叔' : 'Paman (Abang Ayah) · 伯伯';
+      } else return 'Bibi · 姑姑';
+    }
+    const tc = familyData.children.find(c => c.id === targetId);
+    if (tc) {
+      if (tc.parentId === viewer.parentId) {
+        return target.gender === 'M' ? 'Saudara Laki-laki · 兄弟' : 'Saudari · 姐妹';
+      } else {
+        return 'Sepupu · 表亲';
+      }
+    }
+  }
+  return target.role || '';
+}
+
+function getAncestorRelation(id, viewerId) {
+  const viewer = findPerson(viewerId);
+  if (!viewer) return '';
+  const map = {
+    'a1': '始祖 · Leluhur Pendiri',
+    'a2': '祖辈 · Leluhur',
+    'a3a': '祖辈 · Leluhur',
+    'a3b': '祖辈 · Leluhur',
+    'kakek': viewer.gen === 7 ? '曾祖父 · Buyut' : '祖父 · Kakek'
+  };
+  return map[id] || '';
+}
+
+function buildPersonButtons() {
+  const c = document.getElementById('personButtons');
+  const all = [...familyData.siblings, ...familyData.children];
+  c.innerHTML = all.map(p => `
+    <button class="person-btn ${p.id === currentPersonId ? 'active' : ''}" onclick="selectPerson('${p.id}')">
+      <span class="btn-icon">${p.gender === 'M' ? '♂' : '♀'}</span>
+      <span class="btn-han">${p.han}</span>
+      <span class="btn-id">${p.indonesianName || p.hakka || ''}</span>
+    </button>
+  `).join('');
+}
+
+function renderInfoPanel() {
+  const p = findPerson(currentPersonId);
+  if (!p) return;
+  let pos = '';
+  if (p.gen === 6) pos = `Generasi 6 (${p.genChar}) · ${p.birthOrderLabel} dari 6 bersaudara`;
+  else if (p.gen === 7) pos = `Generasi 7 (${p.genChar}) · ${p.birthOrderLabel} dari Yulius`;
+  
+  document.getElementById('infoPanel').innerHTML = `
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-label">Nama Indonesia</div>
+        <div class="info-value">${p.indonesianName || p.han || '—'}</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Nama Mandarin · 中文名</div>
+        <div class="info-value"><span class="han">${p.han || '—'}</span>${p.pinyin || ''}</div>
+      </div>
+      ${p.hakka ? `<div class="info-item">
+        <div class="info-label">Panggilan Hakka · 客家名</div>
+        <div class="info-value">${p.hakka}</div>
+      </div>` : ''}
+      ${p.nationalDate ? `<div class="info-item">
+        <div class="info-label">Tanggal Lahir · 国历</div>
+        <div class="info-value">${p.nationalDate}</div>
+      </div>` : ''}
+      ${p.lunarDate ? `<div class="info-item">
+        <div class="info-label">Tanggal Imlek · 农历</div>
+        <div class="info-value" style="color: var(--vermillion-deep);">${p.lunarDate}</div>
+      </div>` : ''}
+      <div class="info-item">
+        <div class="info-label">Posisi di Keluarga</div>
+        <div class="info-value">${pos}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderTree() {
+  const tree = document.getElementById('familyTree');
+  let html = '';
+
+  // Gen 1-4 ancestors
+  let renderedPair = false;
+  familyData.ancestors.forEach((a, idx) => {
+    if (a.siblings === 'pair') {
+      if (renderedPair) return;
+      renderedPair = true;
+      const pair = familyData.ancestors.filter(x => x.gen === a.gen);
+      html += `<div class="generation"><div style="display:flex;gap:30px;flex-wrap:wrap;justify-content:center;">`;
+      pair.forEach(p => {
+        const isCurr = p.id === currentPersonId;
+        const rel = isCurr ? '★ ANDA' : getAncestorRelation(p.id, currentPersonId);
+        html += `<div class="name-card ${isCurr ? 'is-current' : ''}">
+          <div class="gen-number">Generasi ${p.gen}<span class="gen-character">${p.genChar}</span></div>
+          <div class="name-han">${p.han}</div>
+          <div class="name-pinyin">${p.pinyin}</div>
+          ${rel ? `<div class="name-role">${rel}</div>` : ''}
+        </div>`;
+      });
+      html += `</div></div>`;
+    } else {
+      const isCurr = a.id === currentPersonId;
+      const rel = isCurr ? '★ ANDA' : getAncestorRelation(a.id, currentPersonId);
+      html += `<div class="generation">
+        <div class="name-card ${a.isAncestor ? 'ancestor' : ''} ${isCurr ? 'is-current' : ''}">
+          <div class="gen-number">Generasi ${a.gen}${a.gen === 1 ? ' · 始祖' : ''}<span class="gen-character">${a.genChar}</span></div>
+          <div class="name-han">${a.han}</div>
+          <div class="name-pinyin">${a.pinyin}</div>
+          ${rel ? `<div class="name-role">${rel}</div>` : ''}
+          ${a.meaning ? `<div class="name-meaning">${a.meaning}</div>` : ''}
+        </div>
+      </div>`;
+    }
+  });
+
+  // Gen 5 parents
+  const fIsCurr = currentPersonId === 'ayah';
+  const mIsCurr = currentPersonId === 'ibu';
+  const viewer = findPerson(currentPersonId);
+  const fRel = fIsCurr ? '★ ANDA' : (viewer.gen === 7 ? 'Kakek · 爷爷' : 'Ayah · 父亲');
+  const mRel = mIsCurr ? '★ ANDA' : (viewer.gen === 7 ? 'Nenek · 奶奶' : 'Ibu · 母亲');
+
+  html += `<div class="generation"><div class="parents-pair">
+    <div class="name-card parent-card ${fIsCurr ? 'is-current' : ''}">
+      <div class="parent-badge">${fRel}</div>
+      <div class="gen-number">Generasi 5<span class="gen-character">${familyData.father.genChar}</span></div>
+      <div class="name-han">${familyData.father.han}</div>
+      <div class="name-pinyin">${familyData.father.pinyin}</div>
+      <div class="name-id">Hakka: ${familyData.father.hakka}</div>
+      <div class="date-block">
+        <div class="date-row lunar"><span class="date-label">农历:</span> ${familyData.father.lunarDate}</div>
+      </div>
+      <div class="name-meaning">${familyData.father.meaning}</div>
+    </div>
+    <div class="union-symbol">
+      <span class="union-icon">❤</span>
+      <span class="union-text">夫妻</span>
+    </div>
+    <div class="name-card parent-card mother ${mIsCurr ? 'is-current' : ''}">
+      <div class="parent-badge">${mRel}</div>
+      <div class="gen-number">Generasi 5 (menikah masuk)</div>
+      <div class="name-han">${familyData.mother.han}</div>
+      <div class="name-pinyin">${familyData.mother.pinyin}</div>
+      <div class="name-id">Marga asli: ${familyData.mother.surname}</div>
+      <div class="date-block">
+        <div class="date-row lunar"><span class="date-label">农历:</span> ${familyData.mother.lunarDate}</div>
+      </div>
+      <div class="name-meaning">Hakka: ${familyData.mother.hakka}</div>
+    </div>
+  </div></div>`;
+
+  // Gen 6 siblings
+  html += `<div class="generation"><div class="siblings-grid">`;
+  familyData.siblings.forEach(s => {
+    const isCurr = s.id === currentPersonId;
+    const rel = isCurr ? '★ ANDA' : getRelation(s.id, currentPersonId);
+    html += `<div class="name-card sibling-card ${s.gender === 'F' ? 'daughter' : ''} ${isCurr ? 'is-current' : ''}">
+      <div class="birth-order">${s.birthOrderLabel}</div>
+      <div class="gen-number">Generasi 6<span class="gen-character">${s.genChar}</span></div>
+      <div class="name-han">${s.han}</div>
+      <div class="name-pinyin">${s.pinyin}</div>
+      ${s.indonesianName ? `<div class="name-id">${s.indonesianName} · ${s.hakka}</div>` : `<div class="name-id">Hakka: ${s.hakka}</div>`}
+      <div class="name-role">${rel}</div>
+      <div class="date-block">
+        <div class="date-row"><span class="date-label">国历:</span> ${s.nationalDate}</div>
+        <div class="date-row lunar"><span class="date-label">农历:</span> ${s.lunarDate}</div>
+      </div>
+      <div class="name-meaning">${s.meaning}</div>
+    </div>`;
+  });
+  html += `</div></div>`;
+
+  // Gen 7 children
+  html += `<div class="generation"><div style="display:flex;gap:30px;flex-wrap:wrap;justify-content:center;">`;
+  familyData.children.forEach(c => {
+    const isCurr = c.id === currentPersonId;
+    const rel = isCurr ? '★ ANDA' : getRelation(c.id, currentPersonId);
+    html += `<div class="name-card ${isCurr ? 'is-current' : ''}">
+      <div class="gen-number">Generasi 7<span class="gen-character">${c.genChar}</span></div>
+      <div class="name-han">${c.han}</div>
+      <div class="name-pinyin">${c.pinyin}</div>
+      <div class="name-id">${c.indonesianName}</div>
+      <div class="name-role">${rel}</div>
+      <div class="date-block">
+        <div class="date-row"><span class="date-label">国历:</span> ${c.nationalDate}</div>
+        <div class="date-row lunar"><span class="date-label">农历:</span> ${c.lunarDate}</div>
+      </div>
+      <div class="name-meaning">${c.meaning}</div>
+    </div>`;
+  });
+  html += `</div></div>`;
+
+  tree.innerHTML = html;
+  tree.classList.add('fade-transition');
+  setTimeout(() => tree.classList.remove('fade-transition'), 500);
+}
+
+function selectPerson(id) {
+  currentPersonId = id;
+  const p = findPerson(id);
+  const name = p.indonesianName ? `${p.indonesianName} (${p.han})` : p.han;
+  document.getElementById('viewingAs').innerHTML = 
+    `Menampilkan silsilah dari sudut pandang <strong>${name}</strong>`;
+  buildPersonButtons();
+  renderInfoPanel();
+  renderTree();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  buildPersonButtons();
+  renderInfoPanel();
+  renderTree();
+});
+</script>
 
 </body>
 </html>
