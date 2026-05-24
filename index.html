@@ -884,6 +884,270 @@ body {
   .hometown-actions a { font-size: 10px; }
 }
 
+/* ============ PASSED (DECEASED) STYLING ============ */
+.tree-node.passed .node-avatar {
+  background: #5a4d3a;
+  border-color: #7a6a52;
+  color: #f5e8c8;
+  position: relative;
+}
+
+.tree-node.passed .node-name {
+  color: var(--ink-soft);
+}
+
+.passed-badge {
+  display: inline-block;
+  font-size: 9px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #8b7355, #6b5947);
+  color: #fef3e0;
+  font-weight: 500;
+  margin-left: 6px;
+  border: 1px solid #5a4d3a;
+}
+
+.detail-passed-mark {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 12px;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, #8b7355, #6b5947);
+  color: #fef3e0;
+  border-radius: 10px;
+  letter-spacing: 0.05em;
+}
+
+/* ============ BIRTHDAY SECTION ============ */
+.birthday-section {
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(255, 220, 100, 0.08), rgba(168, 51, 31, 0.04));
+  border-bottom: 1px solid var(--line);
+}
+
+.birthday-title {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.birthday-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+.birthday-card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.birthday-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(184, 146, 62, 0.15);
+}
+
+.birthday-card.today {
+  background: linear-gradient(135deg, #fff9e6, #fef3c7);
+  border-color: var(--gold);
+  border-width: 2px;
+  animation: birthday-pulse 2s ease-in-out infinite;
+}
+
+@keyframes birthday-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(184, 146, 62, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(184, 146, 62, 0); }
+}
+
+.bday-icon {
+  font-size: 24px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(184, 146, 62, 0.12);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.bday-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.bday-name {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.bday-date {
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+.bday-countdown {
+  font-size: 10px;
+  background: var(--gold);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.birthday-card.today .bday-countdown {
+  background: var(--accent);
+}
+
+/* ============ LANGUAGE TOGGLE ============ */
+#langToggle {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* ============ TREE VIEW VISUAL MODE ============ */
+.view-mode-toggle { /* Container handled in HTML */ }
+
+.tree-visual {
+  padding: 24px 12px;
+  overflow-x: auto;
+  overflow-y: visible;
+  background: linear-gradient(180deg, #fdfaf3, #faf6ed);
+  min-height: 60vh;
+}
+
+.tv-tree {
+  display: inline-block;
+  min-width: 100%;
+  padding: 20px;
+}
+
+.tv-node-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  position: relative;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.tv-node {
+  background: white;
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  padding: 10px 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+  max-width: 180px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  position: relative;
+}
+
+.tv-node:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(168, 51, 31, 0.2);
+}
+
+.tv-node.selected {
+  background: var(--bg-current);
+  border-color: var(--accent);
+  border-width: 3px;
+}
+
+.tv-node.passed {
+  background: linear-gradient(135deg, #f5ede0, #ebe0c8);
+  border-color: #8b7355;
+  opacity: 0.85;
+}
+
+.tv-node.female { border-color: var(--accent-soft); }
+
+.tv-node-han {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.tv-node-sub {
+  font-size: 10px;
+  color: var(--ink-soft);
+  line-height: 1.3;
+}
+
+.tv-node-gen {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--jade);
+  color: white;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 8px;
+}
+
+.tv-gen-label {
+  text-align: center;
+  font-size: 11px;
+  color: var(--ink-mute);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.tv-gen-label .gen-char {
+  display: inline-block;
+  background: var(--jade);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  margin-left: 6px;
+  font-size: 12px;
+}
+
+.tv-connector {
+  height: 16px;
+  border-left: 2px solid var(--line-strong);
+  margin: 0 auto;
+  width: 2px;
+}
+
+.view-toggle-btn {
+  background: var(--jade) !important;
+  color: white !important;
+  border-color: var(--jade) !important;
+}
+
+.view-toggle-btn:hover {
+  background: #3d5840 !important;
+  color: white !important;
+  border-color: #3d5840 !important;
+}
+
 /* HIGHLIGHT SEARCH */
 .highlight-match {
   background: rgba(184, 146, 62, 0.3);
@@ -970,6 +1234,8 @@ body {
         </div>
         <button class="btn" onclick="expandAll()">⊕ Buka Semua</button>
         <button class="btn" onclick="collapseAll()">⊖ Tutup Semua</button>
+        <button class="btn view-toggle-btn" id="viewToggle" onclick="toggleView()">🌳 Tree View</button>
+        <button class="btn" id="langToggle" onclick="toggleLang()">中文</button>
       </div>
     </div>
   </header>
@@ -1016,15 +1282,33 @@ body {
     <div class="cards-grid" id="cardsGrid"></div>
   </section>
 
+  <!-- BIRTHDAY SECTION (dynamic, only shows if there are upcoming birthdays) -->
+  <section class="birthday-section" id="birthdaySection" style="display:none;">
+    <div class="birthday-title" id="birthdayTitle">🎂 Ulang Tahun Bulan Ini</div>
+    <div class="birthday-list" id="birthdayList"></div>
+  </section>
+
+  <!-- MEMORIAL SECTION (for passed members) -->
+  <section class="birthday-section" id="memorialSection" style="display:none; background: linear-gradient(135deg, rgba(139, 115, 85, 0.06), rgba(94, 77, 58, 0.04));">
+    <div class="birthday-title">🕯️ Mengenang Leluhur</div>
+    <div class="birthday-list" id="memorialList"></div>
+  </section>
+
   <!-- BREADCRUMB -->
   <div class="breadcrumb" id="breadcrumb"></div>
 
   <!-- MAIN CONTENT -->
   <div class="main">
     <!-- TREE PANEL -->
-    <div class="tree-panel">
+    <div class="tree-panel" id="treePanel">
       <div class="tree-title">Silsilah Tujuh Generasi</div>
       <div id="treeContainer"></div>
+    </div>
+    
+    <!-- TREE VISUAL PANEL (hidden by default) -->
+    <div class="tree-visual" id="treeVisualPanel" style="display:none; grid-column: 1 / -1;">
+      <div class="tree-title" style="padding: 0 20px 20px; margin-bottom: 0;">Silsilah Tujuh Generasi · Tampilan Visual</div>
+      <div id="treeVisualContainer"></div>
     </div>
 
     <!-- DETAIL PANEL -->
@@ -1049,6 +1333,393 @@ body {
 </div>
 
 <script>
+// ============ LUNAR CALENDAR MODULE ============
+// Konversi Gregorian ↔ Chinese Lunar (1900-2100)
+// Data tabel: info bulan, hari, dan tahun kabisat Imlek
+const LunarCalendar = (function() {
+  // Data tahun Imlek 1900-2100. Setiap angka encode info bulan & hari
+  const lunarInfo = [
+    0x04bd8,0x04ae0,0x0a570,0x054d5,0x0d260,0x0d950,0x16554,0x056a0,0x09ad0,0x055d2,
+    0x04ae0,0x0a5b6,0x0a4d0,0x0d250,0x1d255,0x0b540,0x0d6a0,0x0ada2,0x095b0,0x14977,
+    0x04970,0x0a4b0,0x0b4b5,0x06a50,0x06d40,0x1ab54,0x02b60,0x09570,0x052f2,0x04970,
+    0x06566,0x0d4a0,0x0ea50,0x06e95,0x05ad0,0x02b60,0x186e3,0x092e0,0x1c8d7,0x0c950,
+    0x0d4a0,0x1d8a6,0x0b550,0x056a0,0x1a5b4,0x025d0,0x092d0,0x0d2b2,0x0a950,0x0b557,
+    0x06ca0,0x0b550,0x15355,0x04da0,0x0a5b0,0x14573,0x052b0,0x0a9a8,0x0e950,0x06aa0,
+    0x0aea6,0x0ab50,0x04b60,0x0aae4,0x0a570,0x05260,0x0f263,0x0d950,0x05b57,0x056a0,
+    0x096d0,0x04dd5,0x04ad0,0x0a4d0,0x0d4d4,0x0d250,0x0d558,0x0b540,0x0b6a0,0x195a6,
+    0x095b0,0x049b0,0x0a974,0x0a4b0,0x0b27a,0x06a50,0x06d40,0x0af46,0x0ab60,0x09570,
+    0x04af5,0x04970,0x064b0,0x074a3,0x0ea50,0x06b58,0x055c0,0x0ab60,0x096d5,0x092e0,
+    0x0c960,0x0d954,0x0d4a0,0x0da50,0x07552,0x056a0,0x0abb7,0x025d0,0x092d0,0x0cab5,
+    0x0a950,0x0b4a0,0x0baa4,0x0ad50,0x055d9,0x04ba0,0x0a5b0,0x15176,0x052b0,0x0a930,
+    0x07954,0x06aa0,0x0ad50,0x05b52,0x04b60,0x0a6e6,0x0a4e0,0x0d260,0x0ea65,0x0d530,
+    0x05aa0,0x076a3,0x096d0,0x04afb,0x04ad0,0x0a4d0,0x1d0b6,0x0d250,0x0d520,0x0dd45,
+    0x0b5a0,0x056d0,0x055b2,0x049b0,0x0a577,0x0a4b0,0x0aa50,0x1b255,0x06d20,0x0ada0,
+    0x14b63,0x09370,0x049f8,0x04970,0x064b0,0x168a6,0x0ea50,0x06b20,0x1a6c4,0x0aae0,
+    0x0a2e0,0x0d2e3,0x0c960,0x0d557,0x0d4a0,0x0da50,0x05d55,0x056a0,0x0a6d0,0x055d4,
+    0x052d0,0x0a9b8,0x0a950,0x0b4a0,0x0b6a6,0x0ad50,0x055a0,0x0aba4,0x0a5b0,0x052b0,
+    0x0b273,0x06930,0x07337,0x06aa0,0x0ad50,0x14b55,0x04b60,0x0a570,0x054e4,0x0d160,
+    0x0e968,0x0d520,0x0daa0,0x16aa6,0x056d0,0x04ae0,0x0a9d4,0x0a2d0,0x0d150,0x0f252,
+    0x0d520
+  ];
+  
+  // Nama bulan & hari Imlek
+  const cnMonths = ['正月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+  const cnDays = ['初一','初二','初三','初四','初五','初六','初七','初八','初九','初十','十一','十二','十三','十四','十五','十六','十七','十八','十九','二十','廿一','廿二','廿三','廿四','廿五','廿六','廿七','廿八','廿九','三十'];
+  const idMonths = ['bulan 1','bulan 2','bulan 3','bulan 4','bulan 5','bulan 6','bulan 7','bulan 8','bulan 9','bulan 10','bulan 11','bulan 12'];
+  
+  // Shio (12 animals)
+  const zodiacs = ['鼠 Tikus','牛 Kerbau','虎 Macan','兔 Kelinci','龙 Naga','蛇 Ular','马 Kuda','羊 Kambing','猴 Monyet','鸡 Ayam','狗 Anjing','猪 Babi'];
+  const zodiacEmoji = ['🐭','🐂','🐯','🐰','🐲','🐍','🐴','🐐','🐵','🐔','🐶','🐷'];
+  
+  // 10 Heavenly Stems & 12 Earthly Branches
+  const stems = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+  const branches = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+  const elements = ['Kayu','Kayu','Api','Api','Tanah','Tanah','Logam','Logam','Air','Air'];
+  const elementEmoji = ['🌿','🌿','🔥','🔥','🪨','🪨','⚙️','⚙️','💧','💧'];
+
+  // Total hari dalam tahun Imlek
+  function lYearDays(y) {
+    let sum = 348;
+    for (let i = 0x8000; i > 0x8; i >>= 1) {
+      sum += (lunarInfo[y - 1900] & i) ? 1 : 0;
+    }
+    return sum + leapDays(y);
+  }
+  
+  // Hari di bulan kabisat
+  function leapDays(y) {
+    if (leapMonth(y)) {
+      return (lunarInfo[y - 1900] & 0x10000) ? 30 : 29;
+    }
+    return 0;
+  }
+  
+  // Bulan kabisat (0 = tidak ada)
+  function leapMonth(y) {
+    return lunarInfo[y - 1900] & 0xf;
+  }
+  
+  // Hari di bulan biasa
+  function monthDays(y, m) {
+    return (lunarInfo[y - 1900] & (0x10000 >> m)) ? 30 : 29;
+  }
+  
+  // Konversi Gregorian → Lunar
+  function solarToLunar(year, month, day) {
+    if (year < 1900 || year > 2100) return null;
+    
+    const baseDate = new Date(1900, 0, 31);
+    const targetDate = new Date(year, month - 1, day);
+    let offset = Math.floor((targetDate - baseDate) / 86400000);
+    
+    let lYear, lMonth, lDay, isLeap = false;
+    let temp = 0;
+    
+    for (lYear = 1900; lYear < 2100 && offset > 0; lYear++) {
+      temp = lYearDays(lYear);
+      offset -= temp;
+    }
+    if (offset < 0) {
+      offset += temp;
+      lYear--;
+    }
+    
+    const leap = leapMonth(lYear);
+    isLeap = false;
+    
+    for (lMonth = 1; lMonth < 13 && offset > 0; lMonth++) {
+      if (leap > 0 && lMonth === (leap + 1) && !isLeap) {
+        --lMonth;
+        isLeap = true;
+        temp = leapDays(lYear);
+      } else {
+        temp = monthDays(lYear, lMonth);
+      }
+      if (isLeap && lMonth === (leap + 1)) isLeap = false;
+      offset -= temp;
+    }
+    
+    if (offset === 0 && leap > 0 && lMonth === leap + 1) {
+      if (isLeap) isLeap = false;
+      else { isLeap = true; --lMonth; }
+    }
+    
+    if (offset < 0) {
+      offset += temp;
+      --lMonth;
+    }
+    
+    lDay = offset + 1;
+    
+    return {
+      year: lYear,
+      month: lMonth,
+      day: lDay,
+      isLeap: isLeap,
+      stem: stems[(lYear - 4) % 10],
+      branch: branches[(lYear - 4) % 12],
+      element: elements[(lYear - 4) % 10],
+      elementEmoji: elementEmoji[(lYear - 4) % 10],
+      zodiac: zodiacs[(lYear - 4) % 12],
+      zodiacEmoji: zodiacEmoji[(lYear - 4) % 12]
+    };
+  }
+  
+  // Format tampilan Indonesia
+  function formatID(lunar) {
+    if (!lunar) return '—';
+    const leapStr = lunar.isLeap ? ' (闰)' : '';
+    return `${lunar.day} ${idMonths[lunar.month - 1]}${leapStr}, ${lunar.year} (${lunar.stem}${lunar.branch} · ${lunar.zodiacEmoji} ${lunar.zodiac.split(' ')[1]} ${lunar.elementEmoji} ${lunar.element})`;
+  }
+  
+  // Format tampilan Chinese
+  function formatCN(lunar) {
+    if (!lunar) return '—';
+    const leapStr = lunar.isLeap ? '闰' : '';
+    return `${lunar.year}年 ${leapStr}${cnMonths[lunar.month - 1]} ${cnDays[lunar.day - 1]} (${lunar.stem}${lunar.branch} · ${lunar.zodiac})`;
+  }
+  
+  return { solarToLunar, formatID, formatCN };
+})();
+
+// Helper: parse tanggal Indonesia ke Date object
+// Format: "22 Oktober 1981" atau "22 Oktober 1981, 10:00 WIT"
+function parseIDDate(dateStr) {
+  if (!dateStr) return null;
+  const monthMap = {
+    'januari': 0, 'februari': 1, 'maret': 2, 'april': 3, 'mei': 4, 'juni': 5,
+    'juli': 6, 'agustus': 7, 'september': 8, 'oktober': 9, 'november': 10, 'desember': 11
+  };
+  const match = dateStr.toLowerCase().match(/(\d{1,2})\s+(\w+)\s+(\d{4})/);
+  if (!match) return null;
+  const day = parseInt(match[1]);
+  const month = monthMap[match[2]];
+  const year = parseInt(match[3]);
+  if (month === undefined) return null;
+  return { day, month, year, date: new Date(year, month, day) };
+}
+
+// Helper: hitung umur
+function calculateAge(birthDateStr, refDate) {
+  const parsed = parseIDDate(birthDateStr);
+  if (!parsed) return null;
+  refDate = refDate || new Date();
+  let age = refDate.getFullYear() - parsed.year;
+  const m = refDate.getMonth() - parsed.month;
+  if (m < 0 || (m === 0 && refDate.getDate() < parsed.day)) age--;
+  return age;
+}
+
+// Helper: hitung hari ke ulang tahun berikutnya
+function daysToNextBirthday(birthDateStr) {
+  const parsed = parseIDDate(birthDateStr);
+  if (!parsed) return null;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  let nextBday = new Date(today.getFullYear(), parsed.month, parsed.day);
+  if (nextBday < today) nextBday = new Date(today.getFullYear() + 1, parsed.month, parsed.day);
+  return Math.ceil((nextBday - today) / 86400000);
+}
+
+// ============ I18N (Bilingual Support) ============
+const i18n = {
+  id: {
+    brandSub: 'SILSILAH KELUARGA PAN · HAINAN',
+    searchPlaceholder: '🔎 Cari nama anggota keluarga...',
+    btnExpandAll: '⊕ Buka Semua',
+    btnCollapseAll: '⊖ Tutup Semua',
+    btnTreeView: '🌳 Tree View',
+    btnListView: '📋 List View',
+    welcomeTitle: 'Silsilah Keluarga 潘氏 (Pan)',
+    welcomeSub: 'Selamat datang, anggota keluarga! Cari nama Anda di kotak pencarian, atau klik salah satu kartu di bawah untuk eksplorasi silsilah keluarga besar kita.',
+    sectionQuickAccess: 'Akses Cepat',
+    sectionFamilyOf: 'Keluarga dari',
+    sectionBirthdays: '🎂 Ulang Tahun Bulan Ini',
+    sectionUpcoming: '🎈 Ulang Tahun Terdekat',
+    sectionMemorial: '🕯️ Mengenang Leluhur',
+    cardSearchLabel: 'Cari Anggota',
+    cardSearchValue: 'Cari Nama',
+    cardSearchSub: 'Temukan posisi Anda di silsilah',
+    cardAncestorLabel: 'Leluhur Tertua',
+    cardGenLabel: 'Total Generasi',
+    cardMembersLabel: 'Anggota Tercatat',
+    cardYoungestLabel: 'Generasi Termuda',
+    cardYoungestSub: 'Kilian · Lahir 2023 · Generasi 7',
+    cardSelected: 'Yang Dipilih',
+    cardFather: 'Ayah',
+    cardMother: 'Ibu',
+    cardSpouse: 'Pasangan',
+    cardGrandfatherFather: 'Kakek (Pihak Ayah)',
+    cardGrandmotherFather: 'Nenek (Pihak Ayah)',
+    cardGrandfatherMother: 'Kakek (Pihak Ibu)',
+    cardGrandmotherMother: 'Nenek (Pihak Ibu)',
+    cardSiblings: 'Saudara Kandung',
+    cardChildren: 'Anak',
+    cardGeneration: 'Generasi',
+    cardLunarDate: 'Tanggal Imlek',
+    cardReset: 'Reset',
+    cardResetValue: 'Kembali Awal',
+    cardResetSub: 'Tampilkan dashboard default',
+    detailEmpty: 'Eksplorasi Silsilah Keluarga',
+    detailEmptySub: 'Cari nama anggota keluarga di kotak pencarian, atau klik salah satu nama di silsilah.',
+    detailIndonesianName: 'Nama Indonesia',
+    detailMandarinName: 'Nama Mandarin · 中文名',
+    detailHakkaName: 'Panggilan Hakka · 客家名',
+    detailSurname: 'Marga Asli',
+    detailBirthDate: 'Tanggal Lahir · 国历',
+    detailLunarDate: 'Tanggal Imlek · 农历',
+    detailMarriageDate: 'Tanggal Pernikahan · 结婚日',
+    detailPassedDate: 'Tanggal Wafat · 忌日',
+    detailAge: 'Usia',
+    detailGeneration: 'Generasi · 世代',
+    detailPosition: 'Posisi di Keluarga',
+    detailMeaning: 'Makna Nama',
+    detailDescendants: 'Keturunan',
+    detailDescendantsValue: ' anak',
+    detailPassedAt: 'Berpulang pada usia',
+    detailZodiac: 'Shio',
+    badgeMarried: 'menikah ❤',
+    badgeKakek: 'KAKEK',
+    badgePenjaga: 'PENJAGA SILSILAH',
+    badgePassed: '🕯️ Berpulang',
+    tipBreadcrumb: '💡 Tip: Cari nama anggota keluarga atau klik kartu di atas untuk navigasi cepat.',
+    daysAgo: 'hari lalu',
+    daysFromNow: 'hari lagi',
+    today: 'hari ini',
+    tomorrow: 'besok',
+    yearOld: 'tahun',
+    daysHari: 'hari',
+    monthsMonth: 'Mei',
+    months: ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'],
+    footerNote: 'Silsilah Keluarga 潘氏 · 宝藏村 · 海南',
+    hometownTitle: '宝藏村 · 会文镇',
+    hometownName: 'Desa Baozang, Huiwen Town, Wenchang, Hainan, Tiongkok',
+    hometownDesc: '<strong>Wenchang (文昌县)</strong> adalah <strong>tanah kelahiran perantauan Tionghoa di Hainan</strong>. Banyak keluarga Tionghoa-Hainan di Indonesia, Singapura, Malaysia, dan Thailand berasal dari Wenchang. Desa <strong>Baozang (宝藏村)</strong> berarti "Desa Harta Karun". Dari sinilah leluhur 潘有本 memulai perjalanan keluarga.',
+    hometownGmap: '🗺️ Lihat di Google Maps',
+    hometownSearch: '🔍 Cari info lebih',
+    hometownStats: ['📍 <strong>Hainan, Tiongkok</strong>', '🌊 Dekat pelabuhan Huiwen', '🌴 ~200 warga, 500+ perantau', '🏛️ Kabupaten Wenchang']
+  },
+  zh: {
+    brandSub: '潘氏家谱 · 海南',
+    searchPlaceholder: '🔎 搜索家族成员姓名...',
+    btnExpandAll: '⊕ 全部展开',
+    btnCollapseAll: '⊖ 全部收起',
+    btnTreeView: '🌳 树形图',
+    btnListView: '📋 列表',
+    welcomeTitle: '潘氏家族族谱',
+    welcomeSub: '欢迎家族成员！在搜索框中输入您的名字，或点击下方任一卡片探索我们的大家族族谱。',
+    sectionQuickAccess: '快速访问',
+    sectionFamilyOf: '家庭关系来自',
+    sectionBirthdays: '🎂 本月生日',
+    sectionUpcoming: '🎈 即将到来的生日',
+    sectionMemorial: '🕯️ 缅怀祖先',
+    cardSearchLabel: '搜索成员',
+    cardSearchValue: '搜索姓名',
+    cardSearchSub: '查找您在族谱中的位置',
+    cardAncestorLabel: '最早祖先',
+    cardGenLabel: '总世代',
+    cardMembersLabel: '记录成员',
+    cardYoungestLabel: '最年轻一代',
+    cardYoungestSub: 'Kilian · 2023年出生 · 第7代',
+    cardSelected: '已选',
+    cardFather: '父亲',
+    cardMother: '母亲',
+    cardSpouse: '配偶',
+    cardGrandfatherFather: '祖父 (父系)',
+    cardGrandmotherFather: '祖母 (父系)',
+    cardGrandfatherMother: '外祖父 (母系)',
+    cardGrandmotherMother: '外祖母 (母系)',
+    cardSiblings: '兄弟姐妹',
+    cardChildren: '子女',
+    cardGeneration: '世代',
+    cardLunarDate: '农历日期',
+    cardReset: '重置',
+    cardResetValue: '返回主页',
+    cardResetSub: '显示默认仪表板',
+    detailEmpty: '探索家族族谱',
+    detailEmptySub: '在搜索框中输入家族成员姓名，或点击族谱中的任一姓名。',
+    detailIndonesianName: '印尼名',
+    detailMandarinName: '中文名 · 汉字',
+    detailHakkaName: '客家称呼',
+    detailSurname: '原姓',
+    detailBirthDate: '出生日期 · 公历',
+    detailLunarDate: '农历日期',
+    detailMarriageDate: '结婚日期',
+    detailPassedDate: '忌日',
+    detailAge: '年龄',
+    detailGeneration: '世代',
+    detailPosition: '家族地位',
+    detailMeaning: '名字意义',
+    detailDescendants: '后代',
+    detailDescendantsValue: '个孩子',
+    detailPassedAt: '逝于',
+    detailZodiac: '生肖',
+    badgeMarried: '已婚 ❤',
+    badgeKakek: '祖父',
+    badgePenjaga: '族谱守护者',
+    badgePassed: '🕯️ 已逝',
+    tipBreadcrumb: '💡 提示：搜索家族成员姓名或点击上方卡片快速导航。',
+    daysAgo: '天前',
+    daysFromNow: '天后',
+    today: '今天',
+    tomorrow: '明天',
+    yearOld: '岁',
+    daysHari: '天',
+    months: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+    footerNote: '潘氏家族族谱 · 宝藏村 · 海南',
+    hometownTitle: '宝藏村 · 会文镇',
+    hometownName: '中国海南省文昌市会文镇宝藏村',
+    hometownDesc: '<strong>文昌县</strong>是<strong>海南华侨故里</strong>。许多在印尼、新加坡、马来西亚、泰国的海南华侨都来自文昌。<strong>宝藏村</strong>意为"藏有宝藏的村庄"。我们的祖先潘有本从这里开始了家族的旅程。',
+    hometownGmap: '🗺️ 在谷歌地图查看',
+    hometownSearch: '🔍 搜索更多信息',
+    hometownStats: ['📍 <strong>中国海南</strong>', '🌊 靠近会文港', '🌴 约200村民, 500+海外侨胞', '🏛️ 文昌县']
+  }
+};
+
+// Current language
+let currentLang = localStorage.getItem('pan_lang') || 
+  (navigator.language && navigator.language.startsWith('zh') ? 'zh' : 'id');
+
+function t(key) {
+  return (i18n[currentLang] && i18n[currentLang][key]) || i18n.id[key] || key;
+}
+
+function toggleLang() {
+  currentLang = currentLang === 'id' ? 'zh' : 'id';
+  try { localStorage.setItem('pan_lang', currentLang); } catch(e) {}
+  applyLanguage();
+}
+
+function applyLanguage() {
+  // Update static text
+  document.documentElement.lang = currentLang === 'zh' ? 'zh' : 'id';
+  const el = (sel) => document.querySelector(sel);
+  if (el('.brand-sub')) el('.brand-sub').textContent = t('brandSub');
+  if (el('#searchInput')) el('#searchInput').placeholder = t('searchPlaceholder');
+  const btns = document.querySelectorAll('.controls .btn');
+  if (btns[0]) btns[0].innerHTML = t('btnExpandAll');
+  if (btns[1]) btns[1].innerHTML = t('btnCollapseAll');
+  if (el('#langToggle')) el('#langToggle').textContent = currentLang === 'id' ? '中文' : 'Indonesia';
+  if (el('.welcome-title')) el('.welcome-title').textContent = t('welcomeTitle');
+  if (el('.welcome-sub')) el('.welcome-sub').textContent = t('welcomeSub');
+  if (el('.hometown-han')) el('.hometown-han').textContent = t('hometownTitle');
+  if (el('.hometown-name')) el('.hometown-name').textContent = t('hometownName');
+  if (el('.hometown-desc')) el('.hometown-desc').innerHTML = t('hometownDesc');
+  const hsEl = document.querySelectorAll('.hometown-stat');
+  const hsTexts = t('hometownStats');
+  hsEl.forEach((e, i) => { if (hsTexts[i]) e.innerHTML = hsTexts[i]; });
+  const haActions = document.querySelectorAll('.hometown-actions a');
+  if (haActions[0]) haActions[0].textContent = t('hometownGmap');
+  if (haActions[1]) haActions[1].textContent = t('hometownSearch');
+  if (el('.tree-title')) el('.tree-title').textContent = t('welcomeTitle');
+  if (el('.footer-note')) el('.footer-note').innerHTML = `<strong>${t('hometownTitle')}</strong> &nbsp;·&nbsp; ${t('footerNote')}`;
+  // Re-render dynamic parts
+  renderTree();
+  renderDetail();
+  renderBreadcrumb();
+  renderDashboard();
+}
+
 // ============ DATA STRUKTUR POHON ============
 // Setiap node bisa punya children. Struktur ini lebih natural untuk tree.
 const tree = {
@@ -1058,6 +1729,7 @@ const tree = {
   han: '潘有本',
   pinyin: 'Pān Yǒu Běn',
   role: '始祖 · Leluhur Pendiri',
+  passed: true,
   meaning: 'Pan yang Memiliki Akar',
   children: [{
     id: 'a2',
@@ -1066,6 +1738,7 @@ const tree = {
     han: '潘辉',
     pinyin: 'Pān Huī',
     role: 'Generasi ke-2',
+    passed: true,
     meaning: 'Pan yang Bersinar',
     children: [
       {
@@ -1075,6 +1748,7 @@ const tree = {
         han: '潘于昆',
         pinyin: 'Pān Yú Kūn',
         role: 'Generasi ke-3 (Buyut)',
+        passed: true,
         meta: 'Anak ke-1',
         children: []
       },
@@ -1085,6 +1759,7 @@ const tree = {
         han: '潘于理',
         pinyin: 'Pān Yú Lǐ',
         role: 'Generasi ke-3 (Buyut)',
+        passed: true,
         meta: 'Anak ke-2',
         children: [
           // Generasi 4 - Kakek dan saudaranya
@@ -1096,6 +1771,7 @@ const tree = {
             pinyin: 'Pān Xiān Xué',
             role: '祖父 · Kakek (Generasi 4)',
             isKakek: true,
+            passed: true,
             meaning: 'Pan yang Mendahului dalam Belajar',
             meta: 'Anak ke-1',
             children: [
@@ -1298,6 +1974,7 @@ const tree = {
                 han: 'Thai Ku', pinyin: '大姑',
                 hakka: 'Thai Ku',
                 role: 'Saudari dari 潘正忠 (Generasi 5)',
+                passed: true,
                 meaning: 'Bibi dari pihak ayah',
                 meta: 'Anak ke-3', children: []
               },
@@ -1305,6 +1982,7 @@ const tree = {
                 id: 'pak4', gen: 5, genChar: '正', gender: 'M',
                 han: '潘正小', pinyin: 'Pān Zhèng Xiǎo',
                 role: 'Saudara Laki-laki dari 潘正忠 (Generasi 5)',
+                passed: true,
                 meaning: 'Pan yang Lurus dan Rendah Hati',
                 meta: 'Anak ke-4', children: []
               },
@@ -1312,6 +1990,7 @@ const tree = {
                 id: 'pak5', gen: 5, genChar: '正', gender: 'M',
                 han: '潘正鹰', pinyin: 'Pān Zhèng Yīng',
                 role: 'Saudara Laki-laki dari 潘正忠 (Generasi 5)',
+                passed: true,
                 meaning: 'Pan yang Lurus seperti Elang',
                 meta: 'Anak ke-5', children: []
               },
@@ -1329,6 +2008,7 @@ const tree = {
             id: 'ku2', gen: 4, genChar: '先', gender: 'M',
             han: '潘先当', pinyin: 'Pān Xiān Dāng',
             role: 'Saudara Kakek (Granduncle)',
+            passed: true,
             meaning: 'Pan yang Mendahului dalam Tanggung Jawab',
             meta: 'Anak ke-2', children: []
           },
@@ -1336,6 +2016,7 @@ const tree = {
             id: 'ku3', gen: 4, genChar: '先', gender: 'M',
             han: '潘先沣', pinyin: 'Pān Xiān Fēng',
             role: 'Saudara Kakek (Granduncle)',
+            passed: true,
             meaning: 'Pan yang Mendahului dalam Kemakmuran',
             meta: 'Anak ke-3', children: []
           },
@@ -1343,6 +2024,7 @@ const tree = {
             id: 'ku4', gen: 4, genChar: '先', gender: 'M',
             han: '潘先泽', pinyin: 'Pān Xiān Zé',
             role: 'Saudara Kakek (Granduncle)',
+            passed: true,
             meaning: 'Pan yang Mendahului dalam Berkat',
             meta: 'Anak ke-4', children: []
           }
@@ -1396,17 +2078,19 @@ function renderNode(node, depth = 0) {
   const hasChildren = (node.children && node.children.length > 0) || node.spouse;
   const isExpanded = expandedIds.has(node.id);
   const isSelected = node.id === selectedId;
+  const isPassed = node.passed;
 
   let badges = '';
-  if (node.isKakek) badges += '<span class="node-badge role-key">KAKEK</span>';
-  if (node.isFather) badges += '<span class="node-badge role-key">PENJAGA SILSILAH</span>';
+  if (node.isKakek) badges += `<span class="node-badge role-key">${t('badgeKakek')}</span>`;
+  if (node.isFather) badges += `<span class="node-badge role-key">${t('badgePenjaga')}</span>`;
+  if (isPassed) badges += `<span class="passed-badge">${t('badgePassed')}</span>`;
 
   let nameDisplay = node.han;
   if (node.indonesianName) nameDisplay += ` <span class="node-id">· ${node.indonesianName}</span>`;
   else if (node.hakka) nameDisplay += ` <span class="node-id">· ${node.hakka}</span>`;
 
   let html = `
-    <div class="tree-node ${isSelected ? 'selected' : ''}" 
+    <div class="tree-node ${isSelected ? 'selected' : ''} ${isPassed ? 'passed' : ''}" 
          data-id="${node.id}" 
          onclick="handleNodeClick(event, '${node.id}')">
       <div class="tree-toggle ${isExpanded ? 'expanded' : ''} ${!hasChildren ? 'no-children' : ''}">▶</div>
@@ -1528,11 +2212,9 @@ function renderDetail() {
     panel.innerHTML = `
       <div class="detail-empty">
         <div style="font-size: 48px; margin-bottom: 12px;">🌳</div>
-        <div style="font-weight: 600; color: var(--ink); margin-bottom: 8px;">Eksplorasi Silsilah Keluarga</div>
+        <div style="font-weight: 600; color: var(--ink); margin-bottom: 8px;">${t('detailEmpty')}</div>
         <div style="font-size: 12px; line-height: 1.6;">
-          Cari nama anggota keluarga<br>
-          di kotak pencarian, atau<br>
-          klik salah satu nama di silsilah.
+          ${t('detailEmptySub')}
         </div>
       </div>`;
     return;
@@ -1540,18 +2222,41 @@ function renderDetail() {
   
   const node = nodeMap[selectedId];
   if (!node) {
-    panel.innerHTML = '<div class="detail-empty">Anggota tidak ditemukan.</div>';
+    panel.innerHTML = '<div class="detail-empty">—</div>';
     return;
   }
   
   const avatarClass = getAvatarClass(node);
   const avatarChar = getAvatarChar(node);
   
+  // Hitung umur kalau ada tanggal lahir
+  let ageInfo = '';
+  if (node.nationalDate && !node.passed) {
+    const age = calculateAge(node.nationalDate);
+    if (age !== null && age >= 0 && age < 150) {
+      ageInfo = `<span style="font-size: 11px; color: var(--ink-soft); margin-left: 6px;">(${age} ${t('yearOld')})</span>`;
+    }
+  }
+  
+  // Compute lunar date kalau ada nationalDate tapi belum ada lunarDate
+  let lunarDisplay = node.lunarDate;
+  if (!lunarDisplay && node.nationalDate) {
+    const parsed = parseIDDate(node.nationalDate);
+    if (parsed) {
+      const lunar = LunarCalendar.solarToLunar(parsed.year, parsed.month + 1, parsed.day);
+      if (lunar) {
+        lunarDisplay = currentLang === 'zh' ? LunarCalendar.formatCN(lunar) : LunarCalendar.formatID(lunar);
+      }
+    }
+  }
+  
+  const passedMark = node.passed ? `<span class="detail-passed-mark">🕯️ ${currentLang === 'zh' ? '已逝' : 'Berpulang'}</span>` : '';
+  
   let html = `
     <div class="fadein">
       <div class="detail-header">
         <div class="detail-avatar${avatarClass}">${avatarChar}</div>
-        <div class="detail-name">${node.han}</div>
+        <div class="detail-name">${node.han}${passedMark}</div>
         <div class="detail-pinyin">${node.pinyin || ''}</div>
         <span class="detail-role">${node.role || ''}</span>
       </div>
@@ -1560,7 +2265,7 @@ function renderDetail() {
   if (node.indonesianName) {
     html += `
       <div class="detail-section">
-        <div class="detail-label">Nama Indonesia</div>
+        <div class="detail-label">${t('detailIndonesianName')}</div>
         <div class="detail-value">${node.indonesianName}</div>
       </div>`;
   }
@@ -1568,7 +2273,7 @@ function renderDetail() {
   if (node.hakka) {
     html += `
       <div class="detail-section">
-        <div class="detail-label">Panggilan Hakka · 客家名</div>
+        <div class="detail-label">${t('detailHakkaName')}</div>
         <div class="detail-value"><span class="han">${node.hakka}</span></div>
       </div>`;
   }
@@ -1576,7 +2281,7 @@ function renderDetail() {
   if (node.surname) {
     html += `
       <div class="detail-section">
-        <div class="detail-label">Marga Asli</div>
+        <div class="detail-label">${t('detailSurname')}</div>
         <div class="detail-value">${node.surname}</div>
       </div>`;
   }
@@ -1584,31 +2289,39 @@ function renderDetail() {
   if (node.nationalDate) {
     html += `
       <div class="detail-section">
-        <div class="detail-label">Tanggal Lahir · 国历</div>
-        <div class="detail-value">${node.nationalDate}</div>
+        <div class="detail-label">${t('detailBirthDate')}</div>
+        <div class="detail-value">${node.nationalDate}${ageInfo}</div>
       </div>`;
   }
   
-  if (node.lunarDate) {
+  if (lunarDisplay) {
     html += `
       <div class="detail-section">
-        <div class="detail-label">Tanggal Imlek · 农历</div>
-        <div class="detail-value lunar">${node.lunarDate}</div>
+        <div class="detail-label">${t('detailLunarDate')}</div>
+        <div class="detail-value lunar">${lunarDisplay}</div>
       </div>`;
   }
   
   if (node.marriageDate) {
     html += `
       <div class="detail-section">
-        <div class="detail-label">Tanggal Pernikahan · 结婚日</div>
+        <div class="detail-label">${t('detailMarriageDate')}</div>
         <div class="detail-value" style="color: var(--gold); font-weight: 600;">💍 ${node.marriageDate}</div>
+      </div>`;
+  }
+  
+  if (node.passed && node.passedDate) {
+    html += `
+      <div class="detail-section">
+        <div class="detail-label">${t('detailPassedDate')}</div>
+        <div class="detail-value" style="color: #6b5947; font-weight: 600;">🕯️ ${node.passedDate}</div>
       </div>`;
   }
   
   html += `
     <div class="detail-section">
-      <div class="detail-label">Generasi · 世代</div>
-      <div class="detail-value">Generasi ke-${node.gen} ${node.genChar ? '(' + node.genChar + ')' : ''}</div>
+      <div class="detail-label">${t('detailGeneration')}</div>
+      <div class="detail-value">${currentLang === 'zh' ? '第' : 'Generasi ke-'}${node.gen} ${node.genChar ? '(' + node.genChar + ')' : ''}</div>
     </div>
   `;
   
@@ -1925,11 +2638,180 @@ function renderDashboard() {
   }).join('');
 }
 
+// ============ BIRTHDAY REMINDER ============
+function renderBirthdays() {
+  const section = document.getElementById('birthdaySection');
+  const list = document.getElementById('birthdayList');
+  const title = document.getElementById('birthdayTitle');
+  if (!section || !list) return;
+  
+  const today = new Date();
+  const currentMonth = today.getMonth();
+  
+  // Collect all people with birthdays (exclude passed)
+  const allPeople = Object.values(nodeMap).filter(n => 
+    n.nationalDate && !n.passed
+  );
+  
+  const upcoming = [];
+  allPeople.forEach(p => {
+    const days = daysToNextBirthday(p.nationalDate);
+    const parsed = parseIDDate(p.nationalDate);
+    if (days === null || !parsed) return;
+    if (days <= 60) {
+      upcoming.push({ person: p, days, parsed });
+    }
+  });
+  
+  // Sort by days
+  upcoming.sort((a, b) => a.days - b.days);
+  
+  if (upcoming.length === 0) {
+    section.style.display = 'none';
+    return;
+  }
+  
+  // Separate "this month" vs "upcoming"
+  const months = t('months');
+  title.innerHTML = `🎂 ${t('sectionBirthdays')} (${months[currentMonth]})`;
+  
+  section.style.display = 'block';
+  list.innerHTML = upcoming.slice(0, 6).map(item => {
+    const p = item.person;
+    const days = item.days;
+    const parsed = item.parsed;
+    const isToday = days === 0;
+    const ageNextYear = today.getFullYear() - parsed.year + (days === 0 ? 0 : 1);
+    
+    let countdown;
+    if (days === 0) countdown = '🎉 ' + t('today').toUpperCase();
+    else if (days === 1) countdown = t('tomorrow');
+    else countdown = days + ' ' + t('daysHari');
+    
+    const monthName = months[parsed.month];
+    
+    return `
+      <div class="birthday-card ${isToday ? 'today' : ''}" onclick="goToNode('${p.id}')">
+        <div class="bday-icon">${isToday ? '🎉' : '🎂'}</div>
+        <div class="bday-info">
+          <div class="bday-name">${p.indonesianName || p.han}</div>
+          <div class="bday-date">${parsed.day} ${monthName} · ${ageNextYear} ${t('yearOld')}</div>
+        </div>
+        <div class="bday-countdown">${countdown}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ============ MEMORIAL (PASSED ANCESTORS) ============
+function renderMemorial() {
+  const section = document.getElementById('memorialSection');
+  const list = document.getElementById('memorialList');
+  if (!section || !list) return;
+  
+  const passed = Object.values(nodeMap).filter(n => n.passed);
+  
+  if (passed.length === 0) {
+    section.style.display = 'none';
+    return;
+  }
+  
+  section.style.display = 'block';
+  list.innerHTML = passed.map(p => {
+    const passedDate = p.passedDate || '—';
+    return `
+      <div class="birthday-card" onclick="goToNode('${p.id}')" style="background: linear-gradient(135deg, #faf5e8, #f0e8d0);">
+        <div class="bday-icon" style="background: rgba(139, 115, 85, 0.15);">🕯️</div>
+        <div class="bday-info">
+          <div class="bday-name">${p.han}${p.indonesianName ? ' · ' + p.indonesianName : ''}</div>
+          <div class="bday-date">${p.role || ''} ${p.passedDate ? '· ' + p.passedDate : ''}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ============ TREE VISUAL VIEW ============
+let viewMode = 'list'; // 'list' or 'visual'
+
+function toggleView() {
+  viewMode = viewMode === 'list' ? 'visual' : 'list';
+  const treePanel = document.getElementById('treePanel');
+  const visualPanel = document.getElementById('treeVisualPanel');
+  const toggleBtn = document.getElementById('viewToggle');
+  
+  if (viewMode === 'visual') {
+    treePanel.style.display = 'none';
+    visualPanel.style.display = 'block';
+    toggleBtn.innerHTML = '📋 ' + (currentLang === 'zh' ? '列表' : 'List View');
+    renderTreeVisual();
+  } else {
+    treePanel.style.display = 'block';
+    visualPanel.style.display = 'none';
+    toggleBtn.innerHTML = '🌳 ' + (currentLang === 'zh' ? '树形图' : 'Tree View');
+  }
+}
+
+function renderTreeVisual() {
+  const container = document.getElementById('treeVisualContainer');
+  if (!container) return;
+  
+  // Group nodes by generation
+  const byGen = {};
+  Object.values(nodeMap).forEach(n => {
+    if (!n.gen) return;
+    if (!byGen[n.gen]) byGen[n.gen] = [];
+    byGen[n.gen].push(n);
+  });
+  
+  let html = '<div class="tv-tree">';
+  const gens = Object.keys(byGen).sort((a, b) => a - b);
+  
+  gens.forEach((gen, idx) => {
+    const nodes = byGen[gen];
+    const firstNode = nodes[0];
+    const genChar = firstNode.genChar || '';
+    
+    html += `<div class="tv-gen-label">${currentLang === 'zh' ? '第' : 'Generasi'} ${gen}${genChar ? ` <span class="gen-char">${genChar}</span>` : ''}</div>`;
+    html += `<div class="tv-node-row">`;
+    
+    nodes.forEach(n => {
+      const isSelected = n.id === selectedId;
+      const isFem = n.gender === 'F';
+      const isPassed = n.passed;
+      let classes = 'tv-node';
+      if (isSelected) classes += ' selected';
+      if (isFem) classes += ' female';
+      if (isPassed) classes += ' passed';
+      
+      const subText = n.indonesianName || n.hakka || n.pinyin || '';
+      const passedMark = isPassed ? ' 🕯️' : '';
+      
+      html += `
+        <div class="${classes}" onclick="goToNode('${n.id}')">
+          <span class="tv-node-gen">${genChar || gen}</span>
+          <div class="tv-node-han">${n.han}${passedMark}</div>
+          <div class="tv-node-sub">${subText}</div>
+        </div>
+      `;
+    });
+    
+    html += `</div>`;
+    if (idx < gens.length - 1) {
+      html += `<div class="tv-connector"></div>`;
+    }
+  });
+  
+  html += '</div>';
+  container.innerHTML = html;
+}
+
 // Helper: pergi ke node dan render semua
 function goToNode(id) {
   selectedId = id;
   expandPathTo(id);
   renderTree();
+  if (viewMode === 'visual') renderTreeVisual();
   renderDetail();
   renderBreadcrumb();
   renderDashboard();
@@ -1944,6 +2826,7 @@ function resetSelection() {
     n.classList.remove('search-match');
   });
   renderTree();
+  if (viewMode === 'visual') renderTreeVisual();
   renderDetail();
   renderBreadcrumb();
   renderDashboard();
@@ -2110,6 +2993,9 @@ document.addEventListener('DOMContentLoaded', () => {
   renderDetail();
   renderBreadcrumb();
   renderDashboard();
+  renderBirthdays();
+  renderMemorial();
+  applyLanguage();
   // Auto-focus search box on load
   const searchInput = document.getElementById('searchInput');
   if (searchInput && window.innerWidth > 768) {
