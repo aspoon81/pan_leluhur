@@ -1197,19 +1197,52 @@ const tree = {
                   },
                   {
                     id: 'chindy', gen: 6, genChar: '尤', gender: 'F',
-                    han: 'Chindy Lien', pinyin: '阿莲 Acian',
-                    hakka: 'Acian',
+                    han: '潘恋娟', pinyin: 'Pān Liàn Juān',
+                    indonesianName: 'Chindy Lien',
+                    hakka: 'A Lien',
                     role: 'Anak Perempuan ke-2 (Generasi 6)',
                     nationalDate: '11 Desember 1988, 13:00 WIB',
                     lunarDate: '3 bulan 11, 1988 (戊辰 · Naga Tanah)',
-                    meaning: 'Lahir di wilayah WIB',
-                    meta: 'Anak ke-4', children: []
+                    meaning: 'Pan yang Penuh Cinta dan Cantik',
+                    meta: 'Anak ke-4',
+                    spouse: {
+                      id: 'davin',
+                      gen: 6,
+                      gender: 'M',
+                      han: '李志銓',
+                      pinyin: 'Lǐ Zhì Quán',
+                      indonesianName: 'Davin Rivai',
+                      role: '丈夫 · Suami Chindy',
+                      surname: '李 (Li/Lǐ)',
+                      nationalDate: '11 Desember 1987',
+                      meaning: 'Yang Berkemauan Sempurna · Menikah masuk keluarga Pan'
+                    },
+                    children: [
+                      {
+                        id: 'nilo', gen: 7, gender: 'M',
+                        han: '李贵福', pinyin: 'Lǐ Guì Fú',
+                        indonesianName: 'Nilo',
+                        role: 'Anak Sulung Chindy & Davin (Generasi 7)',
+                        nationalDate: '4 November 2020',
+                        meaning: 'Yang Mulia dan Beruntung',
+                        meta: 'Anak ke-1', children: []
+                      },
+                      {
+                        id: 'kilian', gen: 7, gender: 'M',
+                        han: '李贵灵', pinyin: 'Lǐ Guì Líng',
+                        indonesianName: 'Kilian',
+                        role: 'Anak Kedua Chindy & Davin (Generasi 7)',
+                        nationalDate: '9 Juni 2023',
+                        meaning: 'Yang Mulia dan Cerdas/Bersemangat',
+                        meta: 'Anak ke-2', children: []
+                      }
+                    ]
                   },
                   {
                     id: 'desi', gen: 6, genChar: '尤', gender: 'F',
                     han: '潘静娟', pinyin: 'Pān Jìng Juān',
                     indonesianName: 'Desi Wilianti',
-                    hakka: 'Aching',
+                    hakka: 'AChin',
                     role: 'Anak Perempuan ke-3 (Generasi 6)',
                     nationalDate: '30 Desember 1989, 22:00 WIB',
                     lunarDate: '3 bulan 12, 1989 (己巳 · Ular Tanah)',
@@ -1690,14 +1723,14 @@ function renderDashboard() {
       <div class="card">
         <span class="card-icon">👨‍👩‍👧‍👦</span>
         <div class="card-label">Anggota Tercatat</div>
-        <div class="card-value">26 orang</div>
+        <div class="card-value">29 orang</div>
         <div class="card-sub">Termasuk menantu & cucu</div>
       </div>
-      <div class="card" onclick="goToNode('iriana')">
+      <div class="card" onclick="goToNode('kilian')">
         <span class="card-icon">👶</span>
         <div class="card-label">Generasi Termuda</div>
-        <div class="card-value">何依丽</div>
-        <div class="card-sub">Iriana · Lahir 2017 · Generasi 7</div>
+        <div class="card-value">李贵灵</div>
+        <div class="card-sub">Kilian · Lahir 2023 · Generasi 7</div>
       </div>
     `;
     return;
