@@ -4,9 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <meta name="theme-color" content="#a8331f">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
 <title>潘氏家谱 · Silsilah Keluarga Pan</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* Force light mode - override dark mode browsers */
+html { color-scheme: light only; }
+:root { color-scheme: light only; }
+
+@media (prefers-color-scheme: dark) {
+  html, body, * {
+    color-scheme: light only !important;
+  }
+}
+
+/* iOS Safari - force backgrounds and text colors */
+@supports (-webkit-touch-callout: none) {
+  html, body {
+    background-color: #fafaf7 !important;
+    color: #1a1410 !important;
+  }
+  .tree-node, .name-card, .card, .detail-panel, .tree-panel,
+  .birthday-card, .topbar, .breadcrumb, .dashboard,
+  .birthday-section, .hometown-section, .welcome-banner,
+  .footer-note, .search-box input, .btn, .breadcrumb-item,
+  .node-name, .node-id, .card-value, .card-label, .card-sub,
+  .detail-name, .detail-value, .detail-label, .detail-pinyin,
+  .bday-name, .bday-date, .welcome-title, .welcome-sub,
+  .hometown-han, .hometown-name, .hometown-desc, .hometown-stat {
+    -webkit-text-fill-color: inherit !important;
+  }
+}
 :root {
   --bg: #fafaf7;
   --bg-card: #ffffff;
@@ -25,13 +54,27 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+html {
+  background: #fafaf7 !important;
+  color: #1a1410 !important;
+}
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg);
-  color: var(--ink);
+  background: #fafaf7 !important;
+  color: #1a1410 !important;
   line-height: 1.5;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  -webkit-text-fill-color: #1a1410;
+}
+
+/* Explicit colors untuk elements - cegah dark mode override di iOS */
+.app, .topbar, .main, .tree-panel, .detail-panel, .dashboard, 
+.birthday-section, .hometown-section, .breadcrumb, .footer-note,
+.card, .tree-node, .name-card, .welcome-banner,
+.search-box input, .btn, .breadcrumb-item {
+  -webkit-text-fill-color: inherit;
 }
 
 .app {
@@ -1014,6 +1057,24 @@ body {
   background: var(--accent);
 }
 
+/* Lunar (Imlek) birthday card - background hangat emas */
+.birthday-card.lunar-bday {
+  background: linear-gradient(135deg, #fff8e6, #fdf0d0);
+  border-color: rgba(184, 146, 62, 0.35);
+}
+
+.birthday-card.lunar-bday:hover {
+  border-color: var(--gold);
+}
+
+.birthday-card.lunar-bday .bday-icon {
+  background: rgba(168, 51, 31, 0.1);
+}
+
+.birthday-card.lunar-bday .bday-countdown {
+  background: linear-gradient(135deg, var(--gold), #d4a851);
+}
+
 /* ============ LANGUAGE TOGGLE ============ */
 #langToggle {
   font-family: 'Noto Serif SC', serif;
@@ -1479,7 +1540,49 @@ const LunarCalendar = (function() {
     return `${lunar.year}年 ${leapStr}${cnMonths[lunar.month - 1]} ${cnDays[lunar.day - 1]} (${lunar.stem}${lunar.branch} · ${lunar.zodiac})`;
   }
   
-  return { solarToLunar, formatID, formatCN };
+  // Konversi Lunar → Gregorian
+  // Input: tahun Imlek, bulan Imlek, hari Imlek, isLeap
+  function lunarToSolar(lYear, lMonth, lDay, isLeap) {
+    if (lYear < 1900 || lYear > 2100) return null;
+    
+    let offset = 0;
+    // Hitung total hari dari awal tahun Imlek 1900 sampai awal tahun Imlek lYear
+    for (let i = 1900; i < lYear; i++) {
+      offset += lYearDays(i);
+    }
+    
+    const leap = leapMonth(lYear);
+    let isLeapPossible = isLeap && leap === lMonth;
+    
+    // Hitung hari sampai awal bulan target
+    for (let i = 1; i < lMonth; i++) {
+      offset += monthDays(lYear, i);
+      // Kalau ada bulan kabisat dan sudah dilewati
+      if (leap > 0 && i === leap) {
+        offset += leapDays(lYear);
+      }
+    }
+    
+    // Kalau target adalah bulan kabisat itu sendiri
+    if (isLeapPossible) {
+      offset += monthDays(lYear, lMonth);
+    }
+    
+    offset += lDay - 1;
+    
+    // Konversi ke Gregorian dari base 31 Jan 1900
+    const baseDate = new Date(1900, 0, 31);
+    const targetDate = new Date(baseDate.getTime() + offset * 86400000);
+    
+    return {
+      year: targetDate.getFullYear(),
+      month: targetDate.getMonth() + 1,
+      day: targetDate.getDate(),
+      date: targetDate
+    };
+  }
+  
+  return { solarToLunar, lunarToSolar, formatID, formatCN };
 })();
 
 // Helper: parse tanggal Indonesia ke Date object
@@ -1519,6 +1622,54 @@ function daysToNextBirthday(birthDateStr) {
   let nextBday = new Date(today.getFullYear(), parsed.month, parsed.day);
   if (nextBday < today) nextBday = new Date(today.getFullYear() + 1, parsed.month, parsed.day);
   return Math.ceil((nextBday - today) / 86400000);
+}
+
+// Helper: hitung hari ke ulang tahun IMLEK berikutnya
+// Input: tanggal lahir Masehi (string)
+// Output: { days, gregorianDate, lunarInfo } atau null
+function daysToNextLunarBirthday(birthDateStr) {
+  const parsed = parseIDDate(birthDateStr);
+  if (!parsed) return null;
+  
+  // Convert tanggal lahir Masehi → tanggal Imlek
+  const lunar = LunarCalendar.solarToLunar(parsed.year, parsed.month + 1, parsed.day);
+  if (!lunar) return null;
+  
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const currentYear = today.getFullYear();
+  
+  // Hitung kapan ultah Imlek jatuh di tahun ini (Masehi)
+  let bdayThisYear = LunarCalendar.lunarToSolar(currentYear, lunar.month, lunar.day, lunar.isLeap);
+  
+  // Kalau gagal (mungkin di tahun ini bulan kabisat berbeda), coba tanpa isLeap
+  if (!bdayThisYear) {
+    bdayThisYear = LunarCalendar.lunarToSolar(currentYear, lunar.month, lunar.day, false);
+  }
+  if (!bdayThisYear) return null;
+  
+  let targetDate = bdayThisYear.date;
+  targetDate.setHours(0, 0, 0, 0);
+  
+  // Kalau sudah lewat, cari tahun depan
+  if (targetDate < today) {
+    let bdayNextYear = LunarCalendar.lunarToSolar(currentYear + 1, lunar.month, lunar.day, lunar.isLeap);
+    if (!bdayNextYear) {
+      bdayNextYear = LunarCalendar.lunarToSolar(currentYear + 1, lunar.month, lunar.day, false);
+    }
+    if (!bdayNextYear) return null;
+    targetDate = bdayNextYear.date;
+    targetDate.setHours(0, 0, 0, 0);
+  }
+  
+  const days = Math.ceil((targetDate - today) / 86400000);
+  return {
+    days,
+    gregorianDate: targetDate,
+    lunarMonth: lunar.month,
+    lunarDay: lunar.day,
+    isLeap: lunar.isLeap
+  };
 }
 
 // ============ I18N (Bilingual Support) ============
@@ -1783,24 +1934,26 @@ const tree = {
                 han: '潘正忠',
                 pinyin: 'Pān Zhèng Zhōng',
                 indonesianName: 'Soeparto',
-                hakka: 'ACui',
+                hakka: 'A Cui',
                 role: '父亲 · Penjaga Silsilah (Generasi 5)',
                 isFather: true,
-                lunarDate: '24 bulan 8 (Imlek)',
+                nationalDate: '24 September 1951',
+                lunarDate: '24 bulan 8, 1951 (辛卯 · 🐰 Kelinci ⚙️ Logam)',
                 meaning: 'Pan yang Lurus dan Setia · Penjaga Silsilah',
                 meta: 'Anak ke-1',
                 spouse: {
                   id: 'ibu',
                   gen: 5,
                   gender: 'F',
-                  han: '叶氏 Djap',
-                  pinyin: 'Djap Sit Djun',
+                  han: '叶雪珍',
+                  pinyin: 'Yè Xuě Zhēn',
                   indonesianName: 'Yuliana',
-                  hakka: 'ASit',
+                  hakka: 'A Sit',
                   role: '母亲 · Ibu Rumah Tangga (Generasi 5)',
                   surname: '叶 (Djap/Yè)',
-                  lunarDate: '22 bulan 8 (Imlek)',
-                  meaning: 'Pelita Keluarga · Menikah masuk marga Pan'
+                  nationalDate: '4 Oktober 1958',
+                  lunarDate: '22 bulan 8, 1958 (戊戌 · 🐶 Anjing 🪨 Tanah)',
+                  meaning: 'Daun Salju yang Mulia/Berharga · Menikah masuk marga Pan'
                 },
                 children: [
                   {
@@ -1974,7 +2127,6 @@ const tree = {
                 han: 'Thai Ku', pinyin: '大姑',
                 hakka: 'Thai Ku',
                 role: 'Saudari dari 潘正忠 (Generasi 5)',
-                passed: true,
                 meaning: 'Bibi dari pihak ayah',
                 meta: 'Anak ke-3', children: []
               },
@@ -1982,7 +2134,6 @@ const tree = {
                 id: 'pak4', gen: 5, genChar: '正', gender: 'M',
                 han: '潘正小', pinyin: 'Pān Zhèng Xiǎo',
                 role: 'Saudara Laki-laki dari 潘正忠 (Generasi 5)',
-                passed: true,
                 meaning: 'Pan yang Lurus dan Rendah Hati',
                 meta: 'Anak ke-4', children: []
               },
@@ -1990,7 +2141,6 @@ const tree = {
                 id: 'pak5', gen: 5, genChar: '正', gender: 'M',
                 han: '潘正鹰', pinyin: 'Pān Zhèng Yīng',
                 role: 'Saudara Laki-laki dari 潘正忠 (Generasi 5)',
-                passed: true,
                 meaning: 'Pan yang Lurus seperti Elang',
                 meta: 'Anak ke-5', children: []
               },
@@ -2008,7 +2158,6 @@ const tree = {
             id: 'ku2', gen: 4, genChar: '先', gender: 'M',
             han: '潘先当', pinyin: 'Pān Xiān Dāng',
             role: 'Saudara Kakek (Granduncle)',
-            passed: true,
             meaning: 'Pan yang Mendahului dalam Tanggung Jawab',
             meta: 'Anak ke-2', children: []
           },
@@ -2016,7 +2165,6 @@ const tree = {
             id: 'ku3', gen: 4, genChar: '先', gender: 'M',
             han: '潘先沣', pinyin: 'Pān Xiān Fēng',
             role: 'Saudara Kakek (Granduncle)',
-            passed: true,
             meaning: 'Pan yang Mendahului dalam Kemakmuran',
             meta: 'Anak ke-3', children: []
           },
@@ -2024,7 +2172,6 @@ const tree = {
             id: 'ku4', gen: 4, genChar: '先', gender: 'M',
             han: '潘先泽', pinyin: 'Pān Xiān Zé',
             role: 'Saudara Kakek (Granduncle)',
-            passed: true,
             meaning: 'Pan yang Mendahului dalam Berkat',
             meta: 'Anak ke-4', children: []
           }
@@ -2300,6 +2447,25 @@ function renderDetail() {
         <div class="detail-label">${t('detailLunarDate')}</div>
         <div class="detail-value lunar">${lunarDisplay}</div>
       </div>`;
+    
+    // Bonus: tampilkan kapan ultah Imlek jatuh di tahun ini (Masehi)
+    if (node.nationalDate && !node.passed) {
+      const lunarBday = daysToNextLunarBirthday(node.nationalDate);
+      if (lunarBday) {
+        const months = t('months');
+        const gDate = lunarBday.gregorianDate;
+        const dateStr = `${gDate.getDate()} ${months[gDate.getMonth()]} ${gDate.getFullYear()}`;
+        const daysStr = lunarBday.days === 0 ? '🎉 ' + t('today').toUpperCase() :
+                        lunarBday.days === 1 ? t('tomorrow') :
+                        `${lunarBday.days} ${t('daysHari')} ${t('daysFromNow')}`;
+        html += `
+          <div class="detail-section" style="background: linear-gradient(135deg, #fff8e6, #fdf0d0); padding: 10px 12px; border-radius: 6px; border-left: 3px solid var(--gold);">
+            <div class="detail-label">🏮 ${currentLang === 'zh' ? '今年农历生日' : 'Ultah Imlek Tahun Ini'}</div>
+            <div class="detail-value" style="color: var(--accent); font-weight: 600;">${dateStr}</div>
+            <div style="font-size: 11px; color: var(--ink-soft); margin-top: 2px;">${daysStr}</div>
+          </div>`;
+      }
+    }
   }
   
   if (node.marriageDate) {
@@ -2426,8 +2592,8 @@ function renderDashboard() {
       <div class="card" onclick="goToNode('ibu')">
         <span class="card-icon">👩</span>
         <div class="card-label">Generasi 5 (Istri)</div>
-        <div class="card-value">叶氏 Djap</div>
-        <div class="card-sub">Marga 叶 · Menikah masuk</div>
+        <div class="card-value">叶雪珍</div>
+        <div class="card-sub">Yuliana · Marga 叶 · Menikah masuk</div>
       </div>
       <div class="card">
         <span class="card-icon">🌳</span>
@@ -2653,30 +2819,51 @@ function renderBirthdays() {
     n.nationalDate && !n.passed
   );
   
-  const upcoming = [];
+  // Compute birthdays Masehi & Imlek (both)
+  const allBirthdays = [];
   allPeople.forEach(p => {
-    const days = daysToNextBirthday(p.nationalDate);
     const parsed = parseIDDate(p.nationalDate);
-    if (days === null || !parsed) return;
-    if (days <= 60) {
-      upcoming.push({ person: p, days, parsed });
+    if (!parsed) return;
+    
+    // 1. Masehi birthday
+    const daysM = daysToNextBirthday(p.nationalDate);
+    if (daysM !== null && daysM <= 60) {
+      allBirthdays.push({ 
+        person: p, 
+        days: daysM, 
+        parsed, 
+        type: 'masehi'
+      });
+    }
+    
+    // 2. Lunar (Imlek) birthday
+    const lunarBday = daysToNextLunarBirthday(p.nationalDate);
+    if (lunarBday !== null && lunarBday.days <= 60) {
+      allBirthdays.push({ 
+        person: p, 
+        days: lunarBday.days, 
+        parsed,
+        lunarInfo: lunarBday,
+        type: 'lunar'
+      });
     }
   });
   
   // Sort by days
-  upcoming.sort((a, b) => a.days - b.days);
+  allBirthdays.sort((a, b) => a.days - b.days);
   
-  if (upcoming.length === 0) {
+  if (allBirthdays.length === 0) {
     section.style.display = 'none';
     return;
   }
   
-  // Separate "this month" vs "upcoming"
+  // Title with Masehi & Lunar info
   const months = t('months');
-  title.innerHTML = `🎂 ${t('sectionBirthdays')} (${months[currentMonth]})`;
+  const monthZH = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+  title.innerHTML = `🎂 ${t('sectionBirthdays')} <span style="opacity:0.6; font-size: 10px; font-weight: 400; margin-left: 6px;">(国历 & 农历)</span>`;
   
   section.style.display = 'block';
-  list.innerHTML = upcoming.slice(0, 6).map(item => {
+  list.innerHTML = allBirthdays.slice(0, 10).map(item => {
     const p = item.person;
     const days = item.days;
     const parsed = item.parsed;
@@ -2688,14 +2875,27 @@ function renderBirthdays() {
     else if (days === 1) countdown = t('tomorrow');
     else countdown = days + ' ' + t('daysHari');
     
-    const monthName = months[parsed.month];
+    let icon, dateStr, typeLabel;
+    if (item.type === 'masehi') {
+      icon = isToday ? '🎉' : '🎂';
+      const monthName = months[parsed.month];
+      dateStr = `${parsed.day} ${monthName} · ${ageNextYear} ${t('yearOld')}`;
+      typeLabel = '<span style="display:inline-block; background:rgba(168,51,31,0.1); color:var(--accent); font-size:9px; padding:1px 6px; border-radius:8px; margin-right:4px;">国历</span>';
+    } else {
+      // lunar
+      icon = isToday ? '🎊' : '🏮';
+      const lInfo = item.lunarInfo;
+      const lGregDate = lInfo.gregorianDate;
+      dateStr = `Imlek ${lInfo.lunarDay} bulan ${lInfo.lunarMonth} → ${lGregDate.getDate()} ${months[lGregDate.getMonth()]} · ${ageNextYear} ${t('yearOld')}`;
+      typeLabel = '<span style="display:inline-block; background:rgba(184,146,62,0.15); color:var(--gold); font-size:9px; padding:1px 6px; border-radius:8px; margin-right:4px;">农历</span>';
+    }
     
     return `
-      <div class="birthday-card ${isToday ? 'today' : ''}" onclick="goToNode('${p.id}')">
-        <div class="bday-icon">${isToday ? '🎉' : '🎂'}</div>
+      <div class="birthday-card ${isToday ? 'today' : ''} ${item.type === 'lunar' ? 'lunar-bday' : ''}" onclick="goToNode('${p.id}')">
+        <div class="bday-icon">${icon}</div>
         <div class="bday-info">
-          <div class="bday-name">${p.indonesianName || p.han}</div>
-          <div class="bday-date">${parsed.day} ${monthName} · ${ageNextYear} ${t('yearOld')}</div>
+          <div class="bday-name">${typeLabel}${p.indonesianName || p.han}</div>
+          <div class="bday-date">${dateStr}</div>
         </div>
         <div class="bday-countdown">${countdown}</div>
       </div>
