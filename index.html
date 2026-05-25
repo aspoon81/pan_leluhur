@@ -1585,6 +1585,61 @@ const LunarCalendar = (function() {
   return { solarToLunar, lunarToSolar, formatID, formatCN };
 })();
 
+// ============ BAZI HELPER ============
+// Karena algoritma Bazi yang akurat butuh data Solar Terms presisi tinggi
+// dan kalibrasi dengan calculator profesional, kita TIDAK menghitung Bazi sendiri.
+// Sebagai gantinya: kasih link ke bazi-calculator.com untuk yang punya tanggal+jam lahir.
+// Plus info Day Master character berdasarkan SHIO TAHUN sebagai approximation singkat.
+
+const DayMasterByYearStem = {
+  '甲': { name: 'Kayu Yang', symbol: '🌳 Pohon Besar', 
+    desc: 'Tegak kokoh, pemimpin alami, ambisius, jujur.' },
+  '乙': { name: 'Kayu Yin', symbol: '🌸 Rumput Bunga', 
+    desc: 'Lembut & fleksibel, adaptif, artistik, ulet.' },
+  '丙': { name: 'Api Yang', symbol: '☀️ Matahari', 
+    desc: 'Hangat & menyinari, optimis, ekspresif, inspiratif.' },
+  '丁': { name: 'Api Yin', symbol: '🕯️ Lilin', 
+    desc: 'Tenang & hangat, cerdas, intuitif, romantis.' },
+  '戊': { name: 'Tanah Yang', symbol: '⛰️ Gunung', 
+    desc: 'Kokoh seperti gunung, jujur, sabar, andal.' },
+  '己': { name: 'Tanah Yin', symbol: '🌾 Tanah Sawah', 
+    desc: 'Subur & pengasuh, bijak, tenang, memberi tanpa pamrih.' },
+  '庚': { name: 'Logam Yang', symbol: '⚔️ Pedang Baja', 
+    desc: 'Tajam & tegas, berani, prinsipiel, tidak takut konflik.' },
+  '辛': { name: 'Logam Yin', symbol: '💎 Permata', 
+    desc: 'Anggun & berharga, detail, sensitif, karakter mulia.' },
+  '壬': { name: 'Air Yang', symbol: '🌊 Samudera', 
+    desc: 'Luas & dalam, cerdas, kreatif, ambisius, visioner.' },
+  '癸': { name: 'Air Yin', symbol: '🌧️ Embun', 
+    desc: 'Lembut & menyejukkan, bijak, intuitif, penyembuh alami.' }
+};
+
+// Build URL ke bazi-calculator.com untuk anggota keluarga
+// Format: https://bazi-calculator.com/?licz=1&y=YEAR&m=MONTH&d=DAY&h=HH%3AMM&g=TIMEZONE
+function buildBaziCalcUrl(year, month, day, hour, minute, gmtOffset) {
+  const h = hour !== null && hour !== undefined ? hour : 12;
+  const m = minute !== null && minute !== undefined ? minute : 0;
+  const g = gmtOffset !== null && gmtOffset !== undefined ? gmtOffset : 7; // default WIB
+  const hourStr = `${String(h).padStart(2,'0')}%3A${String(m).padStart(2,'0')}`;
+  return `https://bazi-calculator.com/?licz=1&y=${year}&m=${month}&d=${day}&h=${hourStr}&g=${g}&l=0`;
+}
+
+// Detect timezone dari string ("WIB" "WIT" "WITA")
+function detectGmtOffset(dateStr) {
+  if (!dateStr) return 7;
+  if (dateStr.includes('WIT') && !dateStr.includes('WITA')) return 9; // WIT = GMT+9
+  if (dateStr.includes('WITA')) return 8;
+  return 7; // WIB default
+}
+
+// Extract jam:menit dari string
+function extractHourMinute(dateStr) {
+  if (!dateStr) return null;
+  const match = dateStr.match(/(\d{1,2}):(\d{2})/);
+  if (match) return { hour: parseInt(match[1]), minute: parseInt(match[2]) };
+  return null;
+}
+
 // Helper: parse tanggal Indonesia ke Date object
 // Format: "22 Oktober 1981" atau "22 Oktober 1981, 10:00 WIT"
 function parseIDDate(dateStr) {
@@ -1971,7 +2026,7 @@ const tree = {
                     id: 'asong', gen: 6, genChar: '尤', gender: 'M',
                     han: '潘尤上', pinyin: 'Pān Yóu Shàng',
                     indonesianName: 'Yulius',
-                    hakka: '阿松 A Song',
+                    hakka: '阿松 Asong',
                     role: 'Anak Laki-laki Kedua (Generasi 6)',
                     nationalDate: '22 Oktober 1981, 10:00 WIT',
                     lunarDate: '25 bulan 9, 1981 (辛酉 · Ayam Logam)',
@@ -1981,10 +2036,10 @@ const tree = {
                       id: 'veronika',
                       gen: 6,
                       gender: 'F',
-                      han: '苏美玲' , 
+                      han: '苏美玲 Veronika',
                       pinyin: 'Sū Měi Líng',
                       indonesianName: 'Veronika',
-                      hakka: 'Mei Ling',
+                      hakka: 'Shu Mei Ling',
                       role: '妻子 · Istri Yulius · Ibu Benedict & Bellarmino',
                       surname: '苏 (Su/Shu)',
                       nationalDate: '18 Januari 1983, Pontianak',
@@ -2072,7 +2127,7 @@ const tree = {
                     id: 'desi', gen: 6, genChar: '尤', gender: 'F',
                     han: '潘静娟', pinyin: 'Pān Jìng Juān',
                     indonesianName: 'Desi Wilianti',
-                    hakka: 'A Chin',
+                    hakka: 'AChin',
                     role: 'Anak Perempuan ke-3 (Generasi 6)',
                     nationalDate: '30 Desember 1989, 22:00 WIB',
                     lunarDate: '3 bulan 12, 1989 (己巳 · Ular Tanah)',
@@ -2463,6 +2518,59 @@ function renderDetail() {
             <div class="detail-label">🏮 ${currentLang === 'zh' ? '今年农历生日' : 'Ultah Imlek Tahun Ini'}</div>
             <div class="detail-value" style="color: var(--accent); font-weight: 600;">${dateStr}</div>
             <div style="font-size: 11px; color: var(--ink-soft); margin-top: 2px;">${daysStr}</div>
+          </div>`;
+      }
+    }
+  }
+  
+  // ============ BAZI SECTION (4 Pilar / 八字) ============
+  if (node.nationalDate && !node.passed) {
+    const parsed = parseIDDate(node.nationalDate);
+    if (parsed) {
+      const lunar = LunarCalendar.solarToLunar(parsed.year, parsed.month + 1, parsed.day);
+      if (lunar) {
+        // Day Master approximation pakai stem tahun (Year Pillar) - aman & akurat
+        const yearStem = lunar.stem;
+        const dm = DayMasterByYearStem[yearStem];
+        const hm = extractHourMinute(node.nationalDate);
+        const gmt = detectGmtOffset(node.nationalDate);
+        const baziUrl = hm 
+          ? buildBaziCalcUrl(parsed.year, parsed.month + 1, parsed.day, hm.hour, hm.minute, gmt)
+          : buildBaziCalcUrl(parsed.year, parsed.month + 1, parsed.day, 12, 0, gmt);
+        
+        const baziTitle = currentLang === 'zh' ? '八字命盘' : 'Bazi · 4 Pilar Kelahiran';
+        const yearPillarLabel = currentLang === 'zh' ? '年柱 (Pilar Tahun)' : 'Pilar Tahun (年柱)';
+        const dmLabel = currentLang === 'zh' ? '本命特质' : 'Karakter Tahun Lahir';
+        const calcBtnLabel = hm 
+          ? (currentLang === 'zh' ? '👉 Lihat 4 Pilar lengkap di Bazi Calculator' : '👉 Lihat 4 Pilar lengkap di Bazi Calculator')
+          : (currentLang === 'zh' ? '👉 Lihat Bazi (jam lahir tidak diketahui)' : '👉 Lihat Bazi (jam lahir tidak diketahui)');
+        const noteLabel = currentLang === 'zh' 
+          ? '※ Bazi (八字) atau 4 Pilar adalah analisis astrologi Tionghoa mendalam berdasarkan tahun, bulan, hari, dan jam lahir.' 
+          : '※ Bazi (八字) atau "4 Pilar" adalah analisis astrologi Tionghoa mendalam berdasarkan tahun, bulan, hari, dan jam lahir.';
+        
+        html += `
+          <div class="detail-section" style="background: linear-gradient(135deg, #f4f1e8, #ede4cf); padding: 12px; border-radius: 6px; border-left: 3px solid #8b7355; margin-top: 12px;">
+            <div class="detail-label">☯️ ${baziTitle}</div>
+            
+            <div style="display: flex; align-items: center; gap: 10px; margin-top: 8px; padding: 8px; background: white; border-radius: 4px;">
+              <div style="font-family: 'Noto Serif SC', serif; font-size: 28px; font-weight: 700; color: var(--accent); line-height: 1;">${lunar.stem}${lunar.branch}</div>
+              <div style="flex: 1;">
+                <div style="font-size: 11px; color: var(--ink-mute); text-transform: uppercase; letter-spacing: 0.05em;">${yearPillarLabel}</div>
+                <div style="font-size: 13px; font-weight: 600; color: var(--ink);">${lunar.zodiacEmoji} ${lunar.zodiac.split(' ')[1]} ${lunar.elementEmoji} ${lunar.element}</div>
+              </div>
+            </div>
+            
+            <div style="margin-top: 10px; padding: 10px; background: white; border-radius: 4px;">
+              <div style="font-size: 11px; color: var(--ink-mute); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">${dmLabel}</div>
+              <div style="font-weight: 600; color: var(--ink); margin-bottom: 4px;">${dm.symbol} · ${dm.name}</div>
+              <div style="font-size: 12px; color: var(--ink-soft); line-height: 1.4;">${dm.desc}</div>
+            </div>
+            
+            <a href="${baziUrl}" target="_blank" rel="noopener" style="display: block; margin-top: 10px; padding: 8px 12px; background: linear-gradient(135deg, var(--accent), #8b2818); color: white; text-decoration: none; text-align: center; border-radius: 4px; font-size: 12px; font-weight: 600;">
+              ${calcBtnLabel}
+            </a>
+            
+            <div style="font-size: 10px; color: var(--ink-mute); margin-top: 8px; line-height: 1.4; font-style: italic;">${noteLabel}</div>
           </div>`;
       }
     }
