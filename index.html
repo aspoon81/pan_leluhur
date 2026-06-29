@@ -1469,8 +1469,9 @@ const LunarCalendar = (function() {
   function solarToLunar(year, month, day) {
     if (year < 1900 || year > 2100) return null;
     
-    const baseDate = new Date(1900, 0, 31);
-    const targetDate = new Date(year, month - 1, day);
+    // Pakai UTC untuk hindari timezone drift (terutama di Jakarta yang dulu pakai GMT+7:07)
+    const baseDate = Date.UTC(1900, 0, 31);
+    const targetDate = Date.UTC(year, month - 1, day);
     let offset = Math.floor((targetDate - baseDate) / 86400000);
     
     let lYear, lMonth, lDay, isLeap = false;
@@ -1570,14 +1571,21 @@ const LunarCalendar = (function() {
     
     offset += lDay - 1;
     
-    // Konversi ke Gregorian dari base 31 Jan 1900
-    const baseDate = new Date(1900, 0, 31);
-    const targetDate = new Date(baseDate.getTime() + offset * 86400000);
+    // Konversi ke Gregorian dari base 31 Jan 1900 - pakai UTC untuk hindari timezone drift
+    const baseDateUTC = Date.UTC(1900, 0, 31);
+    const targetMs = baseDateUTC + offset * 86400000;
+    const targetUTC = new Date(targetMs);
+    
+    // Ambil komponen UTC, lalu rekonstruksi sebagai tanggal lokal di hari yang sama
+    const y = targetUTC.getUTCFullYear();
+    const m = targetUTC.getUTCMonth();
+    const d = targetUTC.getUTCDate();
+    const targetDate = new Date(y, m, d);
     
     return {
-      year: targetDate.getFullYear(),
-      month: targetDate.getMonth() + 1,
-      day: targetDate.getDate(),
+      year: y,
+      month: m + 1,
+      day: d,
       date: targetDate
     };
   }
@@ -2000,7 +2008,7 @@ const tree = {
                   id: 'ibu',
                   gen: 5,
                   gender: 'F',
-                  han: '叶',
+                  han: '叶雪珍',
                   pinyin: 'Yè Xuě Zhēn',
                   indonesianName: 'Yuliana',
                   hakka: 'A Sit',
@@ -2127,7 +2135,7 @@ const tree = {
                     id: 'desi', gen: 6, genChar: '尤', gender: 'F',
                     han: '潘静娟', pinyin: 'Pān Jìng Juān',
                     indonesianName: 'Desi Wilianti',
-                    hakka: 'A Chin',
+                    hakka: 'AChin',
                     role: 'Anak Perempuan ke-3 (Generasi 6)',
                     nationalDate: '30 Desember 1989, 22:00 WIB',
                     lunarDate: '3 bulan 12, 1989 (己巳 · Ular Tanah)',
@@ -2194,10 +2202,110 @@ const tree = {
               },
               {
                 id: 'pak5', gen: 5, genChar: '正', gender: 'M',
-                han: '潘正鹰', pinyin: 'Pān Zhèng Yīng',
+                han: '潘正立', pinyin: 'Pān Zhèng Lì',
+                indonesianName: 'Paulus Chandra',
+                hakka: 'Cin Lip · Phan Cin Lip',
                 role: 'Saudara Laki-laki dari 潘正忠 (Generasi 5)',
-                meaning: 'Pan yang Lurus seperti Elang',
-                meta: 'Anak ke-5', children: []
+                passed: true,
+                nationalDate: '10 September 1958',
+                lunarDate: '27 bulan 7, 1958 (戊戌 · 🐶 Anjing 🪨 Tanah)',
+                passedDate: '9 Maret 2026 (21 bulan 1 Imlek · 丙午年)',
+                meaning: 'Pan yang Lurus dan Tegak Berdiri · ✝️ Katolik',
+                meta: 'Anak ke-5',
+                spouse: {
+                  id: 'pak5_istri2',
+                  gen: 5,
+                  gender: 'F',
+                  han: 'Juliana',
+                  pinyin: 'Juliana',
+                  indonesianName: 'Juliana',
+                  role: '妻子 · Istri ke-2 Paulus Chandra',
+                  nationalDate: '24 November 1971',
+                  lunarDate: '7 bulan 10, 1971 (辛亥 · 🐷 Babi ⚙️ Logam)',
+                  meaning: 'Istri ke-2 (✝️ Katolik) · Lahir di Bantok, Kalbar · Menikah masuk marga Pan'
+                },
+                children: [
+                  {
+                    id: 'pak5_alexander', gen: 6, genChar: '尤', gender: 'M',
+                    han: '潘尤仁', pinyin: 'Pān Yóu Rén',
+                    indonesianName: 'Alexander',
+                    role: 'Anak ke-1 Paulus Chandra (dari Istri 1)',
+                    nationalDate: '21 November 1984',
+                    lunarDate: '29 bulan 10, 1984 (甲子 · 🐭 Tikus 🌿 Kayu)',
+                    meaning: 'Pan yang Istimewa dan Berkemanusiaan · ☪️ Islam',
+                    meta: 'Anak ke-1 (dari Istri 1) · Tinggal di Jakarta',
+                    spouse: {
+                      id: 'pak5_jeny',
+                      gen: 6,
+                      gender: 'F',
+                      han: 'Jeny Avrilia',
+                      pinyin: 'Jeny Avrilia',
+                      indonesianName: 'Jeny Avrilia',
+                      role: '妻子 · Istri Alexander',
+                      nationalDate: '23 Desember 1985',
+                      lunarDate: '12 bulan 11, 1985 (乙丑 · 🐂 Kerbau 🌿 Kayu)',
+                      meaning: 'Istri Alexander (☪️ Islam) · Lahir di Kebumen'
+                    },
+                    children: [
+                      {
+                        id: 'pak5_barra', gen: 7, genChar: '唯', gender: 'M',
+                        han: '潘 Phan', pinyin: 'Barra Elvander Phan',
+                        indonesianName: 'Barra Elvander Phan',
+                        role: 'Cucu Paulus Chandra (Generasi 7)',
+                        nationalDate: '3 Januari 2024',
+                        lunarDate: '22 bulan 11, 2023 (癸卯 · 🐰 Kelinci 💧 Air)',
+                        meaning: 'Anak Alexander & Jeny · Membawa marga Phan (潘)',
+                        meta: 'Cicit Kakek Pan', children: []
+                      }
+                    ]
+                  },
+                  {
+                    id: 'pak5_anak2', gen: 6, genChar: '尤', gender: 'M',
+                    han: '潘尤?', pinyin: 'Pān Yóu ?',
+                    indonesianName: '(belum diketahui)',
+                    role: 'Anak ke-2 Paulus Chandra (dari Istri 1)',
+                    meaning: 'Data belum lengkap - menunggu info keluarga',
+                    meta: 'Anak ke-2 (dari Istri 1)', children: []
+                  },
+                  {
+                    id: 'pak5_juliawati', gen: 6, genChar: '尤', gender: 'F',
+                    han: '潘尤? Juliawati', pinyin: 'Juliawati',
+                    indonesianName: 'Juliawati',
+                    role: 'Anak ke-3 Paulus Chandra (dari Istri 1)',
+                    nationalDate: '14 April 1987',
+                    lunarDate: '17 bulan 3, 1987 (丁卯 · 🐰 Kelinci 🔥 Api)',
+                    meaning: 'Saudari Alexander · ✝️ Katolik · Tinggal di Jakarta',
+                    meta: 'Anak ke-3 (dari Istri 1)', children: []
+                  },
+                  {
+                    id: 'pak5_anak4', gen: 6, genChar: '尤', gender: 'M',
+                    han: '潘尤?', pinyin: 'Pān Yóu ?',
+                    indonesianName: '(belum diketahui)',
+                    role: 'Anak ke-4 Paulus Chandra (dari Istri 1)',
+                    meaning: 'Data belum lengkap - menunggu info keluarga',
+                    meta: 'Anak ke-4 (dari Istri 1)', children: []
+                  },
+                  {
+                    id: 'pak5_jenny', gen: 6, genChar: '尤', gender: 'F',
+                    han: '潘尤? Jenny', pinyin: 'Jenny Stephany',
+                    indonesianName: 'Jenny Stephany',
+                    role: 'Anak ke-5 Paulus Chandra (dari Istri 2 / Juliana)',
+                    nationalDate: '19 Januari 2004',
+                    lunarDate: '28 bulan 12, 2003 (癸未 · 🐐 Kambing 💧 Air)',
+                    meaning: 'Anak ke-1 dari Juliana · ✝️ Katolik · Meliau, Kalbar',
+                    meta: 'Anak ke-5 (dari Istri 2)', children: []
+                  },
+                  {
+                    id: 'pak5_juander', gen: 6, genChar: '尤', gender: 'M',
+                    han: '潘尤鈿', pinyin: 'Pān Yóu Diàn',
+                    indonesianName: 'Juander Candra',
+                    role: 'Anak ke-6 Paulus Chandra (dari Istri 2 / Juliana)',
+                    nationalDate: '22 Mei 2005',
+                    lunarDate: '15 bulan 4, 2005 (乙酉 · 🐔 Ayam 🌿 Kayu)',
+                    meaning: 'Anak ke-2 dari Juliana · ✝️ Katolik · Meliau, Kalbar',
+                    meta: 'Anak ke-6 (dari Istri 2)', children: []
+                  }
+                ]
               },
               {
                 id: 'seku', gen: 5, genChar: '正', gender: 'F',
@@ -2712,7 +2820,7 @@ function renderDashboard() {
       <div class="card">
         <span class="card-icon">👨‍👩‍👧‍👦</span>
         <div class="card-label">Anggota Tercatat</div>
-        <div class="card-value">29 orang</div>
+        <div class="card-value">38 orang</div>
         <div class="card-sub">Termasuk menantu & cucu</div>
       </div>
       <div class="card" onclick="goToNode('kilian')">
